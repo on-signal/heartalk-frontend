@@ -30,21 +30,18 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/profile"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
+            android:id="@+id/kako_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/kakao_login_medium_narrow" />
 
-        <TextView
-            android:id="@+id/nickname"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/temp_to_signal_room"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/kako_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/kakao_login_medium_narrow" />
+
 
 
     <!--    <androidx.fragment.app.FragmentContainerView-->

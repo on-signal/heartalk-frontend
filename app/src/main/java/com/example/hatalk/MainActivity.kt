@@ -2,12 +2,14 @@ package com.example.hatalk
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.hatalk.signalRoom.SignalRoomActivity
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
@@ -86,6 +88,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }else{
                 LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
+        }
+
+        val temp_to_signal_room = findViewById<Button>(R.id.temp_to_signal_room)
+
+        temp_to_signal_room.setOnClickListener {
+            val intent = Intent(this, SignalRoomActivity::class.java)
+            startActivity(intent)
         }
     }
 
