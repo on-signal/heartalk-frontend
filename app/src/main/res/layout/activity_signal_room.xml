@@ -36,13 +36,14 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_columnWeight="1"
                 android:orientation="horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="150dp">
+                android:layout_rowWeight="1"
+                android:background="@color/gray" >
 
                 <ImageView
                     android:id="@+id/profile_image_man_1"
@@ -62,13 +63,14 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_columnWeight="1"
                 android:orientation="horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="150dp" >
+                android:layout_rowWeight="1"
+                android:background="@color/gray" >
 
                 <ImageView
                     android:id="@+id/profile_image_woman_1"
@@ -88,13 +90,14 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_columnWeight="1"
                 android:orientation="horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="150dp" >
+                android:layout_rowWeight="1"
+                android:background="@color/gray" >
 
                 <ImageView
                     android:id="@+id/profile_image_man_2"
@@ -114,13 +117,14 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_columnWeight="1"
                 android:orientation="horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="150dp" >
+                android:layout_rowWeight="1"
+                android:background="@color/gray" >
 
                 <ImageView
                     android:id="@+id/profile_image_woman_2"
@@ -128,24 +132,31 @@
                     android:layout_height="40dp"
                     android:layout_gravity="fill_horizontal"
                     android:gravity="left"
-                    android:src="@drawable/happy" />
+                    android:src="@drawable/happy"
+                    android:background="@color/gray" />
 
                 <TextView
                     android:id="@+id/chat_text_woman_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_row="0"
+                    android:layout_column="5"
                     android:gravity="center"
-                    android:text="안녕하세요 여자 2호입니다." />
+                    android:text="안녕하세요 여자 2호입니다."
+                    android:background="@color/gray" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_columnWeight="1"
                 android:orientation="horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_rowWeight="1"
+                android:background="@color/gray" >
 
                 <ImageView
                     android:id="@+id/profile_image_man_3"
@@ -165,12 +176,14 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_columnWeight="1"
                 android:orientation="horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_rowWeight="1"
+                android:background="@color/gray" >
 
                 <ImageView
                     android:id="@+id/profile_image_woman_3"
@@ -187,6 +200,7 @@
                     android:gravity="center"
                     android:text="안녕하세요 여자 3호호" />
             </LinearLayout>
+
         </GridLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -219,10 +233,10 @@
                     android:layout_width="64dp"
                     android:layout_height="48dp"
                     android:layout_alignParentEnd="true"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@color/gray"
                     android:text="Send"
                     android:textSize="10dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/white" />
 
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
