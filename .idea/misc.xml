@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/Hatalk/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/Hatalk/app/src/main/res/layout/activity_main.xml" value="0.3792325056433409" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/Hatalk/app/src/main/res/layout/fragment_dashboard.xml" value="0.28940217391304346" />
+        <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/Hatalk/app/src/main/res/layout/fragment_home.xml" value="0.18181818181818182" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/Hatalk/app/src/main/res/layout/fragment_notifications.xml" value="0.28940217391304346" />
+        <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/Hatalk/app/src/main/res/menu/bottom_nav_menu.xml" value="0.190625" />
       </map>
     </option>
   </component>
