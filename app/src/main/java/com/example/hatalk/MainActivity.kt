@@ -1,5 +1,6 @@
 package com.example.hatalk
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cometchat.pro.core.AppSettings
+import com.cometchat.pro.core.CometChat
+import com.cometchat.pro.exceptions.CometChatException
 import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
@@ -21,6 +25,25 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // CometChat init ------------------------------------------------
+        val appID:String="1977065b668f17f5" // Replace with your App ID
+        val region:String="us" // Replace with your App Region ("eu" or "us")
+
+        val appSettings = AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build()
+
+        CometChat.init(this,appID,appSettings, object : CometChat.CallbackListener<String>() {
+            override fun onSuccess(p0: String?) {
+                Log.d(TAG, "Initialization completed successfully")
+            }
+
+            override fun onError(p0: CometChatException?) {
+                Log.d(TAG, "Initialization failed with exception: " + p0?.message)
+            }
+
+        })
+
+
+        // CometChat init ------------------------------------------------
 //        val navHostFragment =
 //            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 //        navController = navHostFragment.navController

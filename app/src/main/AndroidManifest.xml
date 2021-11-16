@@ -19,12 +19,7 @@
         <activity
             android:name=".SignUp"
             android:exported="false" />
-        <activity
-            android:name=".signalRoom.someThing.ChannelActivity"
-            android:exported="false" />
-        <activity
-            android:name=".signalRoom.someThing.chat"
-            android:exported="false" />
+
         <activity
             android:name=".signalRoom.sigRoom.SignalRoomActivity"
             android:exported="false" />

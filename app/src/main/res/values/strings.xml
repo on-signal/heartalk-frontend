@@ -24,4 +24,9 @@
     <string name="phone_number">휴대폰 번호를 입력하세요</string>
     <string name="nickname">닉네임을 입력하세요</string>
     <string name="register_image">사진 등록</string>
+<!--    SendBird APP ID-->
+    <string name="comet_key">1977065b668f17f5</string>
+<!--    Test마다 변경해서 해줘야 합니다-->
+    <string name="currentUser">TestUser1</string>
+    <string name="opponentUser">TestUser2</string>
 </resources>

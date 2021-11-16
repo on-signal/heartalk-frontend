@@ -65,7 +65,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
-
-    // sendbird chatting sdk
-    implementation "com.sendbird.sdk:sendbird-android-sdk:3.0.172"
+    // Cometchat
+    implementation 'com.cometchat:pro-android-chat-sdk:3.0.1'
 }
