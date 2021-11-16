@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".signalRoom.SignalRoomActivity">
+    tools:context=".signalRoom.sigRoom.SignalRoomActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,15 +42,14 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_rowWeight="1"
-                android:background="@color/gray" >
+                android:layout_rowWeight="1" >
 
                 <ImageView
                     android:id="@+id/profile_image_man_1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="fill_horizontal"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:src="@drawable/happy" />
 
                 <TextView
@@ -58,7 +57,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="안녕하세요 남자 1호입니다." />
+                    android:text="안녕하세요 남자 1호입니다."
+                    android:background="@drawable/border_background" />
             </LinearLayout>
 
             <LinearLayout
@@ -69,8 +69,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_rowWeight="1"
-                android:background="@color/gray" >
+                android:layout_rowWeight="1" >
 
                 <ImageView
                     android:id="@+id/profile_image_woman_1"
@@ -85,7 +84,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="안녕하세요 여자 1호입니다." />
+                    android:text="안녕하세요 여자 1호입니다."
+                    android:background="@drawable/border_background" />
             </LinearLayout>
 
             <LinearLayout
@@ -96,9 +96,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_rowWeight="1"
-                android:background="@color/gray" >
-
+                android:layout_rowWeight="1" >
                 <ImageView
                     android:id="@+id/profile_image_man_2"
                     android:layout_width="40dp"
@@ -112,7 +110,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="안녕하세요 남자 2호입니다." />
+                    android:text="안녕하세요 남자 2호입니다."
+                    android:background="@drawable/border_background" />
             </LinearLayout>
 
             <LinearLayout
@@ -123,8 +122,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_rowWeight="1"
-                android:background="@color/gray" >
+                android:layout_rowWeight="1" >
 
                 <ImageView
                     android:id="@+id/profile_image_woman_2"
@@ -143,7 +141,7 @@
                     android:layout_column="5"
                     android:gravity="center"
                     android:text="안녕하세요 여자 2호입니다."
-                    android:background="@color/gray" />
+                    android:background="@drawable/border_background"/>
 
             </LinearLayout>
 
@@ -155,8 +153,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_rowWeight="1"
-                android:background="@color/gray" >
+                android:layout_rowWeight="1" >
 
                 <ImageView
                     android:id="@+id/profile_image_man_3"
@@ -171,7 +168,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="안녕하세요 남자 3호입니다." />
+                    android:text="안녕하세요 남자 3호입니다."
+                    android:background="@drawable/border_background" />
             </LinearLayout>
 
             <LinearLayout
@@ -182,8 +180,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_rowWeight="1"
-                android:background="@color/gray" >
+                android:layout_rowWeight="1" >
 
                 <ImageView
                     android:id="@+id/profile_image_woman_3"
@@ -198,7 +195,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="안녕하세요 여자 3호호" />
+                    android:text="안녕하세요 여자 3호호"
+                    android:background="@drawable/border_background" />
             </LinearLayout>
 
         </GridLayout>
