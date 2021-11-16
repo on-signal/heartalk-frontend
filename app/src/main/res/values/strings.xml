@@ -18,4 +18,10 @@
     <string name="service_name">하톡 시그널!!</string>
     <string name="login_button">로그인으로</string>
     <string name="guideIntroduce">시그널 룸 입주를 환영합니다!\n 처음 만난 상대방에게 본인을 소개해주세요</string>
+    <string name="name_input">이름을 입력하세요</string>
+    <string name="social_number_input">주민번호 7자리를 입력하세요</string>
+    <string name="carrier">통신사를 입력하세요</string>
+    <string name="phone_number">휴대폰 번호를 입력하세요</string>
+    <string name="nickname">닉네임을 입력하세요</string>
+    <string name="register_image">사진 등록</string>
 </resources>
