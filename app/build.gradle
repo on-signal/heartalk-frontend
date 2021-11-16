@@ -68,4 +68,7 @@ dependencies {
 
     // sendbird chatting sdk
     implementation "com.sendbird.sdk:sendbird-android-sdk:3.0.172"
+
+    // corountine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
 }
