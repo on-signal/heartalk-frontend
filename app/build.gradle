@@ -67,4 +67,7 @@ dependencies {
 
     // Cometchat
     implementation 'com.cometchat:pro-android-chat-sdk:3.0.1'
+
+    // corountine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
 }

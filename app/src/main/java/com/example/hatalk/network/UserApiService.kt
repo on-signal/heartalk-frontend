@@ -18,10 +18,10 @@ private val retrofit =
     ).build()
 
 interface UserApiService {
-    @POST("login")
+    @POST("users/login")
     suspend fun login(@Body body: LoginRequest): Response<LoginResponse>
 
-    @POST("signup")
+    @POST("users/signup")
     suspend fun signUp(@Body body: SignUpRequest): Response<SignUpResponse>
 }
 

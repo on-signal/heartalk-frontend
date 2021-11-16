@@ -14,6 +14,7 @@ import com.kakao.sdk.user.UserApiClient
 import androidx.fragment.app.activityViewModels
 import com.example.hatalk.model.UserAuthModel
 import com.example.hatalk.network.LoginRequest
+import kotlinx.coroutines.runBlocking
 
 class SecondActivity : AppCompatActivity() {
     private val userAuthModel: UserAuthModel by viewModels()
@@ -34,9 +35,12 @@ class SecondActivity : AppCompatActivity() {
             userAuthModel.setProfileUrl(user?.kakaoAccount?.profile?.profileImageUrl.toString())
             val loginRequest = LoginRequest(user?.kakaoAccount?.email!!)
 
-            userAuthModel.login(loginRequest)
+            runBlocking {
+                val loginJob = userAuthModel.login(loginRequest)
+                loginJob.join()
+            }
 
-            if (userAuthModel.loginSuccess.value == false) {
+            if (userAuthModel.getLoginSucess() == false) {
                 val intent = Intent(this, SignUpActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
             }
