@@ -20,6 +20,8 @@ allprojects {
 
         // 카카오톡 sdk 레포지토리 설정
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+        // sendbird sdk 레포지토리 설정
+        maven { url "https://repo.sendbird.com/public/maven" }
     }
 }
 

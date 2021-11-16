@@ -13,9 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hatalk">
         <activity
-            android:name=".signalRoom.SignalRoomActivity"
+            android:name=".signalRoom.someThing.ChannelActivity"
             android:exported="false" />
-        <activity 
+        <activity
+            android:name=".signalRoom.someThing.chat"
+            android:exported="false" />
+        <activity
+            android:name=".signalRoom.sigRoom.SignalRoomActivity"
+            android:exported="false" />
+        <activity
             android:name=".SecondActivity"
             android:exported="false" />
         <activity
