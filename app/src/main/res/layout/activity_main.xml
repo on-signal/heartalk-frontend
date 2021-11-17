@@ -36,11 +36,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/kakao_login_medium_narrow" />
 
-        <Button
-            android:id="@+id/temp_to_signal_room"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"/>
 
         <EditText
             android:id="@+id/login_edit"
@@ -54,13 +49,13 @@
             android:id="@+id/comet_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comet Login" />
+            android:text="닉네임 저장" />
 
         <Button
             android:id="@+id/initiate_call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="call" />
+            android:text="시그널 룸 입장하기" />
 
 
 
