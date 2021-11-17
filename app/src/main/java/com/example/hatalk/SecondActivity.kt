@@ -17,34 +17,13 @@ import com.example.hatalk.network.LoginRequest
 import kotlinx.coroutines.runBlocking
 
 class SecondActivity : AppCompatActivity() {
-    private val userAuthModel: UserAuthModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
+    }
 
-        val email = findViewById<TextView>(R.id.kakao_email)
-        val nickname = findViewById<TextView>(R.id.nickname)
-        val profileImage = findViewById<TextView>(R.id.profile_image_url)
-
-        UserApiClient.instance.me { user, error ->
-            email.text = "이메일: ${user?.kakaoAccount?.email}"
-            nickname.text = "닉네임: ${user?.kakaoAccount?.profile?.nickname}"
-            profileImage.text = "URL: ${user?.kakaoAccount?.profile?.profileImageUrl}"
-            userAuthModel.setEmail(user?.kakaoAccount?.email.toString())
-            userAuthModel.setProfileUrl(user?.kakaoAccount?.profile?.profileImageUrl.toString())
-            val loginRequest = LoginRequest(user?.kakaoAccount?.email!!)
-
-            runBlocking {
-                val loginJob = userAuthModel.login(loginRequest)
-                loginJob.join()
-            }
-
-            if (userAuthModel.getLoginSucess() == false) {
-                val intent = Intent(this, SignUpActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-            }
-        }
+    override fun onResume() {
+        super.onResume()
 
         // 임시로 회원가입으로 이동하는 버튼
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hatalk.SignUpActivity
 import com.example.hatalk.network.LoginRequest
+import com.example.hatalk.network.SignUpRequest
 import com.example.hatalk.network.UserApi
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.Dispatchers
@@ -58,18 +59,6 @@ class UserAuthModel: ViewModel() {
             return
         } else {
             _name = nickname
-        }
-    }
-
-     fun login(body: LoginRequest): Job {
-        return viewModelScope.launch(Dispatchers.IO)  {
-            try {
-                val response = UserApi.retrofitService.login(body)
-                _loginSuccess = response.code().toString() != "401"
-                _accessToken = response.body()?.accessToken
-            } catch (e: Exception) {
-                _loginSuccess = false
-            }
         }
     }
 }

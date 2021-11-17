@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
             else if (token != null) {
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, SecondActivity::class.java)
+                val intent = Intent(this, LoadingActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
             }
         }
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
             else if (token != null) {
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, SecondActivity::class.java)
+                val intent = Intent(this, LoadingActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
             }
         }
@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
                 else {
                     Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, SecondActivity::class.java)
+                    val intent = Intent(this, LoadingActivity::class.java)
                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 }
             }
@@ -171,10 +171,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             startActivity(intent)
         }
     }
-
-//    override fun onSupportNavigateUp(): Boolean {
-//        return navController.navigateUp() || super.onSupportNavigateUp()
-//    }
-
-
 }
