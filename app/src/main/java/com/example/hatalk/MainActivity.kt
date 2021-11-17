@@ -1,35 +1,43 @@
 package com.example.hatalk
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.AppSettings
+import com.cometchat.pro.core.Call
+import com.cometchat.pro.core.CallSettings
 import com.cometchat.pro.core.CometChat
+
 import com.cometchat.pro.exceptions.CometChatException
-import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity
+import com.cometchat.pro.models.AudioMode
+import com.cometchat.pro.models.User
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.common.model.KakaoSdkError
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity as SignalRoomActivity
 
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-
+    private val TAG = "HEART"
 //    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // CometChat init ------------------------------------------------
+
         val appID:String="1977065b668f17f5" // Replace with your App ID
         val region:String="us" // Replace with your App Region ("eu" or "us")
 
         val appSettings = AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build()
+
 
         CometChat.init(this,appID,appSettings, object : CometChat.CallbackListener<String>() {
             override fun onSuccess(p0: String?) {
@@ -39,11 +47,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             override fun onError(p0: CometChatException?) {
                 Log.d(TAG, "Initialization failed with exception: " + p0?.message)
             }
-
         })
 
-
-        // CometChat init ------------------------------------------------
 //        val navHostFragment =
 //            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 //        navController = navHostFragment.navController
@@ -167,8 +172,52 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val tempToSignalRoom = findViewById<Button>(R.id.temp_to_signal_room)
 
         tempToSignalRoom.setOnClickListener {
-            val intent = Intent(this, SignalRoomActivity::class.java)
-            startActivity(intent)
+            goToSigRoom()
+        }
+
+        val cometLogin = findViewById<Button>(R.id.comet_login)
+        val apiKey:String ="e102b08b6600393cada117184230401d677a4517"
+
+        cometLogin.setOnClickListener {
+            val UID:String = findViewById<EditText>(R.id.login_edit).text.toString()
+            CometChat.login(UID,apiKey, object : CometChat.CallbackListener<User>() {
+                override fun onSuccess(p0: User?) {
+                    Log.d(TAG, "Login Successful : " + p0?.toString())
+                }
+                override fun onError(p0: CometChatException?) {
+                    Log.d(TAG, "Login failed with exception: " +  p0?.message)
+                }
+            })
+        }
+
+        val initCall = findViewById<Button>(R.id.initiate_call)
+        initCall.setOnClickListener {
+            goToSigRoom()
         }
     }
+
+    private fun goToSigRoom() {
+        val intent = Intent(this, SignalRoomActivity::class.java)
+        startActivity(intent)
+    }
+
+
+
+    /** [CometChat] to remove callListener */
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val listenerID:String="UNIQUE_LISTENER_ID"
+        CometChat.removeCallListener(listenerID)
+    }
+
+
+
+
+
+
+//    override fun onSupportNavigateUp(): Boolean {
+//        return navController.navigateUp() || super.onSupportNavigateUp()
+//    }
+
 }

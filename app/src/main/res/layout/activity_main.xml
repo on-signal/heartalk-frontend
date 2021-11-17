@@ -29,6 +29,7 @@
         android:orientation="vertical"
         android:gravity="center">
 
+
         <ImageView
             android:id="@+id/kako_login"
             android:layout_width="match_parent"
@@ -38,7 +39,32 @@
         <Button
             android:id="@+id/temp_to_signal_room"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"/>
+
+        <EditText
+            android:id="@+id/login_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="UserName" />
+
+        <Button
+            android:id="@+id/comet_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comet Login" />
+
+        <Button
+            android:id="@+id/initiate_call"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="call" />
+
+
+
+
     </LinearLayout>
 
 

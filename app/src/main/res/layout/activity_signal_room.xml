@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -201,6 +202,8 @@
 
         </GridLayout>
 
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
@@ -219,7 +222,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
                     android:layout_toStartOf="@+id/button_chat_send"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/border_background"
                     android:hint="Enter Message"
                     android:inputType="text"
                     android:maxLines="6"
@@ -237,6 +240,23 @@
                     android:textSize="10dp" />
 
             </RelativeLayout>
+
+            <Button
+                android:id="@+id/temp_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="전화걸기"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/sig_room_ui"
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
+
     </LinearLayout>
+
 </layout>
