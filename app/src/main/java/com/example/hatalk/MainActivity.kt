@@ -1,28 +1,21 @@
 package com.example.hatalk
 
-import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.AppSettings
-import com.cometchat.pro.core.Call
-import com.cometchat.pro.core.CallSettings
 import com.cometchat.pro.core.CometChat
 
 import com.cometchat.pro.exceptions.CometChatException
-import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
+import com.example.hatalk.signalRoom.PRIVATE.IDs
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.common.model.KakaoSdkError
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity as SignalRoomActivity
 
 
@@ -33,8 +26,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val appID:String="1977065b668f17f5" // Replace with your App ID
-        val region:String="us" // Replace with your App Region ("eu" or "us")
+        val appID:String= IDs.APP_ID // Replace with your App ID
+        val region:String=IDs.REGION // Replace with your App Region ("eu" or "us")
 
         val appSettings = AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build()
 
