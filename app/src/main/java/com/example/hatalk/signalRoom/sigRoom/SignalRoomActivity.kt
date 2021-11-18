@@ -37,13 +37,19 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
         addCallListener()
         findViewById<Button>(R.id.temp_call).setOnClickListener {
             initiateCall()
+            matchingCall()
         }
 
         /** [CometChat_init] ------------------------------------------------ */
     }
 
+    private fun matchingCall() {
+
+    }
+
     private fun initiateCall() {
         val receiverID: String = IDs.RECEIVERID
+        Log.d("TEST", receiverID)
         val receiverType: String = CometChatConstants.RECEIVER_TYPE_GROUP
         val callType: String = CometChatConstants.CALL_TYPE_AUDIO
 
@@ -136,7 +142,6 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
 
             override fun onError(p0: CometChatException?) {
                 Log.d(TAG, "Call acceptance failed with exception: " + p0?.message)
-
             }
         })
     }
