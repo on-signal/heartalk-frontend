@@ -54,7 +54,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
                         android:gravity="center"
-                        android:src="@drawable/happy" />
+                        android:src="@drawable/lion" />
 
                     <TextView
                         android:id="@+id/chat_text_man_1"
@@ -82,7 +82,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
                         android:gravity="left"
-                        android:src="@drawable/happy" />
+                        android:src="@drawable/bee" />
 
                     <TextView
                         android:id="@+id/chat_text_woman_1"
@@ -109,7 +109,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
                         android:gravity="left"
-                        android:src="@drawable/happy" />
+                        android:src="@drawable/penguin" />
 
                     <TextView
                         android:id="@+id/chat_text_man_2"
@@ -137,7 +137,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
                         android:gravity="left"
-                        android:src="@drawable/happy" />
+                        android:src="@drawable/hamster" />
 
                     <TextView
                         android:id="@+id/chat_text_woman_2"
@@ -168,7 +168,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
                         android:gravity="left"
-                        android:src="@drawable/happy" />
+                        android:src="@drawable/wolf" />
 
                     <TextView
                         android:id="@+id/chat_text_man_3"
@@ -196,7 +196,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
                         android:gravity="left"
-                        android:src="@drawable/happy" />
+                        android:src="@drawable/fox" />
 
                     <TextView
                         android:id="@+id/chat_text_woman_3"
