@@ -7,8 +7,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.RelativeLayout
+import android.widget.Toast
 import com.cometchat.pro.constants.CometChatConstants
-import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.Call
 import com.cometchat.pro.core.CallSettings
 import com.cometchat.pro.core.CometChat
@@ -17,6 +17,7 @@ import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
 
 import com.example.hatalk.R
+import com.example.hatalk.signalRoom.PRIVATE.IDs
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -36,13 +37,19 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
         addCallListener()
         findViewById<Button>(R.id.temp_call).setOnClickListener {
             initiateCall()
+            matchingCall()
         }
 
         /** [CometChat_init] ------------------------------------------------ */
     }
 
+    private fun matchingCall() {
+
+    }
+
     private fun initiateCall() {
-        val receiverID: String = "groupx5eu4qhpddbnfckm6sjdo59rcu9a0ul5mbt6xxn06fg8ch6znj03zr47jir2ykizldxfntllvuyu6zzq9qpejhgqtkgpobx"
+        val receiverID: String = IDs.RECEIVERID
+        Log.d("TEST", receiverID)
         val receiverType: String = CometChatConstants.RECEIVER_TYPE_GROUP
         val callType: String = CometChatConstants.CALL_TYPE_AUDIO
 
@@ -57,8 +64,8 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
             override fun onError(p0: CometChatException?) {
                 Log.d(TAG, "Call initialization failed with exception: " + p0?.message)
             }
-
         })
+
     }
 
     private fun startCall(call: Call?) {
@@ -98,6 +105,7 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
             }
         });
         findViewById<RelativeLayout>(R.id.sig_room_ui).visibility = View.GONE
+        Toast.makeText(this,"연결 됐습니다.", Toast.LENGTH_SHORT).show()
     }
 
     private fun addCallListener() {
@@ -134,7 +142,6 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
 
             override fun onError(p0: CometChatException?) {
                 Log.d(TAG, "Call acceptance failed with exception: " + p0?.message)
-
             }
         })
     }
