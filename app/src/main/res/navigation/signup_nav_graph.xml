@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signup_nav_graph"
+    app:startDestination="@id/signUpFragment">
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.hatalk.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpLoadingFragment"
+            app:destination="@id/signUpLoadingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpLoadingFragment"
+        android:name="com.example.hatalk.SignUpLoadingFragment"
+        android:label="fragment_sign_up_loading"
+        tools:layout="@layout/fragment_sign_up_loading" >
+        <action
+            android:id="@+id/action_signUpLoadingFragment_to_mainHomeFragment"
+            app:destination="@id/mainHomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainHomeFragment"
+        android:name="com.example.hatalk.MainHomeFragment"
+        android:label="fragment_main_home"
+        tools:layout="@layout/fragment_main_home" />
+</navigation>

@@ -31,6 +31,6 @@ data class SignUpRequest (
 
 data class SignUpResponse (
         val accessToken: String,
-        val refreshToken: String
+//        val refreshToken: String
         )
 

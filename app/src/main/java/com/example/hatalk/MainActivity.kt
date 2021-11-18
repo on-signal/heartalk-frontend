@@ -21,7 +21,6 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.common.model.KakaoSdkError
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity as SignalRoomActivity
 
