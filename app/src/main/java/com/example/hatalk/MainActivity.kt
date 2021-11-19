@@ -1,26 +1,46 @@
 package com.example.hatalk
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.CometChat
 
 import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.User
+import com.example.hatalk.network.MatchingApi
+import com.example.hatalk.network.MatchingConfirmRequest
+import com.example.hatalk.network.MatchingRequest
 import com.example.hatalk.signalRoom.PRIVATE.IDs
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.common.model.KakaoSdkError
+import kotlinx.coroutines.launch
 import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity as SignalRoomActivity
 
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val TAG = "HEART"
+
+    /**
+     * 매칭 반복을 위한 변수설정 [Matching]
+     */
+    lateinit var mainHandler: Handler
+
+    private val updateTextTask = object : Runnable {
+        override fun run() {
+            matchConfirm()
+            mainHandler.postDelayed(this, 1000)
+        }
+    }
+
 //    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +95,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
                     }
                     else -> { // Unknown
-//                        Log.d("Kakao ", error.toString())
+                        Log.d("Kakao ", error.toString())
                         Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -179,7 +199,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val initCall = findViewById<Button>(R.id.initiate_call)
         initCall.setOnClickListener {
-            goToSigRoom()
+            matchingCall()
+//            goToSigRoom()
         }
     }
 
@@ -199,6 +220,39 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
 
+    private fun matchingCall() {
+        val matchingRequset = MatchingRequest(
+            findViewById<EditText>(R.id.login_edit).text.toString(),
+            "뀨"
+        )
+
+        lifecycleScope.launch {
+            val matchingResponse = MatchingApi.retrofitService.StartMatch(matchingRequset)
+
+            if (matchingResponse.body()?.success == true) {
+                Log.d(TAG, "Matching try success")
+                mainHandler.post(updateTextTask)
+            } else {
+                Log.d(TAG, "Matching try Fail")
+            }
+        }
+    }
+
+    private fun matchConfirm() {
+        val matchingConfirmRequest = MatchingConfirmRequest(
+            findViewById<EditText>(R.id.login_edit).text.toString()
+        )
+
+        lifecycleScope.launch {
+            val matchConfirmResponse = MatchingApi.retrofitService.ConfirmMatch(matchingConfirmRequest)
+
+            if (matchConfirmResponse.body()?.msg.toString() != "fail") {
+                Log.d(TAG, "Success CONFIRM")
+            } else {
+                Log.d(TAG, "FAIL CONFIRM")
+            }
+        }
+    }
 
 
 

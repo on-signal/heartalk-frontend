@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.Call
 import com.cometchat.pro.core.CallSettings
@@ -17,8 +18,11 @@ import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
 
 import com.example.hatalk.R
+import com.example.hatalk.network.MatchingApi
+import com.example.hatalk.network.MatchingRequest
 import com.example.hatalk.signalRoom.PRIVATE.IDs
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
 import java.util.*
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
@@ -29,9 +33,9 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
 
         /** [Cometchat_init] ------------------------------------------------ */
         val userID:String = CometChat.getLoggedInUser().toString()
-//        findViewById<Button>(R.id.button_chat_send).setOnClickListener {
-//            Log.d(TAG, userID)
-//        }
+        findViewById<Button>(R.id.button_chat_send).setOnClickListener {
+            Log.d(TAG, userID)
+        }
 
 
 
@@ -40,16 +44,13 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
         addCallListener()
         findViewById<Button>(R.id.temp_call).setOnClickListener {
             initiateCall()
-            matchingCall(userID)
+//            matchingCall()
         }
 
         /** [CometChat_init] ------------------------------------------------ */
     }
 
-    private fun matchingCall(id:String) {
 
-
-    }
 
     private fun initiateCall() {
         val receiverID: String = IDs.RECEIVERID
