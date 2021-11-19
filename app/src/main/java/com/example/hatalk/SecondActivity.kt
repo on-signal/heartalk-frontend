@@ -4,17 +4,9 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import com.kakao.sdk.user.UserApiClient
-import androidx.fragment.app.activityViewModels
-import com.example.hatalk.model.UserAuthModel
-import com.example.hatalk.network.LoginRequest
-import kotlinx.coroutines.runBlocking
 
 class SecondActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

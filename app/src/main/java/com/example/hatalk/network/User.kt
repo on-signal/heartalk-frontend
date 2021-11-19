@@ -31,6 +31,14 @@ data class SignUpRequest (
 
 data class SignUpResponse (
         val accessToken: String,
-        val refreshToken: String
+//        val refreshToken: String
         )
 
+data class GetProfileResponse(
+        val email: String,
+        val name: String,
+        val nickname: String,
+        val photoUrl: String,
+        val gender: Int,
+        val age: Int
+)
