@@ -75,7 +75,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
                     }
                     else -> { // Unknown
-//                        Log.d("Kakao ", error.toString())
                         Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -119,7 +118,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         UserApiClient.instance.loginWithKakaoAccount(this, callback = accountCallBack)
                     }
                     else -> { // Unknown
-//                        Log.d("Kakao ", error.toString())
                         Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
                     }
                 }
