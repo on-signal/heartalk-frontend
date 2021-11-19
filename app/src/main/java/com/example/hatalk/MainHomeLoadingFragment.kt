@@ -1,6 +1,5 @@
 package com.example.hatalk
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,10 +13,7 @@ import com.example.hatalk.model.UserJoinModel
 import com.example.hatalk.network.LoginRequest
 import com.example.hatalk.network.UserApi
 import com.kakao.sdk.user.UserApiClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainHomeLoadingFragment : Fragment() {
     private var binding: FragmentMainHomeLoadingBinding? = null
