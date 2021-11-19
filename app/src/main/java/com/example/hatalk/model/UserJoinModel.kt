@@ -44,6 +44,12 @@ class UserJoinModel: ViewModel() {
     private var _refreshToken: String = ""
     val refreshToken: String get() = _refreshToken
 
+    private var _gender: String = ""
+    val gender: String get() = _gender
+
+    private var _age: Int = 0
+    val age: Int get() = _age
+
     private var _loginSuccess: Boolean = false
 
     fun getLoginSucess(): Boolean? {
@@ -76,5 +82,17 @@ class UserJoinModel: ViewModel() {
 
     fun setNickname(nickname: String) {
         _nickname = nickname
+    }
+
+    fun setAccessToken(accessToken: String) {
+        _accessToken = accessToken
+    }
+
+    fun setGender(gender: String) {
+        _gender = gender
+    }
+
+    fun setAge(age: Int) {
+        _age = age
     }
 }

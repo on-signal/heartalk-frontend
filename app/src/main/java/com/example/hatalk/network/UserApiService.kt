@@ -9,8 +9,7 @@ import kotlinx.coroutines.*
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 import java.lang.Exception
 
 private const val BASE_URL = "http://10.0.2.2:8000"
@@ -28,6 +27,9 @@ interface UserApiService {
 
     @POST("users/signup")
     suspend fun signUp(@Body body: SignUpRequest): Response<SignUpResponse>
+
+    @GET("users/lounge")
+    suspend fun getCurrentUser(@Header("Authorization") jwt: String): Response<GetProfileResponse>
 }
 
 object UserApi {

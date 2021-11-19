@@ -11,7 +11,7 @@
             type="com.example.hatalk.model.UserJoinModel" />
 
         <variable
-            name="signupFragment"
+            name="mainHomeFragment"
             type="com.example.hatalk.MainHomeFragment" />
     </data>
 
@@ -20,10 +20,10 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/kakao_email"
+            android:id="@+id/main_home_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="이메일: "
+            android:text="@{@string/main_home_email(viewModel.email)}"
             android:textSize="20sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -31,12 +31,45 @@
             />
 
         <TextView
-            android:id="@+id/nickname"
+            android:id="@+id/main_home_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="닉네임: "
+            android:text="@{@string/main_home_name(viewModel.name)}"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/kakao_email"
+            app:layout_constraintTop_toBottomOf="@+id/main_home_email"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/main_home_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{@string/main_home_nickname(viewModel.nickname)}"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/main_home_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/main_home_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{@string/main_home_gender(viewModel.gender)}"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/main_home_nickname"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/main_home_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{@string/main_home_age(viewModel.age)}"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/main_home_gender"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             />
@@ -45,9 +78,9 @@
             android:id="@+id/profile_image_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="프로필 링크: "
+            android:text="@{@string/main_home_photo_url(viewModel.photoUrl)}"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/nickname"
+            app:layout_constraintTop_toBottomOf="@+id/main_home_age"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             />
@@ -62,17 +95,6 @@
         <!--        app:layout_constraintLeft_toLeftOf="parent"-->
         <!--        app:layout_constraintRight_toRightOf="parent"-->
         <!--        />-->
-
-        <Button
-            android:id="@+id/temp_to_signup_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="회원가입으로"
-            android:textSize="20sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/kakao_logout_button"
-            />
 
         <Button
             android:id="@+id/kakao_logout_button"

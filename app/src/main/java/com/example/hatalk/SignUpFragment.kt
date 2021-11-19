@@ -34,6 +34,7 @@ class SignUpFragment : Fragment() {
             viewModel = sharedViewModel
             lifecycleOwner = viewLifecycleOwner
             signupFragment = this@SignUpFragment
+
             signup.setOnClickListener {
                 onSignUp()
             }

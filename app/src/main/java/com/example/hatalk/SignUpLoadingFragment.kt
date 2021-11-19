@@ -45,8 +45,21 @@ class SignUpLoadingFragment : Fragment() {
                 sharedViewModel.photoUrl
             )
         lifecycleScope.launch {
-            val response = UserApi.retrofitService.signUp(signUpRequest)
-            Log.d("Response Body: ", response.body().toString())
+            val signUpResponse = UserApi.retrofitService.signUp(signUpRequest)
+            sharedViewModel.setAccessToken(signUpResponse.body()?.accessToken.toString())
+
+            val getProfileResponse =
+                UserApi.retrofitService.getCurrentUser("Bearer ${signUpResponse.body()?.accessToken.toString()}")
+
+            val gender = if (getProfileResponse.body()?.gender == 0) {
+                "남성"
+            } else {
+                "여성"
+            }
+
+            sharedViewModel.setGender(gender)
+            getProfileResponse.body()?.age?.let { sharedViewModel.setAge(it) }
+
             findNavController().navigate(R.id.action_signUpLoadingFragment_to_mainHomeFragment)
         }
     }
