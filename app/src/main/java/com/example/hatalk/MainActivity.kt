@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -51,6 +52,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val appSettings = AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build()
 
+        // Matching confirm 반복을 위한 변수
+        mainHandler = Handler(Looper.getMainLooper())
 
         CometChat.init(this,appID,appSettings, object : CometChat.CallbackListener<String>() {
             override fun onSuccess(p0: String?) {
@@ -244,7 +247,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         lifecycleScope.launch {
             val matchConfirmResponse = MatchingApi.retrofitService.ConfirmMatch(matchingConfirmRequest)
 
-            if (matchConfirmResponse.body()?.msg.toString() != "fail") {
+            Log.d(TAG, matchConfirmResponse.body()?.msg.toString())
+            Log.d(TAG, matchConfirmResponse.body().toString())
+            if (matchConfirmResponse.body()?.msg?.toString() == "success") {
                 Log.d(TAG, "Success CONFIRM")
             } else {
                 Log.d(TAG, "FAIL CONFIRM")

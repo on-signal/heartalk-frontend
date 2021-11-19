@@ -15,12 +15,16 @@ data class MatchingConfirmRequest(
     val userId: String
 )
 
+data class room_info(
+    val new1: Array<String>,
+    val new2: Array<String>
+)
 
 
 data class MatchingConfirmResponse(
-    val msg: String,
+    val msg: String?,
     val caller: String?,
     val remain_time: String?,
     val group_room_name: String?,
-    val room_info: Array<Array<Array<String>>>?
+    val room_info: room_info
 )
