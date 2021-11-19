@@ -2,9 +2,21 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/signup_nav_graph"
-    app:startDestination="@id/signUpFragment">
+    android:id="@+id/home_main_nav_graph"
+    app:startDestination="@id/mainHomeLoadingFragment">
 
+    <fragment
+        android:id="@+id/mainHomeLoadingFragment"
+        android:name="com.example.hatalk.MainHomeLoadingFragment"
+        android:label="fragment_main_home_loading"
+        tools:layout="@layout/fragment_main_home_loading" >
+        <action
+            android:id="@+id/action_mainHomeLoadingFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_mainHomeLoadingFragment_to_mainHomeFragment"
+            app:destination="@id/mainHomeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.hatalk.SignUpFragment"
@@ -27,5 +39,9 @@
         android:id="@+id/mainHomeFragment"
         android:name="com.example.hatalk.MainHomeFragment"
         android:label="fragment_main_home"
-        tools:layout="@layout/fragment_main_home" />
+        tools:layout="@layout/fragment_main_home" >
+        <action
+            android:id="@+id/action_mainHomeFragment_to_mainHomeLoadingFragment"
+            app:destination="@id/mainHomeLoadingFragment" />
+    </fragment>
 </navigation>

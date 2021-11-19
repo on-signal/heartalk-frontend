@@ -8,22 +8,15 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.hatalk.model.UserJoinModel
 
-
-class SignUpActivity : AppCompatActivity(R.layout.activity_sign_up) {
+class MainHomeActivity : AppCompatActivity() {
     private lateinit var navController: NavController
-    private val viewModel: UserJoinModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val email = intent?.extras?.getString("email").toString()
-        val photoUrl = intent?.extras?.getString("photoUrl").toString()
-
-        viewModel.setEmail(email)
-        viewModel.setProfileUrl(photoUrl)
+        setContentView(R.layout.activity_main_home)
 
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.signup_nav_fragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.home_main_nav_graph) as NavHostFragment
         navController = navHostFragment.navController
 
         setupActionBarWithNavController(navController)

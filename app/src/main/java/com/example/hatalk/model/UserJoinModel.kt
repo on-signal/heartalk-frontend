@@ -1,20 +1,6 @@
 package com.example.hatalk.model
 
-import android.content.Intent
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.hatalk.SignUpActivity
-import com.example.hatalk.network.LoginRequest
-import com.example.hatalk.network.SignUpRequest
-import com.example.hatalk.network.UserApi
-import com.kakao.sdk.user.UserApiClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class UserJoinModel: ViewModel() {
     private var _email:String = ""
@@ -49,12 +35,6 @@ class UserJoinModel: ViewModel() {
 
     private var _age: Int = 0
     val age: Int get() = _age
-
-    private var _loginSuccess: Boolean = false
-
-    fun getLoginSucess(): Boolean? {
-        return _loginSuccess
-    }
 
     fun setEmail(email: String) {
         _email = email

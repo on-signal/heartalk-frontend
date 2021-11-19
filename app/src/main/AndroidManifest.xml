@@ -17,22 +17,10 @@
             android:name=".BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpLoadingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoadingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignUp"
-            android:exported="false" />
-        <activity
             android:name=".signalRoom.sigRoom.SignalRoomActivity"
             android:exported="false" />
         <activity
-            android:name=".SecondActivity"
+            android:name=".MainHomeActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
