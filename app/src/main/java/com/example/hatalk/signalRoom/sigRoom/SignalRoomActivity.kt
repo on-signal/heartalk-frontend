@@ -28,7 +28,10 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
         super.onCreate(savedInstanceState)
 
         /** [Cometchat_init] ------------------------------------------------ */
-
+        val userID:String = CometChat.getLoggedInUser().toString()
+//        findViewById<Button>(R.id.button_chat_send).setOnClickListener {
+//            Log.d(TAG, userID)
+//        }
 
 
 
@@ -37,13 +40,14 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
         addCallListener()
         findViewById<Button>(R.id.temp_call).setOnClickListener {
             initiateCall()
-            matchingCall()
+            matchingCall(userID)
         }
 
         /** [CometChat_init] ------------------------------------------------ */
     }
 
-    private fun matchingCall() {
+    private fun matchingCall(id:String) {
+
 
     }
 

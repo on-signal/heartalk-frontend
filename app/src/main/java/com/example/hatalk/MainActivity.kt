@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         val cometLogin = findViewById<Button>(R.id.comet_login)
-        val apiKey:String ="e102b08b6600393cada117184230401d677a4517"
+        val apiKey:String = IDs.APIKEY
 
         cometLogin.setOnClickListener {
             val UID:String = findViewById<EditText>(R.id.login_edit).text.toString()
