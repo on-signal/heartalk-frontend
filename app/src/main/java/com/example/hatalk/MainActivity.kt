@@ -23,7 +23,12 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.common.model.KakaoSdkError
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.properties.Delegates
 import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity as SignalRoomActivity
 
 
@@ -41,6 +46,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             mainHandler.postDelayed(this, 1000)
         }
     }
+    private var matchingStatus by Delegates.notNull<Boolean>()
 
 //    private lateinit var navController: NavController
 
@@ -54,6 +60,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         // Matching confirm 반복을 위한 변수
         mainHandler = Handler(Looper.getMainLooper())
+
+        matchingStatus = false
 
         CometChat.init(this,appID,appSettings, object : CometChat.CallbackListener<String>() {
             override fun onSuccess(p0: String?) {
@@ -201,6 +209,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val initCall = findViewById<Button>(R.id.initiate_call)
         initCall.setOnClickListener {
             matchingCall()
+            matchConfirm()
 //            goToSigRoom()
         }
     }
@@ -218,21 +227,34 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val listenerID:String="UNIQUE_LISTENER_ID"
         CometChat.removeCallListener(listenerID)
+        /* Activity가 끝나거나, 혹시 모를 상황을 대비하여 false로 다시 처리 */
+        matchingStatus = false
     }
 
 
     private fun matchingCall() {
-        val matchingRequset = MatchingRequest(
+        val matchingRequest = MatchingRequest(
             findViewById<EditText>(R.id.login_edit).text.toString(),
             "뀨"
         )
 
         lifecycleScope.launch {
-            val matchingResponse = MatchingApi.retrofitService.StartMatch(matchingRequset)
+            val matchingResponse = MatchingApi.retrofitService.StartMatch(matchingRequest)
+            var timer = Timer()
 
-            if (matchingResponse.body()?.success == true) {
+
+            if (matchingResponse.isSuccessful) {
                 Log.d(TAG, "Matching try success")
-                mainHandler.post(updateTextTask)
+                timer.schedule(object : TimerTask() {
+                    override fun run() {
+                        matchConfirm()
+
+                        if (matchingStatus) {
+                            Log.d(TAG, "timer stop by matching finished")
+                            timer.cancel()
+                        }
+                    }
+                }, 0, 1000)
             } else {
                 Log.d(TAG, "Matching try Fail")
             }
@@ -244,13 +266,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             findViewById<EditText>(R.id.login_edit).text.toString()
         )
 
-        lifecycleScope.launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val matchConfirmResponse = MatchingApi.retrofitService.ConfirmMatch(matchingConfirmRequest)
 
-            Log.d(TAG, matchConfirmResponse.body()?.msg.toString())
-            Log.d(TAG, matchConfirmResponse.body().toString())
-            if (matchConfirmResponse.body()?.msg?.toString() == "success") {
+            if (matchConfirmResponse.body()?.msg.toString() == "success") {
                 Log.d(TAG, "Success CONFIRM")
+                matchingStatus = true
             } else {
                 Log.d(TAG, "FAIL CONFIRM")
             }

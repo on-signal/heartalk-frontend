@@ -10,7 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
-private const val BASE_URL = "http://13.124.80.244:8000"
+private const val BASE_URL = "http://3.18.104.98:8000"
 
 private val moshi = Moshi
     .Builder()
@@ -27,7 +27,7 @@ interface MatchingApiService{
     @POST("/room/entrance")
     suspend fun StartMatch(@Body body: MatchingRequest): Response<MatchingResponse>
 
-    @POST("/room/queuecheck")
+    @POST("/room/checkqueue")
     suspend fun ConfirmMatch(@Body body:MatchingConfirmRequest): Response<MatchingConfirmResponse>
 
 }
