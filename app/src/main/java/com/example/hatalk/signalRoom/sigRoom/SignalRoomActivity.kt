@@ -53,7 +53,7 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
 
 
         val intent: Intent = getIntent()
-        var matchingData = intent.getParcelableExtra<MatchingConfirmResponse>("matchingData")
+        val matchingData = intent.getParcelableExtra<MatchingConfirmResponse>("matchingData")
         /** [Cometchat_init] ------------------------------------------------ */
         val userID:String = CometChat.getLoggedInUser().uid.toString()
         findViewById<Button>(R.id.button_chat_send).setOnClickListener {
@@ -63,12 +63,13 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
 
         addCallListener()
 
+        Log.d(TAG, matchingData?.caller.toString())
 
-        findViewById<Button>(R.id.temp_call).setOnClickListener {
-            if (matchingData?.caller == userID) {
-                initiateCall()
-            }
+
+        if (matchingData?.caller.toString() == userID) {
+            initiateCall(matchingData?.group_room_name.toString())
         }
+
 
         /** [CometChat_init] ------------------------------------------------ */
 
@@ -92,8 +93,8 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
 
 
 
-    private fun initiateCall() {
-        val receiverID: String = IDs.RECEIVERID
+    private fun initiateCall(guid: String) {
+        val receiverID: String = guid
         val receiverType: String = CometChatConstants.RECEIVER_TYPE_GROUP
         val callType: String = CometChatConstants.CALL_TYPE_AUDIO
 

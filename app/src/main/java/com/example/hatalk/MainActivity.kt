@@ -1,18 +1,16 @@
 package com.example.hatalk
 
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.CometChat
 
 import com.cometchat.pro.exceptions.CometChatException
+import com.cometchat.pro.models.Group
 import com.cometchat.pro.models.User
 import com.example.hatalk.network.MatchingApi
 import com.example.hatalk.network.MatchingConfirmRequest
@@ -26,9 +24,7 @@ import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.common.model.KakaoSdkError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import java.util.*
 import kotlin.properties.Delegates
 import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity as SignalRoomActivity
@@ -247,6 +243,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         if (matchingStatus) {
                             Log.d(TAG, "timer stop by matching finished")
                             timer.cancel()
+                            CometChat.joinGroup(matchingData.group_room_name.toString(),
+                            CometChatConstants.GROUP_TYPE_PUBLIC, "", object:CometChat.CallbackListener<Group>()
+                                {
+                                    override fun onSuccess(p0: Group?) {
+                                        Log.d(TAG, p0.toString())
+                                    }
+
+                                    override fun onError(p0: CometChatException?) {
+                                        Log.d(TAG, "Group joining failed with exception: " + p0?.message)
+                                    }
+                            })
                             val intent = Intent(this@MainActivity, SignalRoomActivity::class.java)
                             intent.putExtra("matchingData", matchingData)
                             startActivity(intent)
@@ -264,8 +271,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             findViewById<EditText>(R.id.login_edit).text.toString()
         )
 
+
         CoroutineScope(Dispatchers.Main).launch {
             val matchConfirmResponse = MatchingApi.retrofitService.ConfirmMatch(matchingConfirmRequest)
+
 
             if (matchConfirmResponse.body()?.msg.toString() == "success") {
                 Log.d(TAG, "Success CONFIRM")
