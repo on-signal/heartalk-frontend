@@ -16,6 +16,7 @@ import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.User
 import com.example.hatalk.network.MatchingApi
 import com.example.hatalk.network.MatchingConfirmRequest
+import com.example.hatalk.network.MatchingConfirmResponse
 import com.example.hatalk.network.MatchingRequest
 import com.example.hatalk.signalRoom.PRIVATE.IDs
 import com.kakao.sdk.auth.AuthApiClient
@@ -27,6 +28,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import java.util.*
 import kotlin.properties.Delegates
 import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity as SignalRoomActivity
@@ -38,15 +40,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     /**
      * 매칭 반복을 위한 변수설정 [Matching]
      */
-    lateinit var mainHandler: Handler
 
-    private val updateTextTask = object : Runnable {
-        override fun run() {
-            matchConfirm()
-            mainHandler.postDelayed(this, 1000)
-        }
-    }
     private var matchingStatus by Delegates.notNull<Boolean>()
+    private lateinit var matchingData: MatchingConfirmResponse
 
 //    private lateinit var navController: NavController
 
@@ -59,7 +55,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val appSettings = AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build()
 
         // Matching confirm 반복을 위한 변수
-        mainHandler = Handler(Looper.getMainLooper())
 
         matchingStatus = false
 
@@ -238,7 +233,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             "뀨"
         )
 
-        lifecycleScope.launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val matchingResponse = MatchingApi.retrofitService.StartMatch(matchingRequest)
             var timer = Timer()
 
@@ -252,9 +247,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         if (matchingStatus) {
                             Log.d(TAG, "timer stop by matching finished")
                             timer.cancel()
+                            val intent = Intent(this@MainActivity, SignalRoomActivity::class.java)
+                            intent.putExtra("matchingData", matchingData)
+                            startActivity(intent)
                         }
                     }
-                }, 0, 1000)
+                }, 0, 100)
             } else {
                 Log.d(TAG, "Matching try Fail")
             }
@@ -272,10 +270,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             if (matchConfirmResponse.body()?.msg.toString() == "success") {
                 Log.d(TAG, "Success CONFIRM")
                 matchingStatus = true
+                matchingData = matchConfirmResponse.body()!!
             } else {
                 Log.d(TAG, "FAIL CONFIRM")
             }
         }
+
     }
 
 

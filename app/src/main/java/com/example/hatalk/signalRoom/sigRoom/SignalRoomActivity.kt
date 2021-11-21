@@ -1,6 +1,7 @@
 package com.example.hatalk.signalRoom.sigRoom
 
 import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,7 @@ import com.cometchat.pro.models.User
 
 import com.example.hatalk.R
 import com.example.hatalk.network.MatchingApi
+import com.example.hatalk.network.MatchingConfirmResponse
 import com.example.hatalk.network.MatchingRequest
 import com.example.hatalk.signalRoom.PRIVATE.IDs
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,20 +33,22 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val intent: Intent = getIntent()
+        var matchingData = intent.getParcelableExtra<MatchingConfirmResponse>("matchingData")
         /** [Cometchat_init] ------------------------------------------------ */
-        val userID:String = CometChat.getLoggedInUser().toString()
+        val userID:String = CometChat.getLoggedInUser().uid.toString()
         findViewById<Button>(R.id.button_chat_send).setOnClickListener {
             Log.d(TAG, userID)
         }
 
 
-
-
-
         addCallListener()
+
+
         findViewById<Button>(R.id.temp_call).setOnClickListener {
-            initiateCall()
-//            matchingCall()
+            if (matchingData?.caller == userID) {
+                initiateCall()
+            }
         }
 
         /** [CometChat_init] ------------------------------------------------ */
@@ -54,7 +58,6 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
 
     private fun initiateCall() {
         val receiverID: String = IDs.RECEIVERID
-        Log.d("TEST", receiverID)
         val receiverType: String = CometChatConstants.RECEIVER_TYPE_GROUP
         val callType: String = CometChatConstants.CALL_TYPE_AUDIO
 

@@ -1,5 +1,8 @@
 package com.example.hatalk.network
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 
 data class MatchingRequest(
     val userId: String,
@@ -27,12 +30,12 @@ data class userData(
 )
 
 
-
+@Parcelize
 data class MatchingConfirmResponse(
     val msg: String?,
-    val caller: String?,
+    var caller: String?,
     val remain_time: String?,
     val group_room_name: String?,
     val room_info: roomInfo?,
     val question_list: Array<String>?
-)
+) : Parcelable
