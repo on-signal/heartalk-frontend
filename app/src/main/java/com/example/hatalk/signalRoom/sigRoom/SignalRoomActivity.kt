@@ -2,45 +2,55 @@ package com.example.hatalk.signalRoom.sigRoom
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.app.AppCompatActivity
 import com.cometchat.pro.constants.CometChatConstants
+import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.Call
 import com.cometchat.pro.core.CallSettings
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
-
 import com.example.hatalk.R
-import com.example.hatalk.network.MatchingApi
 import com.example.hatalk.network.MatchingConfirmResponse
-import com.example.hatalk.network.MatchingRequest
 import com.example.hatalk.signalRoom.PRIVATE.IDs
-import io.socket.client.IO
-import io.socket.client.Socket
-import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers.IO
+import java.net.Socket
 import java.net.URISyntaxException
 import java.util.*
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
 class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
     private val TAG = "HEART"
-    lateinit var mSocket: Socket
-    private val onConnect = Emitter.Listener {
-        mSocket.emit("emitReceive", "OK")
-    }
+//    lateinit var mSocket: Socket
+//    private val onConnect = Emitter.Listener {
+//        mSocket.emit("emitReceive", "OK")
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val appID:String= IDs.APP_ID // Replace with your App ID
+        val region:String=IDs.REGION // Replace with your App Region ("eu" or "us")
+
+        val appSettings = AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build()
+        CometChat.init(this,appID,appSettings, object : CometChat.CallbackListener<String>() {
+            override fun onSuccess(p0: String?) {
+                Log.d(TAG, "Initialization completed successfully")
+            }
+
+            override fun onError(p0: CometChatException?) {
+                Log.d(TAG, "Initialization failed with exception: " + p0?.message)
+            }
+        })
+
 
         val intent: Intent = getIntent()
         var matchingData = intent.getParcelableExtra<MatchingConfirmResponse>("matchingData")
@@ -66,14 +76,14 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
          * [Socket IO Chat Start]
          */
 
-        try {
-            mSocket = IO.socket("http://localhost/8000")
-            mSocket.connect()
-            Log.d("Connected", "OK")
-        } catch (e: URISyntaxException) {
-            Log.d("ERR", e.toString())
-        }
-        mSocket.on(Socket.EVENT_CONNECT, onConnect)
+//        try {
+//            mSocket = IO.socket("http://localhost/8000")
+//            mSocket.connect()
+//            Log.d("Connected", "OK")
+//        } catch (e: URISyntaxException) {
+//            Log.d("ERR", e.toString())
+//        }
+//        mSocket.on(Socket.EVENT_CONNECT, onConnect)
 
         /**
          * [Socket IO Chat End]
