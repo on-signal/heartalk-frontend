@@ -21,13 +21,22 @@ import com.example.hatalk.R
 import com.example.hatalk.network.MatchingApi
 import com.example.hatalk.network.MatchingRequest
 import com.example.hatalk.signalRoom.PRIVATE.IDs
+import io.socket.client.IO
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
+import java.net.URISyntaxException
 import java.util.*
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
 class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
     private val TAG = "HEART"
+    lateinit var mSocket: Socket
+    private val onConnect = Emitter.Listener {
+        mSocket.emit("emitReceive", "OK")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,6 +57,23 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
         }
 
         /** [CometChat_init] ------------------------------------------------ */
+
+        /**
+         * [Socket IO Chat Start]
+         */
+
+        try {
+            mSocket = IO.socket("http://localhost/8000")
+            mSocket.connect()
+            Log.d("Connected", "OK")
+        } catch (e: URISyntaxException) {
+            Log.d("ERR", e.toString())
+        }
+        mSocket.on(Socket.EVENT_CONNECT, onConnect)
+
+        /**
+         * [Socket IO Chat End]
+         */
     }
 
 

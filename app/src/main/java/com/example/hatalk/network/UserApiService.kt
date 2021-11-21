@@ -28,7 +28,7 @@ interface UserApiService {
     @POST("users/signup")
     suspend fun signUp(@Body body: SignUpRequest): Response<SignUpResponse>
 
-    @GET("users/lounge")
+    @GET("users")
     suspend fun getCurrentUser(@Header("Authorization") jwt: String): Response<GetProfileResponse>
 }
 

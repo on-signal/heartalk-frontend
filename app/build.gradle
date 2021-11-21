@@ -69,7 +69,11 @@ dependencies {
     implementation 'com.cometchat:pro-android-chat-sdk:3.0.1'
     implementation 'com.cometchat:pro-android-calls-sdk:2.1.1'
 
-
     // coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+
+    // socketIO
+    implementation('io.socket:socket.io-client:1.0.0') {
+        exclude group: 'org.json', module: 'json'
+    }
 }
