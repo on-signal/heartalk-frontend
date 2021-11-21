@@ -3,6 +3,9 @@ package com.example.hatalk.model
 import androidx.lifecycle.ViewModel
 
 class UserJoinModel: ViewModel() {
+    private var _kakaoUserId: String = ""
+    val kakaoUserId: String get() = _kakaoUserId
+
     private var _email:String = ""
     val email: String get() = _email
 
@@ -35,6 +38,11 @@ class UserJoinModel: ViewModel() {
 
     private var _age: Int = 0
     val age: Int get() = _age
+
+    fun setKakaoUserId(kakaoUserId: String) {
+        _kakaoUserId = kakaoUserId
+    }
+
 
     fun setEmail(email: String) {
         _email = email

@@ -32,6 +32,7 @@ class SignUpLoadingFragment : Fragment() {
 
         val signUpRequest =
             SignUpRequest(
+                sharedViewModel.kakaoUserId,
                 sharedViewModel.email,
                 sharedViewModel.name,
                 sharedViewModel.socialNumber,
@@ -39,6 +40,7 @@ class SignUpLoadingFragment : Fragment() {
                 sharedViewModel.phoneNumber,
                 sharedViewModel.nickname,
                 sharedViewModel.photoUrl
+
             )
         lifecycleScope.launch {
             val signUpResponse = UserApi.retrofitService.signUp(signUpRequest)

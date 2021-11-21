@@ -1,6 +1,7 @@
 package com.example.hatalk
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,8 +35,9 @@ class MainHomeLoadingFragment : Fragment() {
         UserApiClient.instance.me { user, error ->
             sharedViewModel.setEmail(user?.kakaoAccount?.email.toString())
             sharedViewModel.setProfileUrl(user?.kakaoAccount?.profile?.profileImageUrl.toString())
+            sharedViewModel.setKakaoUserId(user?.id.toString())
 
-            val loginRequest = LoginRequest(user?.kakaoAccount?.email!!)
+            val loginRequest = LoginRequest(user?.id.toString())
 
             lifecycleScope.launch {
                 val response = UserApi.retrofitService.login(loginRequest)

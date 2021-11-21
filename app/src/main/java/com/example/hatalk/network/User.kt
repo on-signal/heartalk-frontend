@@ -11,7 +11,7 @@ data class User (
         )
 
 data class LoginRequest (
-        val email: String
+        val kakaoUserId: String
         )
 
 data class LoginResponse (
@@ -20,6 +20,7 @@ data class LoginResponse (
         )
 
 data class SignUpRequest (
+        val kakaoUserId: String,
         val email: String,
         val name: String,
         val socialNumber: String,
