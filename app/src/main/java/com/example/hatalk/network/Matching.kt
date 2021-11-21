@@ -1,6 +1,5 @@
 package com.example.hatalk.network
 
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 data class MatchingRequest(
     val userId: String,
@@ -8,17 +7,25 @@ data class MatchingRequest(
 )
 
 data class MatchingResponse(
-    val success: Boolean
+    val success: Boolean?
 )
 
 data class MatchingConfirmRequest(
     val userId: String
 )
 
-data class room_info(
-    val new1: Array<String>,
-    val new2: Array<String>
+data class roomInfo(
+    val user1: userData?,
+    val user2: userData?,
+    val user3: userData?
 )
+
+data class userData(
+    val Id: String?,
+    val nickname: String?,
+    val icon: String?
+)
+
 
 
 data class MatchingConfirmResponse(
@@ -26,5 +33,6 @@ data class MatchingConfirmResponse(
     val caller: String?,
     val remain_time: String?,
     val group_room_name: String?,
-    val room_info: room_info
+    val room_info: roomInfo?,
+    val question_list: Array<String>?
 )
