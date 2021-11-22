@@ -77,4 +77,8 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+
+    // bottom navBar
+    implementation 'nl.joery.animatedbottombar:library:1.1.0'
+
 }

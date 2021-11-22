@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_mainHomeLoadingFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
-        <action
-            android:id="@+id/action_mainHomeLoadingFragment_to_mainHomeFragment"
-            app:destination="@id/mainHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -30,18 +27,5 @@
         android:id="@+id/signUpLoadingFragment"
         android:name="com.example.hatalk.SignUpLoadingFragment"
         android:label="fragment_sign_up_loading"
-        tools:layout="@layout/fragment_sign_up_loading" >
-        <action
-            android:id="@+id/action_signUpLoadingFragment_to_mainHomeFragment"
-            app:destination="@id/mainHomeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/mainHomeFragment"
-        android:name="com.example.hatalk.MainHomeFragment"
-        android:label="fragment_main_home"
-        tools:layout="@layout/fragment_main_home" >
-        <action
-            android:id="@+id/action_mainHomeFragment_to_mainHomeLoadingFragment"
-            app:destination="@id/mainHomeLoadingFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_sign_up_loading" />
 </navigation>

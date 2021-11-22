@@ -1,5 +1,6 @@
 package com.example.hatalk
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,9 +10,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.hatalk.databinding.FragmentSignUpLoadingBinding
+import com.example.hatalk.main.HomeActivity
 import com.example.hatalk.model.UserJoinModel
+import com.example.hatalk.model.userInfo
 import com.example.hatalk.network.SignUpRequest
 import com.example.hatalk.network.UserApi
+import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity
 import kotlinx.coroutines.launch
 
 class SignUpLoadingFragment : Fragment() {
@@ -40,7 +44,6 @@ class SignUpLoadingFragment : Fragment() {
                 sharedViewModel.phoneNumber,
                 sharedViewModel.nickname,
                 sharedViewModel.photoUrl
-
             )
         lifecycleScope.launch {
             val signUpResponse = UserApi.retrofitService.signUp(signUpRequest)
@@ -55,10 +58,32 @@ class SignUpLoadingFragment : Fragment() {
                 "여성"
             }
 
-            sharedViewModel.setGender(gender)
-            getProfileResponse.body()?.age?.let { sharedViewModel.setAge(it) }
+            val userInfo = userInfo(
+                sharedViewModel.kakaoUserId,
+                sharedViewModel.email,
+                sharedViewModel.photoUrl,
+                sharedViewModel.name,
+                sharedViewModel.socialNumber,
+                sharedViewModel.carrier,
+                sharedViewModel.phoneNumber,
+                sharedViewModel.nickname,
+                sharedViewModel.accessToken,
+                sharedViewModel.refreshToken,
+                gender,
+                getProfileResponse.body()?.age!!
+            )
 
-            findNavController().navigate(R.id.action_signUpLoadingFragment_to_mainHomeFragment)
+            activity?.let {
+                val intent = Intent(it, HomeActivity::class.java)
+                intent.putExtra("userInfo", userInfo)
+                it.startActivity(intent)
+//                        startActivity(intent)
+            }
+
+//            sharedViewModel.setGender(gender)
+//            getProfileResponse.body()?.age?.let { sharedViewModel.setAge(it) }
+
+//            findNavController().navigate(R.id.action_signUpLoadingFragment_to_mainHomeFragment)
         }
     }
 
