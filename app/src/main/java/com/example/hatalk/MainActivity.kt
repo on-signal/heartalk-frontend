@@ -1,6 +1,7 @@
 package com.example.hatalk
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
@@ -32,6 +33,8 @@ import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity as SignalRoomAct
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val TAG = "HEART"
+    // 권한 설정
+
 
     /**
      * 매칭 반복을 위한 변수설정 [Matching]
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         val appID:String= IDs.APP_ID // Replace with your App ID
         val region:String=IDs.REGION // Replace with your App Region ("eu" or "us")
@@ -205,6 +209,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
+
     private fun goToSigRoom() {
         val intent = Intent(this, SignalRoomActivity::class.java)
         startActivity(intent)
@@ -217,10 +222,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onDestroy()
 
         val listenerID:String="UNIQUE_LISTENER_ID"
-        CometChat.removeCallListener(listenerID)
-        /* Activity가 끝나거나, 혹시 모를 상황을 대비하여 false로 다시 처리 */
-        matchingStatus = false
+//        CometChat.removeCallListener(listenerID)
+//        /* Activity가 끝나거나, 혹시 모를 상황을 대비하여 false로 다시 처리 */
+//        matchingStatus = false
     }
+
+
 
 
     private fun matchingCall() {
@@ -241,7 +248,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         matchConfirm()
 
                         if (matchingStatus) {
-                            Log.d(TAG, "timer stop by matching finished")
                             timer.cancel()
                             CometChat.joinGroup(matchingData.group_room_name.toString(),
                             CometChatConstants.GROUP_TYPE_PUBLIC, "", object:CometChat.CallbackListener<Group>()
@@ -259,7 +265,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                             startActivity(intent)
                         }
                     }
-                }, 0, 100)
+                }, 0, 300)
             } else {
                 Log.d(TAG, "Matching try Fail")
             }
@@ -286,6 +292,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
     }
+
 
 
 

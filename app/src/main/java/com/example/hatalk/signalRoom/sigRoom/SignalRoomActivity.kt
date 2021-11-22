@@ -159,6 +159,7 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
         val callSettings = CallSettings.CallSettingsBuilder(activity, callView)
             .setSessionId(sessionID)
             .setAudioOnlyCall(true)
+            .setDefaultAudioMode(CometChatConstants.AUDIO_MODE_SPEAKER)
             .build();
 
         CometChat.startCall(callSettings, object : CometChat.OngoingCallListener {

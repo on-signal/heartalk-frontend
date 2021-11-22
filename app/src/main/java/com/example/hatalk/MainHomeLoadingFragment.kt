@@ -1,5 +1,6 @@
 package com.example.hatalk
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,7 +11,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.hatalk.databinding.FragmentMainHomeLoadingBinding
+import com.example.hatalk.main.HomeActivity
 import com.example.hatalk.model.UserJoinModel
+import com.example.hatalk.model.userInfo
 import com.example.hatalk.network.LoginRequest
 import com.example.hatalk.network.UserApi
 import com.kakao.sdk.user.UserApiClient
@@ -58,7 +61,27 @@ class MainHomeLoadingFragment : Fragment() {
 
                     sharedViewModel.setGender(gender)
                     getProfileResponse.body()?.age?.let { sharedViewModel.setAge(it) }
-                    findNavController().navigate(R.id.action_mainHomeLoadingFragment_to_mainHomeFragment)
+                    val userInfo = userInfo(
+                        sharedViewModel.kakaoUserId,
+                        sharedViewModel.email,
+                        sharedViewModel.photoUrl,
+                        sharedViewModel.name,
+                        sharedViewModel.socialNumber,
+                        sharedViewModel.carrier,
+                        sharedViewModel.phoneNumber,
+                        sharedViewModel.nickname,
+                        sharedViewModel.accessToken,
+                        sharedViewModel.refreshToken,
+                        sharedViewModel.gender,
+                        sharedViewModel.age
+                    )
+
+                    activity?.let {
+                        val intent = Intent(it, HomeActivity::class.java)
+                        intent.putExtra("userInfo", userInfo)
+                        it.startActivity(intent)
+//                        startActivity(intent)
+                    }
                 } else {
                     findNavController().navigate(R.id.action_mainHomeLoadingFragment_to_signUpFragment)
                 }
