@@ -74,29 +74,30 @@ class MainHomeFragment : Fragment() {
         /**
          * [CometChat로그인] [Matching]
          */
-        val cometLogin = binding?.cometLogin
-        val apiKey: String = IDs.APIKEY
 
-        cometLogin?.setOnClickListener {
-            val UID: String = binding?.loginEdit?.text.toString()
-            CometChat.login(UID, apiKey, object : CometChat.CallbackListener<User>() {
-                override fun onSuccess(p0: User?) {
-                    Log.d(TAG, "Login Successful : " + p0?.toString())
-                }
+        cometchatLogin()
 
-                override fun onError(p0: CometChatException?) {
-                    Log.d(TAG, "Login failed with exception: " + p0?.message)
-                }
-            })
-        }
-
-        val initCall = binding?.initiateCall
-        initCall?.setOnClickListener {
+        val matchingButton = binding?.matchingButton
+        matchingButton?.setOnClickListener {
             matchingCall()
             matchConfirm()
 //            goToSigRoom()
         }
 
+    }
+
+    private fun cometchatLogin() {
+        val apiKey: String = IDs.APIKEY
+        val UID: String = sharedViewModel.kakaoUserId
+        CometChat.login(UID, apiKey, object : CometChat.CallbackListener<User>() {
+            override fun onSuccess(p0: User?) {
+                Log.d(TAG, "Login Successful : " + p0?.toString())
+            }
+
+            override fun onError(p0: CometChatException?) {
+                Log.d(TAG, "Login failed with exception: " + p0?.message)
+            }
+        })
     }
 
     override fun onDestroyView() {
@@ -107,7 +108,7 @@ class MainHomeFragment : Fragment() {
 
     private fun matchingCall() {
         val matchingRequest = MatchingRequest(
-            binding?.loginEdit?.text.toString(),
+            sharedViewModel.kakaoUserId,
             "뀨"
         )
 
@@ -155,7 +156,7 @@ class MainHomeFragment : Fragment() {
 
     private fun matchConfirm() {
         val matchingConfirmRequest = MatchingConfirmRequest(
-            binding?.loginEdit?.text.toString()
+            sharedViewModel.kakaoUserId
         )
 
 

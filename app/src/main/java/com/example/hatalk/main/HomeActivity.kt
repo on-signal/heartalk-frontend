@@ -45,12 +45,6 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
 
         val userInfo = intent?.getParcelableExtra<userInfo>("userInfo")
 
-//        val bundle = Bundle()
-//        bundle.putParcelable("userInfo", userInfo)
-//        bundle.putString("test", "HIHITEST")
-//        val homeFrag = MainHomeFragment()
-//        homeFrag.arguments = bundle
-
         CoroutineScope(Dispatchers.Main).launch {
             val getProfileResponse =
                 UserApi.retrofitService.getCurrentUser("Bearer ${userInfo?.accessToken}")
@@ -61,7 +55,7 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
             sharedViewModel.setProfileUrl(profile?.photoUrl.toString())
             sharedViewModel.setGender(profile?.gender.toString())
             sharedViewModel.setAge(profile!!.age)
-            Log.d(TAG, "Coroutine...her...e..")
+            sharedViewModel.setKakaoUserId(userInfo!!.kakaoUserId)
 //            Log.d(TAG, sharedViewModel.nickname)
 //            Log.d(TAG, sharedViewModel.gender.toString())
 //            Log.d(TAG, sharedViewModel.age.toString())

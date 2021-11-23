@@ -19,103 +19,74 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik"
+            android:text="@string/Lounge"
+            android:textSize="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--        <TextView-->
+<!--            android:id="@+id/main_home_age"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@{@string/main_home_age(viewModel.age)}"-->
+<!--            android:textSize="20sp"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/main_home_gender"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            />-->
+
 
         <ImageView
             android:id="@+id/home_profile_image"
             android:layout_width="350dp"
             android:layout_height="400dp"
-            app:layout_constraintBottom_toTopOf="@+id/login_edit"
+            android:layout_marginTop="31dp"
+            app:layout_constraintBottom_toTopOf="@id/matching_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.298" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
-            android:id="@+id/main_home_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{@string/main_home_email(viewModel.email)}"
-            android:textSize="20sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
-
-        <TextView
-            android:id="@+id/main_home_name"
-            android:layout_width="match_parent"
+            android:id="@+id/home_profile_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{@string/main_home_name(viewModel.name)}"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/main_home_email"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:textSize="20dp"
+            android:background="@color/white"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintStart_toStartOf="@id/home_profile_image"
+            app:layout_constraintBottom_toBottomOf="@id/home_profile_image"
             />
 
         <TextView
-            android:id="@+id/main_home_nickname"
-            android:layout_width="match_parent"
+            android:id="@+id/home_profile_age"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/main_home_nickname(viewModel.nickname)}"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/main_home_name"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
-
-        <TextView
-            android:id="@+id/main_home_gender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{@string/main_home_gender(viewModel.gender)}"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/main_home_nickname"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
-
-        <TextView
-            android:id="@+id/main_home_age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{@string/main_home_age(viewModel.age)}"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/main_home_gender"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
-
-
-        <EditText
-            android:id="@+id/login_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:hint="UserName"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/comet_login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-        <Button
-            android:id="@+id/comet_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="닉네임 저장"
-            app:layout_constraintBottom_toTopOf="@+id/initiate_call"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.888" />
+            android:text="@{@string/main_home_age(viewModel.name)}"
+            android:textSize="20dp"
+            android:background="@color/white"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/home_profile_image"
+            app:layout_constraintStart_toStartOf="@id/home_profile_image" />
 
         <Button
-            android:id="@+id/initiate_call"
-            android:layout_width="match_parent"
+            android:id="@+id/matching_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Matching"
             android:fontFamily="@font/rubik"
+            android:paddingHorizontal="50dp"
+            android:text="Matching"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_profile_image" />
+            app:layout_constraintTop_toBottomOf="@id/home_profile_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
