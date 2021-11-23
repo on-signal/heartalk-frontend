@@ -102,6 +102,40 @@ class SignalRoomActivity : AppCompatActivity() {
             e.printStackTrace();
         }
 
+        val onConnect = Emitter.Listener { args ->
+            val res = JSONObject(args[0].toString())
+
+            var userChat: TextView? = null
+            when(res.getString("icon")) {
+                "lion" -> {
+                    userChat = view.lion_text
+                }
+                "bee" -> {
+                    userChat = view.bee_text
+                }
+                "penguin" -> {
+                    userChat = view.penguin_text
+                }
+                "hamster" -> {
+                    userChat = view.hamster_text
+                }
+                "wolf" -> {
+                    userChat = view.wolf_text
+                }
+                "fox" -> {
+                    userChat = view.fox_text
+                }
+            }
+
+            Thread {
+                runOnUiThread(Runnable {
+                    kotlin.run {
+                        userChat?.text = res.getString("text")
+                    }
+                })
+            }.start()
+        }
+        mSocket.on("channel1", onConnect)
 
         chatButton.setOnClickListener {
             val chatText = view.edit_chat_message
@@ -113,40 +147,7 @@ class SignalRoomActivity : AppCompatActivity() {
             )
             val gson = Gson()
             val obj = JSONObject(gson.toJson(message))
-            val onConnect = Emitter.Listener { args ->
-                val res = JSONObject(args[0].toString())
 
-                var userChat: TextView? = null
-                when(res.getString("icon")) {
-                    "lion" -> {
-                        userChat = view.lion_text
-                    }
-                    "bee" -> {
-                        userChat = view.bee_text
-                    }
-                    "penguin" -> {
-                        userChat = view.penguin_text
-                    }
-                    "hamster" -> {
-                        userChat = view.hamster_text
-                    }
-                    "wolf" -> {
-                        userChat = view.wolf_text
-                    }
-                    "fox" -> {
-                        userChat = view.fox_text
-                    }
-                }
-
-                Thread {
-                    runOnUiThread(Runnable {
-                        kotlin.run {
-                            userChat?.text = res.getString("text")
-                        }
-                    })
-                }.start()
-            }
-            mSocket.on("channel1", onConnect)
             mSocket.emit("msgToServer", obj)
             chatText.text.clear()
         }
