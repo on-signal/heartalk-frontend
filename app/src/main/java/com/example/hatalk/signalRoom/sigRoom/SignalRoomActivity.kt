@@ -25,6 +25,7 @@ import com.example.hatalk.network.DeleteRoomRequest
 import com.example.hatalk.network.MatchingApi
 import com.example.hatalk.network.MatchingConfirmResponse
 import com.example.hatalk.signalRoom.PRIVATE.IDs
+import com.example.hatalk.signalRoom.PRIVATE.URLs
 import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Socket
@@ -42,7 +43,7 @@ class SocketApplication {
         fun get(): Socket {
             try {
                 // [uri]부분은 "http://X.X.X.X:3000" 꼴로 넣어주는 게 좋다.
-                socket = IO.socket("http://143.248.200.21:8000/chat")
+                socket = IO.socket("${URLs.URL}/chat")
             } catch (e: URISyntaxException) {
                 e.printStackTrace()
             }
