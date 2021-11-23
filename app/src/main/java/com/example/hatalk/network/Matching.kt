@@ -42,3 +42,11 @@ data class MatchingConfirmResponse(
     val room_info: @RawValue roomInfo?,
     val question_list: Array<String>?
 ) : Parcelable
+
+data class DeleteRoomRequest(
+    val guid: String
+)
+
+data class DeleteRoomResponse(
+    val msg: String
+)

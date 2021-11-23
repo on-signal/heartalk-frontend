@@ -57,9 +57,6 @@
             android:layout_height="wrap_content"
             android:text="시그널 룸 입장하기" />
 
-
-
-
     </LinearLayout>
 
 

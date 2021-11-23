@@ -33,7 +33,6 @@ import kotlinx.android.synthetic.main.fragment_main_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import nl.joery.animatedbottombar.AnimatedBottomBar
 import java.util.*
 import java.util.jar.Manifest
 import kotlin.properties.Delegates

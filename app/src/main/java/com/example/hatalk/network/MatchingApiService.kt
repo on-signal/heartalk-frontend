@@ -9,6 +9,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.POST
 import java.lang.reflect.Type
 import java.util.*
@@ -21,7 +22,7 @@ val nullOnEmptyConverterFactory = object : Converter.Factory() {
     }
 }
 
-private const val BASE_URL = "http://3.18.104.98:8000"
+private const val BASE_URL = "http://143.248.200.21:8000"
 
 private val moshi = Moshi
     .Builder()
@@ -41,6 +42,9 @@ interface MatchingApiService{
 
     @POST("/room/checkqueue")
     suspend fun ConfirmMatch(@Body body:MatchingConfirmRequest): Response<MatchingConfirmResponse>
+
+    @DELETE("/room/one/delete")
+    suspend fun deleteRoom(@Body body: DeleteRoomRequest): Response<DeleteRoomResponse>
 
 }
 
