@@ -15,7 +15,6 @@ import com.cometchat.pro.models.Group
 import com.cometchat.pro.models.User
 import com.example.hatalk.network.MatchingApi
 import com.example.hatalk.network.MatchingConfirmRequest
-import com.example.hatalk.network.MatchingConfirmResponse
 import com.example.hatalk.network.MatchingRequest
 import com.example.hatalk.signalRoom.PRIVATE.IDs
 import com.kakao.sdk.auth.AuthApiClient
@@ -41,7 +40,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
      */
 
     private var matchingStatus by Delegates.notNull<Boolean>()
-    private lateinit var matchingData: MatchingConfirmResponse
 
 //    private lateinit var navController: NavController
 

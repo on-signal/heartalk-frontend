@@ -69,7 +69,7 @@
             android:id="@+id/home_profile_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/main_home_age(viewModel.name)}"
+            android:text="@{@string/main_home_age(viewModel.age)}"
             android:textSize="20dp"
             android:background="@color/white"
             android:layout_marginTop="20dp"

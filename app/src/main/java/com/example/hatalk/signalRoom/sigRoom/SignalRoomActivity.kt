@@ -20,10 +20,10 @@ import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
 import com.example.hatalk.R
 import com.example.hatalk.databinding.ActivitySignalRoomBinding
+import com.example.hatalk.main.data.MatchingConfirmResponse
 import com.example.hatalk.model.sigRoom.MatchingModel
 import com.example.hatalk.network.DeleteRoomRequest
 import com.example.hatalk.network.MatchingApi
-import com.example.hatalk.network.MatchingConfirmResponse
 import com.example.hatalk.signalRoom.PRIVATE.IDs
 import com.example.hatalk.signalRoom.PRIVATE.URLs
 import com.google.gson.Gson
