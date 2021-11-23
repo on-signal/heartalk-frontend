@@ -3,6 +3,7 @@ package com.example.hatalk.network
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.example.hatalk.signalRoom.PRIVATE.URLs
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.*
@@ -12,7 +13,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 import java.lang.Exception
 
-private const val BASE_URL = "http://143.248.200.21:8000"
+private const val BASE_URL = URLs.URL
 
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
