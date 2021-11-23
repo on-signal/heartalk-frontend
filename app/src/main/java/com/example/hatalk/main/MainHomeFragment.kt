@@ -252,6 +252,21 @@ class MainHomeFragment : Fragment() {
             val matchingConfirmJSON = JSONObject(args[0].toString())
             val matchingConfirmResponse = Gson().fromJson(matchingConfirmJSON.toString(), MatchingConfirmResponse::class.java)
             Log.d(TAG, matchingConfirmResponse.toString())
+            CometChat.joinGroup(matchingConfirmResponse.group_room_name.toString(),
+                CometChatConstants.GROUP_TYPE_PUBLIC,
+                "",
+                object : CometChat.CallbackListener<Group>() {
+                    override fun onSuccess(p0: Group?) {
+                        Log.d(TAG, p0.toString())
+                    }
+
+                    override fun onError(p0: CometChatException?) {
+                        Log.d(
+                            TAG,
+                            "Group joining failed with exception: " + p0?.message
+                        )
+                    }
+                })
             activity?.let {
                 val intent = Intent(it, SignalRoomActivity::class.java)
                 intent.putExtra("matchingData", matchingConfirmResponse)
