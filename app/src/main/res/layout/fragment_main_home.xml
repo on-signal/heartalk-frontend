@@ -2,121 +2,90 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainHomeFragment">
+    tools:context=".main.MainHomeFragment">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.example.hatalk.model.UserJoinModel" />
+            type="com.example.hatalk.main.userModel.UserModel" />
 
         <variable
             name="mainHomeFragment"
-            type="com.example.hatalk.MainHomeFragment" />
+            type="com.example.hatalk.main.MainHomeFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
 
-<!--        <TextView-->
-<!--            android:id="@+id/main_home_email"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@{@string/main_home_email(viewModel.email)}"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            />-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/main_home_name"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@{@string/main_home_name(viewModel.name)}"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/main_home_email"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            />-->
+        <ImageView
+            android:id="@+id/home_profile_image"
+            android:layout_width="350dp"
+            android:layout_height="400dp"
+            app:layout_constraintBottom_toTopOf="@+id/login_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.298" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/main_home_nickname"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@{@string/main_home_nickname(viewModel.nickname)}"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/main_home_name"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/main_home_gender"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@{@string/main_home_gender(viewModel.gender)}"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/main_home_nickname"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/main_home_age"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@{@string/main_home_age(viewModel.age)}"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/main_home_gender"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/profile_image_url"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@{@string/main_home_photo_url(viewModel.photoUrl)}"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/main_home_age"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            />-->
-
-        <!--    <TextView-->
-        <!--        android:id="@+id/thumbnailimage_url"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:text="썸네일 링크: "-->
-        <!--        android:textSize="20sp"-->
-        <!--        app:layout_constraintTop_toBottomOf="@+id/profileimage_url"-->
-        <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--        app:layout_constraintRight_toRightOf="parent"-->
-        <!--        />-->
-
-        <Button
-            android:id="@+id/kakao_logout_button"
+        <TextView
+            android:id="@+id/main_home_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="로그아웃"
+            android:text="@{@string/main_home_email(viewModel.email)}"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/kakao_unlink_button"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            />
 
-        <Button
-            android:id="@+id/kakao_unlink_button"
+        <TextView
+            android:id="@+id/main_home_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="292dp"
-            android:text="회원 탈퇴"
+            android:text="@{@string/main_home_name(viewModel.name)}"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@id/main_home_email"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/main_home_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{@string/main_home_nickname(viewModel.nickname)}"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/main_home_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/main_home_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{@string/main_home_gender(viewModel.gender)}"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/main_home_nickname"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/main_home_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{@string/main_home_age(viewModel.age)}"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/main_home_gender"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
 
         <EditText
             android:id="@+id/login_edit"
@@ -127,9 +96,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/comet_login"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kakao_unlink_button" />
-
+            app:layout_constraintStart_toStartOf="parent" />
         <Button
             android:id="@+id/comet_login"
             android:layout_width="match_parent"
@@ -137,20 +104,18 @@
             android:text="닉네임 저장"
             app:layout_constraintBottom_toTopOf="@+id/initiate_call"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kakao_unlink_button"
             app:layout_constraintVertical_bias="0.888" />
 
         <Button
             android:id="@+id/initiate_call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="시그널 룸 입장하기"
+            android:text="Matching"
+            android:fontFamily="@font/rubik"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kakao_unlink_button"
-            app:layout_constraintVertical_bias="0.639" />
+            app:layout_constraintTop_toBottomOf="@+id/home_profile_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

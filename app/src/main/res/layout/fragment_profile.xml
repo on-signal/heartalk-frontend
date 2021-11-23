@@ -13,4 +13,26 @@
         android:text="Profile"
         tools:ignore="HardcodedText" />
 
+    <Button
+        android:id="@+id/kakao_logout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그아웃"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/kakao_unlink_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/kakao_unlink_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="292dp"
+        android:text="회원 탈퇴"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

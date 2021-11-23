@@ -12,7 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 import java.lang.Exception
 
-private const val BASE_URL = "http://143.248.200.21:8000"
+private const val BASE_URL = "http://3.18.104.98:8000"
 
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 

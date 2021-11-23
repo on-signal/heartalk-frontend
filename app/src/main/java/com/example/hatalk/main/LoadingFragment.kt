@@ -1,13 +1,18 @@
 package com.example.hatalk.main
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.hatalk.R
 import com.example.hatalk.main.userModel.UserModel
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -15,7 +20,7 @@ import com.example.hatalk.main.userModel.UserModel
  * Use the [ChatFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AlarmFragment : Fragment() {
+class LoadingFragment : Fragment() {
     private val TAG = "HEART"
     private val sharedViewModel: UserModel by activityViewModels()
 
@@ -24,6 +29,18 @@ class AlarmFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alarm, container, false)
+        return inflater.inflate(R.layout.fragment_loading, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "LOADING")
+//        TimeUnit.SECONDS.sleep(1L)
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                findNavController().navigate(R.id.action_loadingFragment_to_mainHomeFragment)
+            },
+            500
+        )
     }
 }
