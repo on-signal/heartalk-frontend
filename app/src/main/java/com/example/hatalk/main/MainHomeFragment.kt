@@ -83,7 +83,12 @@ class MainHomeFragment : Fragment() {
             mainHomeFragment = this@MainHomeFragment
         }
 
-        matchingStatus = false
+        try {
+            mSocket = MatchingSoketApplication.get()
+            mSocket.connect()
+        } catch (e: URISyntaxException) {
+            e.printStackTrace();
+        }
 
         Glide.with(this)
             .load(sharedViewModel.photoUrl)
@@ -129,83 +134,10 @@ class MainHomeFragment : Fragment() {
     }
 
 
-//    private fun matchingCall() {
-//        val matchingRequest = MatchingRequest(
-//            sharedViewModel.kakaoUserId,
-//            sharedViewModel.nickname,
-//            sharedViewModel.gender
-//        )
-//
-//        CoroutineScope(Dispatchers.Main).launch {
-//            val matchingResponse = MatchingApi.retrofitService.StartMatch(matchingRequest)
-//            var timer = Timer()
-//
-//            if (matchingResponse.isSuccessful) {
-//                Log.d(TAG, "Matching try success")
-//                timer.schedule(object : TimerTask() {
-//                    override fun run() {
-//                        matchConfirm()
-//
-//                        if (matchingStatus) {
-//                            timer.cancel()
-//                            CometChat.joinGroup(matchingData.group_room_name.toString(),
-//                                CometChatConstants.GROUP_TYPE_PUBLIC,
-//                                "",
-//                                object : CometChat.CallbackListener<Group>() {
-//                                    override fun onSuccess(p0: Group?) {
-//                                        Log.d(TAG, p0.toString())
-//                                    }
-//
-//                                    override fun onError(p0: CometChatException?) {
-//                                        Log.d(
-//                                            TAG,
-//                                            "Group joining failed with exception: " + p0?.message
-//                                        )
-//                                    }
-//                                })
-//                            activity?.let {
-//                                val intent = Intent(it, SignalRoomActivity::class.java)
-//                                intent.putExtra("matchingData", matchingData)
-//                                it.startActivity(intent)
-//                            }
-//                        }
-//                    }
-//                }, 100, 300)
-//            } else {
-//                Log.d(TAG, "Matching try Fail")
-//            }
-//        }
-//    }
-//
-//    private fun matchConfirm() {
-//        val matchingConfirmRequest = MatchingConfirmRequest(
-//            sharedViewModel.kakaoUserId
-//        )
-//
-//
-//        CoroutineScope(Dispatchers.Main).launch {
-//            val matchConfirmResponse =
-//                MatchingApi.retrofitService.ConfirmMatch(matchingConfirmRequest)
-//
-//
-//            if (matchConfirmResponse.body()?.msg.toString() == "success") {
-//                Log.d(TAG, "Success CONFIRM")
-//                matchingStatus = true
-//                matchingData = matchConfirmResponse.body()!!
-//                Log.d(TAG, matchingData.toString())
-//            } else {
-//                Log.d(TAG, "FAIL CONFIRM")
-//            }
-//        }
-//    }
+
 
     private fun matching() {
-        try {
-            mSocket = MatchingSoketApplication.get()
-            mSocket.connect()
-        } catch (e: URISyntaxException) {
-            e.printStackTrace();
-        }
+
 
 
         val userId = sharedViewModel.kakaoUserId
