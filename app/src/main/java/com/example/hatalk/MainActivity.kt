@@ -49,16 +49,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
 
 
-        val appID:String= IDs.APP_ID // Replace with your App ID
-        val region:String=IDs.REGION // Replace with your App Region ("eu" or "us")
+        val appID: String = IDs.APP_ID // Replace with your App ID
+        val region: String = IDs.REGION // Replace with your App Region ("eu" or "us")
 
-        val appSettings = AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build()
+        val appSettings =
+            AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region)
+                .build()
 
         // Matching confirm 반복을 위한 변수
 
         matchingStatus = false
 
-        CometChat.init(this,appID,appSettings, object : CometChat.CallbackListener<String>() {
+        CometChat.init(this, appID, appSettings, object : CometChat.CallbackListener<String>() {
             override fun onSuccess(p0: String?) {
                 Log.d(TAG, "Initialization completed successfully")
             }
@@ -83,7 +85,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
                     }
                     error.toString() == InvalidGrant.toString() -> {
-                        Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT)
+                            .show()
                     }
                     error.toString() == InvalidRequest.toString() -> {
                         Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
@@ -92,7 +95,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
                     }
                     error.toString() == Misconfigured.toString() -> {
-                        Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT)
+                            .show()
                     }
                     error.toString() == ServerError.toString() -> {
                         Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
@@ -104,8 +108,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
-            else if (token != null) {
+            } else if (token != null) {
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainHomeActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
@@ -122,7 +125,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         Toast.makeText(this, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
                     }
                     error.toString() == InvalidGrant.toString() -> {
-                        Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT)
+                            .show()
                     }
                     error.toString() == InvalidRequest.toString() -> {
                         Toast.makeText(this, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
@@ -131,7 +135,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         Toast.makeText(this, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
                     }
                     error.toString() == Misconfigured.toString() -> {
-                        Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT)
+                            .show()
                     }
                     error.toString() == ServerError.toString() -> {
                         Toast.makeText(this, "서버 내부 에러", Toast.LENGTH_SHORT).show()
@@ -141,14 +146,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     }
                     error.toString() == "AuthError(statusCode=302, reason=Unknown, response=AuthErrorResponse(error=NotSupportError, errorDescription=KakaoTalk is installed but not connected to Kakao account.))" -> {
                         Log.d("Kakao ", error.toString())
-                        UserApiClient.instance.loginWithKakaoAccount(this, callback = accountCallBack)
+                        UserApiClient.instance.loginWithKakaoAccount(
+                            this,
+                            callback = accountCallBack
+                        )
                     }
                     else -> { // Unknown
                         Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
-            else if (token != null) {
+            } else if (token != null) {
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainHomeActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
@@ -159,16 +166,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             UserApiClient.instance.accessTokenInfo { _, error ->
                 if (error != null) {
                     if (error is KakaoSdkError && error.isInvalidTokenError()) {
-                        if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
+                        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                             UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
-                        }else{
-                            UserApiClient.instance.loginWithKakaoAccount(this, callback = accountCallBack)
+                        } else {
+                            UserApiClient.instance.loginWithKakaoAccount(
+                                this,
+                                callback = accountCallBack
+                            )
                         }
                     } else {
                         Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MainHomeActivity::class.java)
                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
@@ -176,46 +185,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }
 
-        val kakaoLoginButton =  findViewById<ImageView>(R.id.kako_login)
+        val kakaoLoginButton = findViewById<ImageView>(R.id.kako_login)
 
         kakaoLoginButton.setOnClickListener {
-            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                 UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = accountCallBack)
             }
         }
 
-        val cometLogin = findViewById<Button>(R.id.comet_login)
-        val apiKey:String = IDs.APIKEY
 
-        cometLogin.setOnClickListener {
-            val UID:String = findViewById<EditText>(R.id.login_edit).text.toString()
-            CometChat.login(UID,apiKey, object : CometChat.CallbackListener<User>() {
-                override fun onSuccess(p0: User?) {
-                    Log.d(TAG, "Login Successful : " + p0?.toString())
-                }
-                override fun onError(p0: CometChatException?) {
-                    Log.d(TAG, "Login failed with exception: " +  p0?.message)
-                }
-            })
-        }
-
-        val initCall = findViewById<Button>(R.id.initiate_call)
-        initCall.setOnClickListener {
-            matchingCall()
-            matchConfirm()
-//            goToSigRoom()
-        }
     }
-
-
-    private fun goToSigRoom() {
-        val intent = Intent(this, SignalRoomActivity::class.java)
-        startActivity(intent)
-    }
-
-
 
     /** [CometChat] to remove callListener */
     override fun onDestroy() {
@@ -226,76 +207,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 //        /* Activity가 끝나거나, 혹시 모를 상황을 대비하여 false로 다시 처리 */
 //        matchingStatus = false
     }
-
-
-
-
-    private fun matchingCall() {
-        val matchingRequest = MatchingRequest(
-            findViewById<EditText>(R.id.login_edit).text.toString(),
-            "뀨"
-        )
-
-        CoroutineScope(Dispatchers.Main).launch {
-            val matchingResponse = MatchingApi.retrofitService.StartMatch(matchingRequest)
-            var timer = Timer()
-
-
-            if (matchingResponse.isSuccessful) {
-                Log.d(TAG, "Matching try success")
-                timer.schedule(object : TimerTask() {
-                    override fun run() {
-                        matchConfirm()
-
-                        if (matchingStatus) {
-                            timer.cancel()
-                            CometChat.joinGroup(matchingData.group_room_name.toString(),
-                            CometChatConstants.GROUP_TYPE_PUBLIC, "", object:CometChat.CallbackListener<Group>()
-                                {
-                                    override fun onSuccess(p0: Group?) {
-                                        Log.d(TAG, p0.toString())
-                                    }
-
-                                    override fun onError(p0: CometChatException?) {
-                                        Log.d(TAG, "Group joining failed with exception: " + p0?.message)
-                                    }
-                            })
-                            val intent = Intent(this@MainActivity, SignalRoomActivity::class.java)
-                            intent.putExtra("matchingData", matchingData)
-                            startActivity(intent)
-                        }
-                    }
-                }, 0, 300)
-            } else {
-                Log.d(TAG, "Matching try Fail")
-            }
-        }
-    }
-
-    private fun matchConfirm() {
-        val matchingConfirmRequest = MatchingConfirmRequest(
-            findViewById<EditText>(R.id.login_edit).text.toString()
-        )
-
-
-        CoroutineScope(Dispatchers.Main).launch {
-            val matchConfirmResponse = MatchingApi.retrofitService.ConfirmMatch(matchingConfirmRequest)
-
-
-            if (matchConfirmResponse.body()?.msg.toString() == "success") {
-                Log.d(TAG, "Success CONFIRM")
-                matchingStatus = true
-                matchingData = matchConfirmResponse.body()!!
-            } else {
-                Log.d(TAG, "FAIL CONFIRM")
-            }
-        }
-
-    }
-
-
-
-
 
 //    override fun onSupportNavigateUp(): Boolean {
 //        return navController.navigateUp() || super.onSupportNavigateUp()

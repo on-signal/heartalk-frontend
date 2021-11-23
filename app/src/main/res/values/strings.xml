@@ -35,4 +35,6 @@
     <string name="chat">Chat</string>
     <string name="alarm">Alarm</string>
     <string name="profile">Profile</string>
+    <string name="matching_start_button">매칭하기</string>
+    <string name="Lounge"><b>라운지</b></string>
 </resources>

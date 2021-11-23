@@ -1,23 +1,33 @@
 package com.example.hatalk.main
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.hatalk.MainActivity
 import com.example.hatalk.R
+import com.example.hatalk.databinding.FragmentSignUpLoadingBinding
+import com.example.hatalk.main.userModel.UserModel
 import com.example.hatalk.model.userInfo
-import com.example.hatalk.network.MatchingConfirmResponse
+import com.example.hatalk.network.UserApi
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class HomeActivity : AppCompatActivity(R.layout.activity_home) {
+    private val TAG = "HEART"
+    private var binding: FragmentSignUpLoadingBinding? = null
+    private val sharedViewModel: UserModel by viewModels()
     private lateinit var navController: NavController
+
 
     private val requiredPermissions = arrayOf(
         android.Manifest.permission.RECORD_AUDIO
@@ -30,13 +40,30 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requesAudioPermission()
+        requestAudioPermission()
 
+
+        val userInfo = intent?.getParcelableExtra<userInfo>("userInfo")
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val getProfileResponse =
+                UserApi.retrofitService.getCurrentUser("Bearer ${userInfo?.accessToken}")
+            val profile = getProfileResponse.body()
+            sharedViewModel.setEmail(profile?.email.toString())
+            sharedViewModel.setName(profile?.name.toString())
+            sharedViewModel.setNickname(profile?.nickname.toString())
+            sharedViewModel.setProfileUrl(profile?.photoUrl.toString())
+            sharedViewModel.setGender(profile?.gender.toString())
+            sharedViewModel.setAge(profile!!.age)
+            sharedViewModel.setKakaoUserId(userInfo!!.kakaoUserId)
+//            Log.d(TAG, sharedViewModel.nickname)
+//            Log.d(TAG, sharedViewModel.gender.toString())
+//            Log.d(TAG, sharedViewModel.age.toString())
+//            Log.d(TAG, sharedViewModel.photoUrl)
+        }
 
         navController = findNavController(R.id.home_fragment)
-//        val intent: Intent = getIntent()
-//        val userInfo = intent.getParcelableExtra<userInfo>("userInfo")
-//        Log.d("TESTEST", userInfo.toString())
+
         setupActionBarWithNavController(navController)
     }
 
@@ -49,6 +76,16 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
     override fun onSupportNavigateUp(): Boolean {
         navController.navigateUp()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        supportActionBar?.hide()
     }
 
     override fun onRequestPermissionsResult(
@@ -67,7 +104,7 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
         }
     }
 
-    private fun requesAudioPermission() {
+    private fun requestAudioPermission() {
         requestPermissions(requiredPermissions, HomeActivity.REQUEST_RECORD_AUDIO_PERMISSION)
     }
 }

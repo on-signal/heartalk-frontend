@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_bottom_nav_graph"
-    app:startDestination="@id/mainHomeFragment">
+    app:startDestination="@id/loadingFragment">
 
     <fragment
         android:id="@+id/mainHomeFragment"
-        android:name="com.example.hatalk.MainHomeFragment"
+        android:name="com.example.hatalk.main.MainHomeFragment"
         android:label="fragment_main_home"
         tools:layout="@layout/fragment_main_home" >
         <action
@@ -37,4 +37,13 @@
         android:name="com.example.hatalk.main.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.example.hatalk.main.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading" >
+        <action
+            android:id="@+id/action_loadingFragment_to_mainHomeFragment"
+            app:destination="@id/mainHomeFragment" />
+    </fragment>
 </navigation>

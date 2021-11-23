@@ -1,31 +1,26 @@
-package com.example.hatalk
+package com.example.hatalk.main
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.Group
 import com.cometchat.pro.models.User
 import com.example.hatalk.databinding.FragmentMainHomeBinding
-import com.example.hatalk.main.HomeActivity
+import com.example.hatalk.main.userModel.UserModel
 import com.example.hatalk.model.UserJoinModel
-import com.example.hatalk.network.MatchingApi
-import com.example.hatalk.network.MatchingConfirmRequest
-import com.example.hatalk.network.MatchingConfirmResponse
-import com.example.hatalk.network.MatchingRequest
+import com.example.hatalk.model.userInfo
+import com.example.hatalk.network.*
 import com.example.hatalk.signalRoom.PRIVATE.IDs
 import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity
 import com.kakao.sdk.user.UserApiClient
@@ -34,7 +29,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
-import java.util.jar.Manifest
+import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
 
@@ -50,7 +45,7 @@ class MainHomeFragment : Fragment() {
     private lateinit var matchingData: MatchingConfirmResponse
 
     private var binding: FragmentMainHomeBinding? = null
-    private val sharedViewModel: UserJoinModel by activityViewModels()
+    private val sharedViewModel: UserModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +53,8 @@ class MainHomeFragment : Fragment() {
     ): View? {
         val fragmentBinding = FragmentMainHomeBinding.inflate(inflater, container, false)
         binding = fragmentBinding
+
+
         return fragmentBinding.root
     }
 
@@ -69,53 +66,38 @@ class MainHomeFragment : Fragment() {
             mainHomeFragment = this@MainHomeFragment
         }
         matchingStatus = false
+        Glide.with(this)
+            .load(sharedViewModel.photoUrl)
+            .into(binding!!.homeProfileImage)
 
 
-        binding?.kakaoLogoutButton?.setOnClickListener {
-            UserApiClient.instance.logout { error ->
-                if (error != null) {
-                    Toast.makeText(context, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "로그아웃 성공", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        binding?.kakaoUnlinkButton?.setOnClickListener {
-            UserApiClient.instance.unlink { error ->
-                if (error != null) {
-                    Toast.makeText(context, "회원 탈퇴 실패 $error", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "회원 탈퇴 성공", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
         /**
          * [CometChat로그인] [Matching]
          */
-        val cometLogin = binding?.cometLogin
-        val apiKey: String = IDs.APIKEY
 
-        cometLogin?.setOnClickListener {
-            val UID: String = binding?.loginEdit?.text.toString()
-            CometChat.login(UID, apiKey, object : CometChat.CallbackListener<User>() {
-                override fun onSuccess(p0: User?) {
-                    Log.d(TAG, "Login Successful : " + p0?.toString())
-                }
+        cometchatLogin()
 
-                override fun onError(p0: CometChatException?) {
-                    Log.d(TAG, "Login failed with exception: " + p0?.message)
-                }
-            })
-        }
-
-        val initCall = binding?.initiateCall
-        initCall?.setOnClickListener {
+        val matchingButton = binding?.matchingButton
+        matchingButton?.setOnClickListener {
             matchingCall()
             matchConfirm()
 //            goToSigRoom()
         }
 
+    }
+
+    private fun cometchatLogin() {
+        val apiKey: String = IDs.APIKEY
+        val UID: String = sharedViewModel.kakaoUserId
+        CometChat.login(UID, apiKey, object : CometChat.CallbackListener<User>() {
+            override fun onSuccess(p0: User?) {
+                Log.d(TAG, "Login Successful : " + p0?.toString())
+            }
+
+            override fun onError(p0: CometChatException?) {
+                Log.d(TAG, "Login failed with exception: " + p0?.message)
+            }
+        })
     }
 
     override fun onDestroyView() {
@@ -126,7 +108,7 @@ class MainHomeFragment : Fragment() {
 
     private fun matchingCall() {
         val matchingRequest = MatchingRequest(
-            binding?.loginEdit?.text.toString(),
+            sharedViewModel.kakaoUserId,
             "뀨"
         )
 
@@ -174,7 +156,7 @@ class MainHomeFragment : Fragment() {
 
     private fun matchConfirm() {
         val matchingConfirmRequest = MatchingConfirmRequest(
-            binding?.loginEdit?.text.toString()
+            sharedViewModel.kakaoUserId
         )
 
 

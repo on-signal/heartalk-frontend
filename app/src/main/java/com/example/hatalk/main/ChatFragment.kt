@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.hatalk.R
+import com.example.hatalk.main.userModel.UserModel
 
 
 /**
@@ -14,6 +16,9 @@ import com.example.hatalk.R
  * create an instance of this fragment.
  */
 class ChatFragment : Fragment() {
+    private val TAG = "HEART"
+    private val sharedViewModel: UserModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
