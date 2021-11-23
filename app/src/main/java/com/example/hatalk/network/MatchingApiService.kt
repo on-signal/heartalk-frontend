@@ -41,8 +41,8 @@ interface MatchingApiService{
     @POST("/room/entrance")
     suspend fun StartMatch(@Body body: MatchingRequest): Response<MatchingResponse>
 
-    @POST("/room/checkqueue")
-    suspend fun ConfirmMatch(@Body body:MatchingConfirmRequest): Response<MatchingConfirmResponse>
+//    @POST("/room/checkqueue")
+//    suspend fun ConfirmMatch(@Body body:MatchingConfirmRequest): Response<MatchingConfirmResponse>
 
     @DELETE("/room/one/delete")
     suspend fun deleteRoom(@Body body: DeleteRoomRequest): Response<DeleteRoomResponse>

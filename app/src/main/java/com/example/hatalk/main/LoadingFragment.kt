@@ -40,7 +40,7 @@ class LoadingFragment : Fragment() {
             {
                 findNavController().navigate(R.id.action_loadingFragment_to_mainHomeFragment)
             },
-            500
+            700
         )
     }
 }
