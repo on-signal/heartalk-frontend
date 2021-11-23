@@ -49,7 +49,7 @@
                     android:layout_rowWeight="1" >
 
                     <ImageView
-                        android:id="@+id/profile_image_man_1"
+                        android:id="@+id/lion"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
@@ -57,7 +57,7 @@
                         android:src="@drawable/lion" />
 
                     <TextView
-                        android:id="@+id/chat_text_man_1"
+                        android:id="@+id/lion_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -77,7 +77,7 @@
                     android:layout_rowWeight="1" >
 
                     <ImageView
-                        android:id="@+id/profile_image_woman_1"
+                        android:id="@+id/bee"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
@@ -85,7 +85,7 @@
                         android:src="@drawable/bee" />
 
                     <TextView
-                        android:id="@+id/chat_text_woman_1"
+                        android:id="@+id/bee_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -104,7 +104,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_rowWeight="1" >
                     <ImageView
-                        android:id="@+id/profile_image_man_2"
+                        android:id="@+id/penguin"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
@@ -112,7 +112,7 @@
                         android:src="@drawable/penguin" />
 
                     <TextView
-                        android:id="@+id/chat_text_man_2"
+                        android:id="@+id/penguin_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -132,7 +132,7 @@
                     android:layout_rowWeight="1" >
 
                     <ImageView
-                        android:id="@+id/profile_image_woman_2"
+                        android:id="@+id/hamster"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
@@ -140,7 +140,7 @@
                         android:src="@drawable/hamster" />
 
                     <TextView
-                        android:id="@+id/chat_text_woman_2"
+                        android:id="@+id/hamster_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_row="0"
@@ -163,7 +163,7 @@
                     android:layout_rowWeight="1" >
 
                     <ImageView
-                        android:id="@+id/profile_image_man_3"
+                        android:id="@+id/wolf"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
@@ -171,7 +171,7 @@
                         android:src="@drawable/wolf" />
 
                     <TextView
-                        android:id="@+id/chat_text_man_3"
+                        android:id="@+id/wolf_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -191,7 +191,7 @@
                     android:layout_rowWeight="1" >
 
                     <ImageView
-                        android:id="@+id/profile_image_woman_3"
+                        android:id="@+id/fox"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="fill_horizontal"
@@ -199,7 +199,7 @@
                         android:src="@drawable/fox" />
 
                     <TextView
-                        android:id="@+id/chat_text_woman_3"
+                        android:id="@+id/fox_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -248,16 +248,6 @@
                         android:textSize="10dp" />
 
                 </RelativeLayout>
-
-                <Button
-                    android:id="@+id/temp_call"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="전화걸기"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout

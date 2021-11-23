@@ -2,11 +2,14 @@ package com.example.hatalk.signalRoom.sigRoom
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.Call
@@ -16,6 +19,10 @@ import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
 import com.example.hatalk.R
+import com.example.hatalk.databinding.ActivitySignalRoomBinding
+import com.example.hatalk.model.sigRoom.MatchingModel
+import com.example.hatalk.network.DeleteRoomRequest
+import com.example.hatalk.network.MatchingApi
 import com.example.hatalk.network.MatchingConfirmResponse
 import com.example.hatalk.signalRoom.PRIVATE.IDs
 import com.google.gson.Gson
@@ -23,6 +30,8 @@ import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_signal_room.view.*
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.net.URISyntaxException
 import java.util.*
@@ -33,7 +42,7 @@ class SocketApplication {
         fun get(): Socket {
             try {
                 // [uri]부분은 "http://X.X.X.X:3000" 꼴로 넣어주는 게 좋다.
-                socket = IO.socket("http://3.18.104.98:8000/chat")
+                socket = IO.socket("http://143.248.200.21:8000/chat")
             } catch (e: URISyntaxException) {
                 e.printStackTrace()
             }
@@ -43,12 +52,17 @@ class SocketApplication {
 }
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
-class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
+class SignalRoomActivity : AppCompatActivity() {
     private val TAG = "HEART"
     lateinit var mSocket: Socket
+    private lateinit var binding: ActivitySignalRoomBinding
+    private val matchingModel: MatchingModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySignalRoomBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         val appID: String = IDs.APP_ID // Replace with your App ID
         val region: String = IDs.REGION // Replace with your App Region ("eu" or "us")
@@ -66,70 +80,88 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
             }
         })
 
-
-        val intent: Intent = getIntent()
-        val matchingData = intent.getParcelableExtra<MatchingConfirmResponse>("matchingData")
-
         /** [Cometchat_init] ------------------------------------------------ */
-        val userID: String = CometChat.getLoggedInUser().uid.toString()
-        findViewById<Button>(R.id.button_chat_send).setOnClickListener {
-            Log.d(TAG, userID)
-        }
 
-
+        setMatchingData()
+        setMyButton(view)
         addCallListener()
-
-        Log.d(TAG, matchingData?.caller.toString())
-
-
-        if (matchingData?.caller.toString() == userID) {
-            initiateCall(matchingData?.group_room_name.toString())
+        if (matchingModel.caller == matchingModel.myId) {
+            initiateCall(matchingModel.groupRoomName)
         }
-
-
         /** [CometChat_init] ------------------------------------------------ */
 
         /**
          * [Socket IO Chat Start]
          */
-        val chat_button = findViewById<Button>(R.id.button_chat_send)
-        val chat_text = findViewById<EditText>(R.id.edit_chat_message)
-        chat_button.setOnClickListener {
+        val chatButton = view.button_chat_send
+        try {
             mSocket = SocketApplication.get()
             mSocket.connect()
-            val message = TempMessage("channel1", userID, chat_text.text.toString())
+        } catch (e: URISyntaxException) {
+            e.printStackTrace();
+        }
+
+
+        chatButton.setOnClickListener {
+            val chatText = view.edit_chat_message
+            val message = TempMessage(
+                "channel1",
+                matchingModel.myId,
+                chatText.text.toString(),
+                matchingModel.myIcon
+            )
             val gson = Gson()
             val obj = JSONObject(gson.toJson(message))
             val onConnect = Emitter.Listener { args ->
                 val res = JSONObject(args[0].toString())
-                val userChat = findViewById<TextView>(R.id.chat_text_man_1)
-                userChat.text = res.getString("text")
+
+                var userChat: TextView? = null
+                when(res.getString("icon")) {
+                    "lion" -> {
+                        userChat = view.lion_text
+                    }
+                    "bee" -> {
+                        userChat = view.bee_text
+                    }
+                    "penguin" -> {
+                        userChat = view.penguin_text
+                    }
+                    "hamster" -> {
+                        userChat = view.hamster_text
+                    }
+                    "wolf" -> {
+                        userChat = view.wolf_text
+                    }
+                    "fox" -> {
+                        userChat = view.fox_text
+                    }
+                }
+
+                Thread {
+                    runOnUiThread(Runnable {
+                        kotlin.run {
+                            userChat?.text = res.getString("text")
+                        }
+                    })
+                }.start()
             }
             mSocket.on("channel1", onConnect)
             mSocket.emit("msgToServer", obj)
+            chatText.text.clear()
         }
-
-
-//        try {
-//            mSocket = IO.socket("http://10.0.2.2:8000")
-//            Log.d("Socket: ", mSocket.toString())
-//            mSocket.connect()
-//            val message = TempMessage("parkchoongho", "Hello~")
-//            mSocket.on("channel1") { msg ->
-//                Log.d("Message: ", msg.toString())
-//            }
-//            mSocket.emit("msgToServer", message)
-//
-//            Log.d("Connected", "OK")
-//        } catch (e: URISyntaxException) {
-//            Log.d("ERR", e.toString())
-//        }
-
         /**
          * [Socket IO Chat End]
          */
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mSocket.disconnect()
+        lifecycleScope.launch {
+            val deleteRoomRequest = DeleteRoomRequest(matchingModel.groupRoomName)
+            MatchingApi.retrofitService.deleteRoom(deleteRoomRequest)
+        }
+    }
 
     private fun initiateCall(guid: String) {
         val receiverID: String = guid
@@ -229,5 +261,58 @@ class SignalRoomActivity : AppCompatActivity(R.layout.activity_signal_room) {
                 Log.d(TAG, "Call acceptance failed with exception: " + p0?.message)
             }
         })
+    }
+
+    private fun setMatchingData() {
+        val intent: Intent = getIntent()
+        val matchingData = intent.getParcelableExtra<MatchingConfirmResponse>("matchingData")
+
+        val userID: String = CometChat.getLoggedInUser().uid.toString()
+
+        matchingModel.setGroupRoomName(matchingData?.group_room_name.toString())
+        matchingModel.setCaller(matchingData?.caller.toString())
+
+        matchingModel.setMyId(userID)
+
+        if (userID == matchingData?.room_info?.user1?.Id.toString()) {
+            matchingModel.setMyNickname(matchingData?.room_info?.user1?.nickname.toString())
+            matchingModel.setMyIcon(matchingData?.room_info?.user1?.icon.toString())
+        } else if (userID == matchingData?.room_info?.user2?.Id.toString()) {
+            matchingModel.setMyNickname(matchingData?.room_info?.user2?.nickname.toString())
+            matchingModel.setMyIcon(matchingData?.room_info?.user2?.icon.toString())
+        }
+
+        matchingModel.setUser1Id(matchingData?.room_info?.user1?.Id.toString())
+        matchingModel.setUser1Nickname(matchingData?.room_info?.user1?.nickname.toString())
+        matchingModel.setUser1Icon(matchingData?.room_info?.user1?.icon.toString())
+
+        matchingModel.setUser2Id(matchingData?.room_info?.user2?.Id.toString())
+        matchingModel.setUser2Nickname(matchingData?.room_info?.user2?.nickname.toString())
+        matchingModel.setUser2Icon(matchingData?.room_info?.user2?.icon.toString())
+    }
+
+    private fun setMyButton(view: View) {
+        var userImageVIew: ImageView? = null
+        when(matchingModel.myIcon) {
+            "lion" -> {
+                userImageVIew = view.lion
+            }
+            "bee" -> {
+                userImageVIew = view.bee
+            }
+            "penguin" -> {
+                userImageVIew = view.penguin
+            }
+            "hamster" -> {
+                userImageVIew = view.hamster
+            }
+            "wolf" -> {
+                userImageVIew = view.wolf
+            }
+            "fox" -> {
+                userImageVIew = view.fox
+            }
+        }
+        userImageVIew?.setBackgroundColor(Color.parseColor("#472a2b"))
     }
 }
