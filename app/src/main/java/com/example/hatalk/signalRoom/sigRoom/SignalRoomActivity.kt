@@ -5,12 +5,15 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.Call
@@ -106,7 +109,12 @@ class SignalRoomActivity : AppCompatActivity() {
         setMyButton(view)
         addCallListener()
         if (matchingModel.caller == matchingModel.myId) {
-            initiateCall(matchingModel.groupRoomName)
+            Handler(Looper.getMainLooper()).postDelayed(
+                {
+                    initiateCall(matchingModel.groupRoomName)
+                },
+                1000
+            )
         }
         /** [CometChat_init] ------------------------------------------------ */
 

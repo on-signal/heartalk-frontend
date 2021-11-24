@@ -1,6 +1,8 @@
 package com.example.hatalk.main.userModel
 
 import androidx.lifecycle.ViewModel
+import com.example.hatalk.main.data.MatchingConfirmData
+import com.example.hatalk.main.data.MatchingConfirmResponse
 
 class UserModel: ViewModel() {
     private var _kakaoUserId: String = ""

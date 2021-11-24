@@ -45,7 +45,7 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
 
         val userInfo = intent?.getParcelableExtra<userInfo>("userInfo")
 
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             val getProfileResponse =
                 UserApi.retrofitService.getCurrentUser("Bearer ${userInfo?.accessToken}")
             val profile = getProfileResponse.body()
