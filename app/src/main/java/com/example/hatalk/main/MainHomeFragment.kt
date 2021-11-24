@@ -20,7 +20,7 @@ import com.cometchat.pro.models.User
 import com.example.hatalk.databinding.FragmentMainHomeBinding
 import com.example.hatalk.main.data.MatchingConfirmData
 import com.example.hatalk.main.data.MatchingConfirmResponse
-import com.example.hatalk.main.data.MatchingSoketApplication
+import com.example.hatalk.main.data.MatchingSocketApplication
 import com.example.hatalk.main.data.MatchingStartData
 import com.example.hatalk.main.userModel.UserModel
 import com.example.hatalk.signalRoom.PRIVATE.IDs
