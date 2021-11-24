@@ -13,7 +13,8 @@ data class MatchingStartData(
 
 data class MatchingConfirmData(
     val userId: String,
-    val groupName: String
+    val groupName: String,
+    val successMsg: Boolean
 )
 
 @Parcelize

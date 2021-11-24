@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,12 +13,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.Group
 import com.cometchat.pro.models.User
+import com.example.hatalk.R
 import com.example.hatalk.databinding.FragmentMainHomeBinding
 import com.example.hatalk.main.data.MatchingConfirmData
 import com.example.hatalk.main.data.MatchingConfirmResponse
@@ -143,21 +147,28 @@ class MainHomeFragment : Fragment() {
             val matchingResponse = JSONObject(args[0].toString())
             GUID = matchingResponse.getString("groupName")
             //팝업창을 띄우기
-            val matchingConfirmMessage = MatchingConfirmData(
+            val matchingConfirmSuccessMessage = MatchingConfirmData(
                 userId,
-                GUID
+                GUID,
+                true
             )
-            val matchingConfirmObj = JSONObject(gson.toJson(matchingConfirmMessage))
+            val matchingConfirmFailMessage = MatchingConfirmData(
+                userId,
+                GUID,
+                false
+            )
+            val matchingConfirmSuccessObj = JSONObject(gson.toJson(matchingConfirmSuccessMessage))
+            val matchingConfirmFailObj = JSONObject(gson.toJson(matchingConfirmFailMessage))
             val dialogBuilder = AlertDialog.Builder(context)
             dialogBuilder.setTitle("매칭")
                 .setMessage("매칭을 수락하시겠습니까?")
                 .setPositiveButton("수락",
                     DialogInterface.OnClickListener{ dialog, id ->
-                        mSocket.emit("imready", matchingConfirmObj)
+                        mSocket.emit("imready", matchingConfirmSuccessObj)
                 })
                 .setNegativeButton("취소",
                     DialogInterface.OnClickListener{ dialog, id ->
-
+                        mSocket.emit("imready", matchingConfirmFailObj)
                     }
                 )
             Thread {
@@ -172,7 +183,7 @@ class MainHomeFragment : Fragment() {
             val matchingConfirmJSON = JSONObject(args[0].toString())
             val matchingConfirmResponse = Gson().fromJson(matchingConfirmJSON.toString(), MatchingConfirmResponse::class.java)
             Log.d(TAG, matchingConfirmResponse.toString())
-            CometChat.joinGroup(matchingConfirmResponse.groupName.toString(),
+            CometChat.joinGroup(matchingConfirmResponse.groupName,
                 CometChatConstants.GROUP_TYPE_PUBLIC,
                 "",
                 object : CometChat.CallbackListener<Group>() {
@@ -187,6 +198,7 @@ class MainHomeFragment : Fragment() {
                         )
                     }
                 })
+
             activity?.let {
                 val intent = Intent(it, SignalRoomActivity::class.java)
                 intent.putExtra("matchingData", matchingConfirmResponse)
