@@ -176,6 +176,12 @@ class SignalRoomActivity : AppCompatActivity() {
         val onContentsConnect = Emitter.Listener { args ->
             val res = JSONObject(args[0].toString())
             Log.d("Current Content: ", res.getString("currentContent"))
+
+            Thread {
+                runOnUiThread(Runnable {
+                    Toast.makeText(this, "지금부터 자기소개 시간입니다.", Toast.LENGTH_SHORT).show()
+                })
+            }.start()
         }
         contentsSocket.on("${matchingModel.groupRoomName}firstChoice", onContentsConnect)
 
