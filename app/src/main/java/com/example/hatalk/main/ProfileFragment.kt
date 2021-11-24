@@ -44,6 +44,7 @@ class ProfileFragment : Fragment() {
         val userInfo = arguments?.getParcelable<userInfo>("userInfo")
 
         binding?.kakaoLogoutButton?.setOnClickListener {
+            Log.d(TAG, "button good")
             UserApiClient.instance.logout { error ->
                 if (error != null) {
                     Toast.makeText(context, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
@@ -52,8 +53,9 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
-
-        binding?.kakaoUnlinkButton?.setOnClickListener {
+        Log.d(TAG, "HELLO")
+        binding?.kakaoLogoutButton?.setOnClickListener {
+            Log.d(TAG, "button good")
             UserApiClient.instance.unlink { error ->
                 if (error != null) {
                     Toast.makeText(context, "회원 탈퇴 실패 $error", Toast.LENGTH_SHORT).show()

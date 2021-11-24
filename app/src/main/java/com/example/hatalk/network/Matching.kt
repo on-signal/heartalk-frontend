@@ -15,13 +15,6 @@ data class MatchingResponse(
     val success: Boolean?
 )
 
-data class MatchingConfirmRequest(
-    val userId: String
-)
-
-
-
-
 data class DeleteRoomRequest(
     val guid: String
 )

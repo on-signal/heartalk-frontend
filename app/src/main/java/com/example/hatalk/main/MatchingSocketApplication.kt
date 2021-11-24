@@ -1,4 +1,4 @@
-package com.example.hatalk.main
+package com.example.hatalk.main.data
 
 import com.example.hatalk.signalRoom.PRIVATE.URLs
 import io.socket.client.IO

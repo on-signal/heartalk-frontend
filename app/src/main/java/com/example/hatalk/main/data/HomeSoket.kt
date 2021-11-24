@@ -1,6 +1,7 @@
 package com.example.hatalk.main.data
 
 import android.os.Parcelable
+import androidx.annotation.StringRes
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 

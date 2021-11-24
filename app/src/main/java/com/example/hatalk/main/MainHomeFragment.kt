@@ -20,6 +20,7 @@ import com.cometchat.pro.models.User
 import com.example.hatalk.databinding.FragmentMainHomeBinding
 import com.example.hatalk.main.data.MatchingConfirmData
 import com.example.hatalk.main.data.MatchingConfirmResponse
+import com.example.hatalk.main.data.MatchingSoketApplication
 import com.example.hatalk.main.data.MatchingStartData
 import com.example.hatalk.main.userModel.UserModel
 import com.example.hatalk.signalRoom.PRIVATE.IDs
@@ -127,8 +128,6 @@ class MainHomeFragment : Fragment() {
 
     private fun matching() {
 
-
-
         val userId = sharedViewModel.kakaoUserId
 
         val matchingStartMessage = MatchingStartData(
@@ -142,7 +141,7 @@ class MainHomeFragment : Fragment() {
         val onMatchingConnect = Emitter.Listener { args ->
             Log.d(TAG, args[0].toString())
             val matchingResponse = JSONObject(args[0].toString())
-            GUID = matchingResponse.getString("group_room_name")
+            GUID = matchingResponse.getString("groupName")
             //팝업창을 띄우기
             val matchingConfirmMessage = MatchingConfirmData(
                 userId,
