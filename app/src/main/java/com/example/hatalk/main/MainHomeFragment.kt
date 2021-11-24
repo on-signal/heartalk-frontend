@@ -10,8 +10,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.cometchat.pro.constants.CometChatConstants
@@ -22,28 +20,20 @@ import com.cometchat.pro.models.User
 import com.example.hatalk.databinding.FragmentMainHomeBinding
 import com.example.hatalk.main.data.MatchingConfirmData
 import com.example.hatalk.main.data.MatchingConfirmResponse
+import com.example.hatalk.main.data.MatchingSoketApplication
 import com.example.hatalk.main.data.MatchingStartData
 import com.example.hatalk.main.userModel.UserModel
-import com.example.hatalk.model.UserJoinModel
-import com.example.hatalk.model.userInfo
 import com.example.hatalk.signalRoom.PRIVATE.IDs
 import com.example.hatalk.signalRoom.sigRoom.SignalRoomActivity
-import com.example.hatalk.signalRoom.sigRoom.SocketApplication
-import com.example.hatalk.signalRoom.sigRoom.TempMessage
 import com.facebook.react.bridge.UiThreadUtil.runOnUiThread
 import com.google.gson.Gson
-import com.kakao.sdk.user.UserApiClient
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_signal_room.view.*
 import kotlinx.android.synthetic.main.fragment_main_home.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.net.URISyntaxException
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
 
@@ -138,8 +128,6 @@ class MainHomeFragment : Fragment() {
 
     private fun matching() {
 
-
-
         val userId = sharedViewModel.kakaoUserId
 
         val matchingStartMessage = MatchingStartData(
@@ -153,7 +141,7 @@ class MainHomeFragment : Fragment() {
         val onMatchingConnect = Emitter.Listener { args ->
             Log.d(TAG, args[0].toString())
             val matchingResponse = JSONObject(args[0].toString())
-            GUID = matchingResponse.getString("group_room_name")
+            GUID = matchingResponse.getString("groupName")
             //팝업창을 띄우기
             val matchingConfirmMessage = MatchingConfirmData(
                 userId,
