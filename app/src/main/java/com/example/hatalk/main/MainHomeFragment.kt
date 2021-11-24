@@ -74,7 +74,7 @@ class MainHomeFragment : Fragment() {
         }
 
         try {
-            mSocket = MatchingSoketApplication.get()
+            mSocket = MatchingSocketApplication.get()
             mSocket.connect()
         } catch (e: URISyntaxException) {
             e.printStackTrace();

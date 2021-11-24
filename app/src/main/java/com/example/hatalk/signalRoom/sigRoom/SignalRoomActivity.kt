@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -32,18 +33,35 @@ import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_signal_room.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.net.URISyntaxException
 import java.util.*
 
-class SocketApplication {
+class ChatSocketApplication {
     companion object {
         private lateinit var socket: Socket
         fun get(): Socket {
             try {
                 // [uri]부분은 "http://X.X.X.X:3000" 꼴로 넣어주는 게 좋다.
-                socket = IO.socket("${URLs.URL}/chat")
+                socket = IO.socket("${URLs.URL}/contents")
+            } catch (e: URISyntaxException) {
+                e.printStackTrace()
+            }
+            return socket
+        }
+    }
+}
+
+class ContentsSocketApplication {
+    companion object {
+        private lateinit var socket: Socket
+        fun get(): Socket {
+            try {
+                // [uri]부분은 "http://X.X.X.X:3000" 꼴로 넣어주는 게 좋다.
+                socket = IO.socket("${URLs.URL}/contents")
             } catch (e: URISyntaxException) {
                 e.printStackTrace()
             }
@@ -55,7 +73,8 @@ class SocketApplication {
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
 class SignalRoomActivity : AppCompatActivity() {
     private val TAG = "HEART"
-    lateinit var mSocket: Socket
+    private lateinit var chatSocket: Socket
+    private lateinit var contentsSocket: Socket
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
 
@@ -96,17 +115,19 @@ class SignalRoomActivity : AppCompatActivity() {
          */
         val chatButton = view.button_chat_send
         try {
-            mSocket = SocketApplication.get()
-            mSocket.connect()
+            chatSocket = ChatSocketApplication.get()
+            chatSocket.connect()
+            contentsSocket = ContentsSocketApplication.get()
+            contentsSocket.connect()
         } catch (e: URISyntaxException) {
             e.printStackTrace();
         }
 
-        val onConnect = Emitter.Listener { args ->
+        val onChatConnect = Emitter.Listener { args ->
             val res = JSONObject(args[0].toString())
 
             var userChat: TextView? = null
-            when(res.getString("icon")) {
+            when (res.getString("icon")) {
                 "lion" -> {
                     userChat = view.lion_text
                 }
@@ -135,12 +156,12 @@ class SignalRoomActivity : AppCompatActivity() {
                 })
             }.start()
         }
-        mSocket.on("channel1", onConnect)
+        chatSocket.on(matchingModel.groupRoomName, onChatConnect)
 
         chatButton.setOnClickListener {
             val chatText = view.edit_chat_message
             val message = TempMessage(
-                "channel1",
+                matchingModel.groupRoomName,
                 matchingModel.myId,
                 chatText.text.toString(),
                 matchingModel.myIcon
@@ -148,9 +169,24 @@ class SignalRoomActivity : AppCompatActivity() {
             val gson = Gson()
             val obj = JSONObject(gson.toJson(message))
 
-            mSocket.emit("msgToServer", obj)
+            chatSocket.emit("msgToServer", obj)
             chatText.text.clear()
         }
+
+        val onContentsConnect = Emitter.Listener { args ->
+            val res = JSONObject(args[0].toString())
+            Log.d("Current Content: ", res.getString("currentContent"))
+        }
+        contentsSocket.on("${matchingModel.groupRoomName}firstChoice", onContentsConnect)
+
+        val firstContent = FirstContent(
+            matchingModel.groupRoomName,
+            matchingModel.myId
+        )
+        val firstContentGson = Gson()
+        val firstContentObj = JSONObject(firstContentGson.toJson(firstContent))
+        contentsSocket.emit("readyToServer", firstContentObj)
+
         /**
          * [Socket IO Chat End]
          */
@@ -158,7 +194,8 @@ class SignalRoomActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mSocket.disconnect()
+        chatSocket.disconnect()
+        contentsSocket.disconnect()
         lifecycleScope.launch {
             val deleteRoomRequest = DeleteRoomRequest(matchingModel.groupRoomName)
             MatchingApi.retrofitService.deleteRoom(deleteRoomRequest)
@@ -295,7 +332,7 @@ class SignalRoomActivity : AppCompatActivity() {
 
     private fun setMyButton(view: View) {
         var userImageVIew: ImageView? = null
-        when(matchingModel.myIcon) {
+        when (matchingModel.myIcon) {
             "lion" -> {
                 userImageVIew = view.lion
             }

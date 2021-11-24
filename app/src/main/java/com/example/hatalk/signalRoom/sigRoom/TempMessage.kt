@@ -1,7 +1,7 @@
 package com.example.hatalk.signalRoom.sigRoom
 
 data class TempMessage(
-    val channelname: String,
+    val groupName: String,
     val name: String,
     val text: String,
     val icon: String
