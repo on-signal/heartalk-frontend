@@ -3,22 +3,17 @@ package com.example.hatalk.signalRoom.sigRoom
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.cometchat.pro.constants.CometChatConstants
-import com.cometchat.pro.core.AppSettings
-import com.cometchat.pro.core.Call
-import com.cometchat.pro.core.CallSettings
-import com.cometchat.pro.core.CometChat
+import com.cometchat.pro.core.*
 import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
@@ -41,7 +36,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.net.URISyntaxException
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.concurrent.timer
 
 class ChatSocketApplication {
     companion object {
@@ -81,6 +80,7 @@ class SignalRoomActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignalRoomBinding.inflate(layoutInflater)
@@ -183,13 +183,62 @@ class SignalRoomActivity : AppCompatActivity() {
 
         val onContentsConnect = Emitter.Listener { args ->
             val res = JSONObject(args[0].toString())
-            Log.d("Current Content: ", res.getString("currentContent"))
+            val introContentsResponse =
+                Gson().fromJson(res.toString(), IntroContentsResponse::class.java)
 
-            Thread {
-                runOnUiThread(Runnable {
-                    Toast.makeText(this, "지금부터 자기소개 시간입니다.", Toast.LENGTH_SHORT).show()
-                })
-            }.start()
+            val introductionTime = Date(introContentsResponse.contentsStartTime.introduction).time
+            timer(period = 10) {
+                if (Date().time >= introductionTime) {
+                    Thread {
+                        runOnUiThread(Runnable {
+                            Toast.makeText(
+                                applicationContext,
+                                "지금부터 자기소개 시간입니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        })
+                    }.start()
+                    this.cancel()
+                }
+            }
+            timer(period = 10) {
+                if (Date().time >= introductionTime + 5000) {
+                    Thread {
+                        runOnUiThread(Runnable {
+                            Toast.makeText(
+                                applicationContext,
+                                "늑대님 자기 소개 시간 10초 드리겠습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        })
+                    }.start()
+//                    if (matchingModel.myIcon == "wolf") {
+//                        callManager.muteAudio(false)
+//                    } else {
+//                        callManager.muteAudio(true)
+//                    }
+                    this.cancel()
+                }
+            }
+            timer(period = 10) {
+                if (Date().time >= introductionTime + 15000) {
+                    Thread {
+                        runOnUiThread(Runnable {
+                            Toast.makeText(
+                                applicationContext,
+                                "여우님 자기 소개 시간 10초 드리겠습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        })
+                    }.start()
+//                    if (matchingModel.myIcon == "fox") {
+//                        callManager.muteAudio(false)
+//                    } else {
+//                        callManager.muteAudio(true)
+//                    }
+                    this.cancel()
+                }
+            }
         }
         contentsSocket.on("${matchingModel.groupRoomName}firstChoice", onContentsConnect)
 
