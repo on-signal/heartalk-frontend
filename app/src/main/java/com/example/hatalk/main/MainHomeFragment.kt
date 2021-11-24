@@ -172,7 +172,7 @@ class MainHomeFragment : Fragment() {
             val matchingConfirmJSON = JSONObject(args[0].toString())
             val matchingConfirmResponse = Gson().fromJson(matchingConfirmJSON.toString(), MatchingConfirmResponse::class.java)
             Log.d(TAG, matchingConfirmResponse.toString())
-            CometChat.joinGroup(matchingConfirmResponse.group_room_name.toString(),
+            CometChat.joinGroup(matchingConfirmResponse.groupName.toString(),
                 CometChatConstants.GROUP_TYPE_PUBLIC,
                 "",
                 object : CometChat.CallbackListener<Group>() {

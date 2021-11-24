@@ -13,7 +13,7 @@ data class MatchingStartData(
 
 data class MatchingConfirmData(
     val userId: String,
-    val group_room_name: String
+    val groupName: String
 )
 
 @Parcelize
@@ -21,7 +21,7 @@ data class MatchingConfirmResponse(
     val msg: String?,
     var caller: String?,
     val remain_time: String?,
-    val group_room_name: String?,
+    val groupName: String,
     val gender: String?,
     val room_info: @RawValue roomInfo?,
     val question_list: Array<String>?

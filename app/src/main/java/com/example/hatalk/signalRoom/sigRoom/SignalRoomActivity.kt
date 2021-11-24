@@ -271,7 +271,7 @@ class SignalRoomActivity : AppCompatActivity() {
 
         val userID: String = CometChat.getLoggedInUser().uid.toString()
 
-        matchingModel.setGroupRoomName(matchingData?.group_room_name.toString())
+        matchingModel.setGroupRoomName(matchingData?.groupName.toString())
         matchingModel.setCaller(matchingData?.caller.toString())
 
         matchingModel.setMyId(userID)

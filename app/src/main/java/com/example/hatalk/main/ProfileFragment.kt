@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.example.hatalk.R
@@ -43,7 +44,9 @@ class ProfileFragment : Fragment() {
 
         val userInfo = arguments?.getParcelable<userInfo>("userInfo")
 
-        binding?.kakaoLogoutButton?.setOnClickListener {
+        val kakaoLogoutButton: Button? = binding?.kakaoLogoutButton
+
+        kakaoLogoutButton?.setOnClickListener {
             Log.d(TAG, "button good")
             UserApiClient.instance.logout { error ->
                 if (error != null) {
