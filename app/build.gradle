@@ -56,6 +56,7 @@ dependencies {
     implementation "com.kakao.sdk:v2-user:2.5.0"
     implementation "com.kakao.sdk:v2-talk:2.3.0"
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.30.0'
+    implementation "android.arch.lifecycle:extensions:1.1.1"
     // Moshi
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
     // Retrofit with Moshi Converter
@@ -76,12 +77,15 @@ dependencies {
     implementation('io.socket:socket.io-client:2.0.0') {
         exclude group: 'org.json', module: 'json'
     }
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
 
     // bottom navBar
     implementation 'nl.joery.animatedbottombar:library:1.1.0'
 
     // material UI
     implementation 'com.google.android.material:material:1.4.0'
+
+    //balloon
+    implementation 'com.github.skydoves:balloon:1.4.0'
 
 }

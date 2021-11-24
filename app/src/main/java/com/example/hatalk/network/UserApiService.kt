@@ -31,6 +31,9 @@ interface UserApiService {
 
     @GET("users")
     suspend fun getCurrentUser(@Header("Authorization") jwt: String): Response<GetProfileResponse>
+
+    @POST("users/delete")
+    suspend fun deleteUser(@Header("Authorization") jwt: String, @Body body: DeleteUserRequest): Response<DeleteUserResponse>
 }
 
 object UserApi {

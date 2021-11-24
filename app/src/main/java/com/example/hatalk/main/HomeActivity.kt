@@ -56,10 +56,7 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
             sharedViewModel.setGender(profile?.gender.toString())
             sharedViewModel.setAge(profile!!.age)
             sharedViewModel.setKakaoUserId(userInfo!!.kakaoUserId)
-//            Log.d(TAG, sharedViewModel.nickname)
-//            Log.d(TAG, sharedViewModel.gender.toString())
-//            Log.d(TAG, sharedViewModel.age.toString())
-//            Log.d(TAG, sharedViewModel.photoUrl)
+            sharedViewModel.setAccessToken(userInfo.accessToken)
         }
 
         navController = findNavController(R.id.home_fragment)

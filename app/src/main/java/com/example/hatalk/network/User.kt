@@ -43,3 +43,12 @@ data class GetProfileResponse(
         val gender: Int,
         val age: Int
 )
+
+
+data class DeleteUserRequest(
+        val kakaoUserId: String
+)
+
+data class DeleteUserResponse(
+        val msg: String
+)

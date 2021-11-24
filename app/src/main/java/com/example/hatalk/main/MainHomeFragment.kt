@@ -49,8 +49,6 @@ import kotlin.properties.Delegates
 class MainHomeFragment : Fragment() {
     private val TAG = "HEART"
 
-    private var matchingStatus by Delegates.notNull<Boolean>()
-    private lateinit var matchingData: MatchingConfirmResponse
 
     private var binding: FragmentMainHomeBinding? = null
     private val sharedViewModel: UserModel by activityViewModels()
@@ -66,7 +64,7 @@ class MainHomeFragment : Fragment() {
         binding = fragmentBinding
 
 
-        return fragmentBinding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
