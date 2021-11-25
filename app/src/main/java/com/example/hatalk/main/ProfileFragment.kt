@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.hatalk.MainActivity
 import com.example.hatalk.R
@@ -64,6 +65,11 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val profileEditButton: Button? = binding?.profileEditButton
+        profileEditButton?.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_profileEditFragment)
+        }
 
 
         val kakaoLogoutButton: Button? = binding?.kakaoLogoutButton
