@@ -23,25 +23,20 @@ import com.example.hatalk.model.sigRoom.MatchingModel
 import com.example.hatalk.network.DeleteRoomRequest
 import com.example.hatalk.network.MatchingApi
 import com.example.hatalk.signalRoom.PRIVATE.IDs
-import com.example.hatalk.signalRoom.sigRoom.socket.ContentsSocketApplication
-import com.google.gson.Gson
-import io.socket.client.Socket
-import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_signal_room.view.*
 import kotlinx.coroutines.launch
-import org.json.JSONObject
-import java.net.URISyntaxException
 import java.util.*
-import kotlin.concurrent.timer
-import com.cometchat.pro.core.CallManager
+import com.example.hatalk.model.sigRoom.MatchingUser
+import com.example.hatalk.signalRoom.sigRoom.socket.ChatSocket
+import com.example.hatalk.signalRoom.sigRoom.socket.ContentsReadySocket
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
 class SignalRoomActivity : AppCompatActivity() {
     private val TAG = "HEART"
-    private lateinit var chatSocket: Socket
-    private lateinit var contentsReadySocket: Socket
+    private lateinit var chatSocket: ChatSocket
+    private lateinit var contentsReadySocket: ContentsReadySocket
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
 
@@ -62,9 +57,25 @@ class SignalRoomActivity : AppCompatActivity() {
 
         /** [CometChat_init] ------------------------------------------------ */
 
-        setChatSocket(view)
+        chatSocket =
+            ChatSocket(view, matchingModel.groupRoomName, matchingModel.myId, matchingModel.myIcon)
+        chatSocket.set()
+        chatSocket.makeOn()
 
-        setContentsReadySocket()
+        contentsReadySocket = ContentsReadySocket(
+            this,
+            matchingModel.groupRoomName,
+            matchingModel.myGender,
+            matchingModel.myIcon
+        )
+
+        contentsReadySocket.set()
+        contentsReadySocket.makeOn()
+        val firstContent = FirstContent(
+            matchingModel.groupRoomName,
+            matchingModel.myId
+        )
+        contentsReadySocket.emit(firstContent)
     }
 
     override fun onDestroy() {
@@ -186,6 +197,7 @@ class SignalRoomActivity : AppCompatActivity() {
         matchingModel.setGroupRoomName(matchingData?.groupName.toString())
         matchingModel.setCaller(matchingData?.caller.toString())
 
+        matchingModel.setMyGender(matchingData?.gender.toString())
         matchingModel.setMyId(userID)
 
         if (userID == matchingData?.room_info?.user1?.Id.toString()) {
@@ -196,13 +208,45 @@ class SignalRoomActivity : AppCompatActivity() {
             matchingModel.setMyIcon(matchingData?.room_info?.user2?.icon.toString())
         }
 
-        matchingModel.setUser1Id(matchingData?.room_info?.user1?.Id.toString())
-        matchingModel.setUser1Nickname(matchingData?.room_info?.user1?.nickname.toString())
-        matchingModel.setUser1Icon(matchingData?.room_info?.user1?.icon.toString())
+        if (matchingData?.room_info?.user1?.gender.toString() == "0") {
+            val manUser = MatchingUser(
+                matchingData?.room_info?.user1?.Id.toString(),
+                matchingData?.room_info?.user1?.nickname.toString(),
+                matchingData?.room_info?.user1?.gender.toString(),
+                matchingData?.room_info?.user1?.icon.toString()
+            )
+            matchingModel.appendManList(manUser)
+        } else {
+            val womanUser = MatchingUser(
+                matchingData?.room_info?.user1?.Id.toString(),
+                matchingData?.room_info?.user1?.nickname.toString(),
+                matchingData?.room_info?.user1?.gender.toString(),
+                matchingData?.room_info?.user1?.icon.toString()
+            )
+            matchingModel.appendWomanList(womanUser)
+        }
 
-        matchingModel.setUser2Id(matchingData?.room_info?.user2?.Id.toString())
-        matchingModel.setUser2Nickname(matchingData?.room_info?.user2?.nickname.toString())
-        matchingModel.setUser2Icon(matchingData?.room_info?.user2?.icon.toString())
+        if (matchingData?.room_info?.user2?.gender.toString() == "0") {
+            val manUser = MatchingUser(
+                matchingData?.room_info?.user2?.Id.toString(),
+                matchingData?.room_info?.user2?.nickname.toString(),
+                matchingData?.room_info?.user2?.gender.toString(),
+                matchingData?.room_info?.user2?.icon.toString()
+            )
+            matchingModel.appendManList(manUser)
+        } else {
+            val womanUser = MatchingUser(
+                matchingData?.room_info?.user2?.Id.toString(),
+                matchingData?.room_info?.user2?.nickname.toString(),
+                matchingData?.room_info?.user2?.gender.toString(),
+                matchingData?.room_info?.user2?.icon.toString()
+            )
+            matchingModel.appendWomanList(womanUser)
+        }
+
+        for (item: String in matchingData?.question_list!!) {
+            matchingModel.appendQuestionList(item)
+        }
     }
 
     private fun setMyButton(view: View) {
@@ -257,146 +301,5 @@ class SignalRoomActivity : AppCompatActivity() {
                 1000
             )
         }
-    }
-
-    private fun setChatSocket(view: View) {
-        val chatButton = view.button_chat_send
-        try {
-            chatSocket = ContentsSocketApplication.get()
-            chatSocket.connect()
-        } catch (e: URISyntaxException) {
-            e.printStackTrace();
-        }
-
-        val onChatConnect = Emitter.Listener { args ->
-            val res = JSONObject(args[0].toString())
-
-            var userChat: TextView? = null
-            when (res.getString("icon")) {
-                "lion" -> {
-                    userChat = view.lion_text
-                }
-                "bee" -> {
-                    userChat = view.bee_text
-                }
-                "penguin" -> {
-                    userChat = view.penguin_text
-                }
-                "hamster" -> {
-                    userChat = view.hamster_text
-                }
-                "wolf" -> {
-                    userChat = view.wolf_text
-                }
-                "fox" -> {
-                    userChat = view.fox_text
-                }
-            }
-
-            Thread {
-                runOnUiThread(Runnable {
-                    kotlin.run {
-                        userChat?.text = res.getString("text")
-                    }
-                })
-            }.start()
-        }
-        chatSocket.on(matchingModel.groupRoomName, onChatConnect)
-
-        chatButton.setOnClickListener {
-            val chatText = view.edit_chat_message
-            val message = TempMessage(
-                matchingModel.groupRoomName,
-                matchingModel.myId,
-                chatText.text.toString(),
-                matchingModel.myIcon
-            )
-            val gson = Gson()
-            val obj = JSONObject(gson.toJson(message))
-
-            chatSocket.emit("msgToServer", obj)
-            chatText.text.clear()
-        }
-    }
-
-    private fun setContentsReadySocket() {
-        try {
-            contentsReadySocket = ContentsSocketApplication.get()
-            contentsReadySocket.connect()
-        } catch (e: URISyntaxException) {
-            e.printStackTrace();
-        }
-
-        val onContentsConnect = Emitter.Listener { args ->
-            val res = JSONObject(args[0].toString())
-            val introContentsResponse =
-                Gson().fromJson(res.toString(), IntroContentsResponse::class.java)
-
-            val introductionTime = Date(introContentsResponse.contentsStartTime.introduction).time
-            timer(period = 10) {
-                if (Date().time >= introductionTime) {
-                    Thread {
-                        runOnUiThread(Runnable {
-                            Toast.makeText(
-                                applicationContext,
-                                "지금부터 자기소개 시간입니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        })
-                    }.start()
-                    this.cancel()
-                }
-            }
-
-            val callManager = CallManager.getInstance()
-            timer(period = 10) {
-                if (Date().time >= introductionTime + 5000) {
-                    Thread {
-                        runOnUiThread(Runnable {
-                            Toast.makeText(
-                                applicationContext,
-                                "늑대님 자기 소개 시간 10초 드리겠습니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        })
-                    }.start()
-                    if (matchingModel.myIcon == "wolf") {
-                        callManager.muteAudio(false)
-                    } else {
-                        callManager.muteAudio(true)
-                    }
-                    this.cancel()
-                }
-            }
-
-            timer(period = 10) {
-                if (Date().time >= introductionTime + 15000) {
-                    Thread {
-                        runOnUiThread(Runnable {
-                            Toast.makeText(
-                                applicationContext,
-                                "여우님 자기 소개 시간 10초 드리겠습니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        })
-                    }.start()
-                    if (matchingModel.myIcon == "fox") {
-                        callManager.muteAudio(false)
-                    } else {
-                        callManager.muteAudio(true)
-                    }
-                    this.cancel()
-                }
-            }
-        }
-        contentsReadySocket.on("${matchingModel.groupRoomName}firstChoice", onContentsConnect)
-
-        val firstContent = FirstContent(
-            matchingModel.groupRoomName,
-            matchingModel.myId
-        )
-        val firstContentGson = Gson()
-        val firstContentObj = JSONObject(firstContentGson.toJson(firstContent))
-        contentsReadySocket.emit("readyToServer", firstContentObj)
     }
 }

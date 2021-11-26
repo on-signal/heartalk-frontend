@@ -2,7 +2,14 @@ package com.example.hatalk.model.sigRoom
 
 import androidx.lifecycle.ViewModel
 
-class MatchingModel: ViewModel() {
+data class MatchingUser(
+    private val id: String,
+    private val nickname: String,
+    private val gender: String,
+    public val icon: String
+)
+
+class MatchingModel : ViewModel() {
     private var _groupRoomName: String = ""
     val groupRoomName: String get() = _groupRoomName
 
@@ -18,23 +25,18 @@ class MatchingModel: ViewModel() {
     private var _myIcon: String = ""
     val myIcon: String get() = _myIcon
 
-    private var _user1Id: String = ""
-    val user1Id: String get() = _user1Id
+    private var _myGender: String = "0"
+    val myGender: String get() = _myGender
 
-    private var _user1Nickname: String = ""
-    val user1Nickname: String get() = _user1Nickname
+    private val _manList: MutableList<MatchingUser> = mutableListOf()
+    val manList: MutableList<MatchingUser> get() = _manList
 
-    private var _user1Icon: String = ""
-    val user1Icon: String get() = _user1Icon
+    private val _womanList: MutableList<MatchingUser> = mutableListOf()
+    val womanList: MutableList<MatchingUser> get() = _womanList
 
-    private var _user2Id: String = ""
-    val user2Id: String get() = _user2Id
+    private val _questionList: MutableList<String> = mutableListOf()
+    val questionList: MutableList<String> get() = _questionList
 
-    private var _user2Nickname: String = ""
-    val user2Nickname: String get() = _user2Nickname
-
-    private var _user2Icon: String = ""
-    val user2Icon: String get() = _user2Icon
 
     fun setGroupRoomName(groupRoomName: String) {
         _groupRoomName = groupRoomName
@@ -56,27 +58,20 @@ class MatchingModel: ViewModel() {
         _myIcon = myIcon
     }
 
-    fun setUser1Id(user1Id: String) {
-        _user1Id = user1Id
+    fun setMyGender(myGender: String) {
+        _myGender = myGender
     }
 
-    fun setUser1Nickname(user1Nickname: String) {
-        _user1Nickname = user1Nickname
+    fun appendManList(man: MatchingUser) {
+        _manList.add(man)
     }
 
-    fun setUser1Icon(user1Icon: String) {
-        _user1Icon = user1Icon
+    fun appendWomanList(woman: MatchingUser) {
+        _womanList.add(woman)
     }
 
-    fun setUser2Id(user2Id: String) {
-        _user2Id = user2Id
+    fun appendQuestionList(question: String) {
+        _questionList.add(question)
     }
 
-    fun setUser2Nickname(user2Nickname: String) {
-        _user2Nickname = user2Nickname
-    }
-
-    fun setUser2Icon(user2Icon: String) {
-        _user2Icon = user2Icon
-    }
 }
