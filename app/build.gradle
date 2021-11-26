@@ -85,7 +85,9 @@ dependencies {
     // material UI
     implementation 'com.google.android.material:material:1.4.0'
 
-    //balloon
+    // balloon
     implementation 'com.github.skydoves:balloon:1.4.0'
 
+    // anko for socket (1:1 chat)
+//    implementation "org.jetbrains.anko:anko:0.10.8"
 }
