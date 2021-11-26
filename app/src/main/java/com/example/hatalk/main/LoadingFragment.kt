@@ -34,13 +34,12 @@ class LoadingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "LOADING")
 //        TimeUnit.SECONDS.sleep(1L)
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 findNavController().navigate(R.id.action_loadingFragment_to_mainHomeFragment)
             },
-            700
+            1000
         )
     }
 }

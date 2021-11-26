@@ -93,12 +93,9 @@ class MainHomeFragment : Fragment() {
         /** [MatchingButton] */
         val matchingButton = binding?.matchingButton
         matchingButton?.setOnClickListener {
-//            matchingCall()
-//            matchConfirm()
 //            goToSigRoom()
             matching()
         }
-
 
 
     }

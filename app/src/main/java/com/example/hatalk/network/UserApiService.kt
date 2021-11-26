@@ -3,6 +3,7 @@ package com.example.hatalk.network
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.example.hatalk.main.data.Friends
 import com.example.hatalk.signalRoom.PRIVATE.URLs
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -12,6 +13,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 import java.lang.Exception
+
+import com.example.hatalk.main.userModel.UserModel
+import retrofit2.Call
+import retrofit2.http.GET
+
+
 
 private const val BASE_URL = URLs.URL
 
@@ -34,6 +41,10 @@ interface UserApiService {
 
     @POST("users/delete")
     suspend fun deleteUser(@Header("Authorization") jwt: String, @Body body: DeleteUserRequest): Response<DeleteUserResponse>
+
+    @GET("chats/{userId}")
+    suspend fun getUserFriend(@Path(value = "userId", encoded = true)userId: String): Response<Array<Friends>>
+
 }
 
 object UserApi {

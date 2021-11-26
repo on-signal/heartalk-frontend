@@ -1,10 +1,21 @@
 package com.example.hatalk.main.userModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.hatalk.main.data.Friends
 import com.example.hatalk.main.data.MatchingConfirmData
 import com.example.hatalk.main.data.MatchingConfirmResponse
+import com.example.hatalk.network.UserApi
+import kotlinx.coroutines.launch
+import retrofit2.Response
+import java.lang.Exception
 
 class UserModel: ViewModel() {
+    init {
+        Log.d("HEART", "model init")
+    }
+
     private var _kakaoUserId: String = ""
     val kakaoUserId: String get() = _kakaoUserId
 
@@ -41,8 +52,23 @@ class UserModel: ViewModel() {
     private var _age: Int = 0
     val age: Int get() = _age
 
+    private var _friends: Array<Friends>? = null
+    val friends: Array<Friends>? get() = _friends
+
+    private fun getFriends() {
+        viewModelScope.launch {
+            try {
+                val friendsResponse = UserApi.retrofitService.getUserFriend(_kakaoUserId)
+                _friends = friendsResponse.body()
+                }
+            catch (e: Exception) {
+            }
+        }
+    }
+
     fun setKakaoUserId(kakaoUserId: String) {
         _kakaoUserId = kakaoUserId
+        getFriends()
     }
 
 
