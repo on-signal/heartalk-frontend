@@ -34,6 +34,8 @@ import org.json.JSONObject
 import java.net.URISyntaxException
 import java.util.*
 import kotlin.concurrent.timer
+import com.cometchat.pro.core.CallManager
+
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
 class SignalRoomActivity : AppCompatActivity() {
@@ -345,6 +347,8 @@ class SignalRoomActivity : AppCompatActivity() {
                     this.cancel()
                 }
             }
+
+            val callManager = CallManager.getInstance()
             timer(period = 10) {
                 if (Date().time >= introductionTime + 5000) {
                     Thread {
@@ -356,14 +360,15 @@ class SignalRoomActivity : AppCompatActivity() {
                             ).show()
                         })
                     }.start()
-//                    if (matchingModel.myIcon == "wolf") {
-//                        callManager.muteAudio(false)
-//                    } else {
-//                        callManager.muteAudio(true)
-//                    }
+                    if (matchingModel.myIcon == "wolf") {
+                        callManager.muteAudio(false)
+                    } else {
+                        callManager.muteAudio(true)
+                    }
                     this.cancel()
                 }
             }
+
             timer(period = 10) {
                 if (Date().time >= introductionTime + 15000) {
                     Thread {
@@ -375,11 +380,11 @@ class SignalRoomActivity : AppCompatActivity() {
                             ).show()
                         })
                     }.start()
-//                    if (matchingModel.myIcon == "fox") {
-//                        callManager.muteAudio(false)
-//                    } else {
-//                        callManager.muteAudio(true)
-//                    }
+                    if (matchingModel.myIcon == "fox") {
+                        callManager.muteAudio(false)
+                    } else {
+                        callManager.muteAudio(true)
+                    }
                     this.cancel()
                 }
             }
