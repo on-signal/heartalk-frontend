@@ -30,6 +30,7 @@ import java.util.*
 import com.example.hatalk.model.sigRoom.MatchingUser
 import com.example.hatalk.signalRoom.sigRoom.socket.ChatSocket
 import com.example.hatalk.signalRoom.sigRoom.socket.ContentsReadySocket
+import com.example.hatalk.signalRoom.sigRoom.socket.IntroductionSocket
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
@@ -37,6 +38,7 @@ class SignalRoomActivity : AppCompatActivity() {
     private val TAG = "HEART"
     private lateinit var chatSocket: ChatSocket
     private lateinit var contentsReadySocket: ContentsReadySocket
+    private lateinit var introductionSocket: IntroductionSocket
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
 
@@ -62,26 +64,27 @@ class SignalRoomActivity : AppCompatActivity() {
         chatSocket.set()
         chatSocket.makeOn()
 
-        contentsReadySocket = ContentsReadySocket(
-            this,
-            matchingModel.groupRoomName,
-            matchingModel.myGender,
-            matchingModel.myIcon
-        )
-
+        contentsReadySocket = ContentsReadySocket(this, matchingModel.groupRoomName)
         contentsReadySocket.set()
-        contentsReadySocket.makeOn()
         val firstContent = FirstContent(
             matchingModel.groupRoomName,
             matchingModel.myId
         )
+        contentsReadySocket.makeOn()
         contentsReadySocket.emit(firstContent)
+
+        introductionSocket =
+            IntroductionSocket(this, matchingModel.groupRoomName, matchingModel.myIcon)
+        introductionSocket.set()
+        introductionSocket.makeOn()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         chatSocket.disconnect()
         contentsReadySocket.disconnect()
+        introductionSocket.disconnect()
+
         lifecycleScope.launch {
             val deleteRoomRequest = DeleteRoomRequest(matchingModel.groupRoomName)
             MatchingApi.retrofitService.deleteRoom(deleteRoomRequest)

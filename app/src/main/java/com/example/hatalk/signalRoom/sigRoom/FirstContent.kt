@@ -3,7 +3,6 @@ package com.example.hatalk.signalRoom.sigRoom
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
-import java.util.*
 
 data class FirstContent (
     val groupName: String,
@@ -11,13 +10,15 @@ data class FirstContent (
         )
 
 @Parcelize
-data class IntroContentsResponse(
+data class AnswerToQuestion(
     val currentContent: String,
-    val contentsStartTime: @RawValue IntroContentsStartTime
-) : Parcelable
+    val contentsStartTime: @RawValue AnswerToQuestionTime,
+    val partners: Array<Array<String>>
+): Parcelable
 
 @Parcelize
-data class IntroContentsStartTime(
-    val introduction: String,
-    val firstChoice: String
+data class AnswerToQuestionTime(
+    val answerToQuestion: String,
+    val call: String,
+    val leaveCall: String
 ) : Parcelable

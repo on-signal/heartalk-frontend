@@ -1,53 +1,58 @@
 package com.example.hatalk.signalRoom.sigRoom.socket
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
-import com.example.hatalk.signalRoom.sigRoom.FirstContent
+import com.cometchat.pro.core.CallManager
 import com.facebook.react.bridge.UiThreadUtil
-import com.google.gson.Gson
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import org.json.JSONObject
 import java.net.URISyntaxException
 
-class ContentsReadySocket(private val context: Context, private val groupRoomName: String) {
-
+class IntroductionSocket(
+    private val context: Context,
+    private val groupRoomName: String,
+    private val myIcon: String
+) {
     private lateinit var socket: Socket
-    private val onContentsReadyConnect = Emitter.Listener { _ ->
-        emitListener()
+    private val onIntroductionConnect = Emitter.Listener { args ->
+        emiListener(args)
     }
+    private val callManager = CallManager.getInstance()
 
     fun set() {
         try {
             socket = ContentsSocketApplication.get()
             socket.connect()
         } catch (e: URISyntaxException) {
-            e.printStackTrace();
+            e.printStackTrace()
         }
     }
 
     fun makeOn() {
-        socket.on("${groupRoomName}Start", onContentsReadyConnect)
-    }
-
-    fun emit(firstContent: FirstContent) {
-        val firstContentGson = Gson()
-        val firstContentObj = JSONObject(firstContentGson.toJson(firstContent))
-
-        socket.emit("readyToServer", firstContentObj)
+        socket.on("${groupRoomName}Introduction", onIntroductionConnect)
     }
 
     fun disconnect() {
         socket.disconnect()
     }
 
-    private fun emitListener() {
+    private fun emiListener(args: Array<Any>) {
+        val res = JSONObject(args[0].toString())
+
+        val talkingIcon = res.getString("icon")
+
+        if (myIcon == talkingIcon) {
+            callManager.muteAudio(false)
+        } else {
+            callManager.muteAudio(true)
+        }
+
         Thread {
             UiThreadUtil.runOnUiThread(Runnable {
                 Toast.makeText(
                     context,
-                    "자기 소개 시간입니다.",
+                    "${res.getString("icon")} 소개 시간입니다.",
                     Toast.LENGTH_SHORT
                 ).show()
             })

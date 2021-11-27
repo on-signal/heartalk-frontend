@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.widget.Toast
 import com.cometchat.pro.core.CallManager
+import com.example.hatalk.model.sigRoom.MatchingUser
+import com.example.hatalk.signalRoom.sigRoom.socket.FirstChoiceSocket
 import com.facebook.react.bridge.UiThreadUtil
 import java.util.*
 import kotlin.concurrent.timer
@@ -12,13 +14,19 @@ class SignalRoomTimer(
     private val context: Context,
     private val introductionTime: Long,
     private val firstChoiceTime: Long,
-    private val myIcon: String
+    private val myIcon: String,
+    private val groupName: String,
+    private val userId: String,
+    private val gender: String,
+    private val manList: MutableList<MatchingUser>,
+    private val womanList: MutableList<MatchingUser>
 ) {
     private val callManager = CallManager.getInstance()
     private val womanIconList = arrayOf("fox")
     private val manIconList = arrayOf("wolf")
     private val dialogBuilder = AlertDialog.Builder(context)
-    private lateinit var selectedItem: String
+    lateinit var selectedItem: String
+    private lateinit var firstChoiceSocket: FirstChoiceSocket
 
     fun checkIntroTime() {
         timer(period = 10) {
@@ -81,29 +89,47 @@ class SignalRoomTimer(
         }
     }
 
-    fun setFirstChoiceForMan() {
-        dialogBuilder.setTitle("첫 인상 선택")
-            .setSingleChoiceItems(womanIconList, -1) { _, pos ->
-                selectedItem = womanIconList[pos]
-            }.setPositiveButton("OK") { _, _ ->
-                Toast.makeText(
-                    context,
-                    "${selectedItem.toString()} is Selected", Toast.LENGTH_LONG
-                ).show();
-            }
-    }
+//    fun setFirstChoiceForMan() {
+//        dialogBuilder.setTitle("첫 인상 선택")
+//            .setSingleChoiceItems(womanIconList, -1) { _, pos ->
+//                selectedItem = womanIconList[pos]
+//            }.setPositiveButton("OK") { _, _ ->
+//                Toast.makeText(
+//                    context,
+//                    "$selectedItem is Selected", Toast.LENGTH_LONG
+//                ).show()
+//                var choice: String = ""
+//                for (woman in womanList) {
+//                    if (woman.icon == selectedItem) {
+//                        choice = woman.id
+//                    }
+//                }
+//                firstChoiceSocket = FirstChoiceSocket(groupName, userId, gender, choice)
+//                firstChoiceSocket.set()
+//                firstChoiceSocket.makeOn()
+//            }
+//    }
 
-    fun setFirstChoiceForWoman() {
-        dialogBuilder.setTitle("첫 인상 선택")
-            .setSingleChoiceItems(manIconList, -1) { _, pos ->
-                selectedItem = manIconList[pos]
-            }.setPositiveButton("OK") { _, _ ->
-                Toast.makeText(
-                    context,
-                    "${selectedItem.toString()} is Selected", Toast.LENGTH_LONG
-                ).show();
-            }
-    }
+//    fun setFirstChoiceForWoman() {
+//        dialogBuilder.setTitle("첫 인상 선택")
+//            .setSingleChoiceItems(manIconList, -1) { _, pos ->
+//                selectedItem = manIconList[pos]
+//            }.setPositiveButton("OK") { _, _ ->
+//                Toast.makeText(
+//                    context,
+//                    "$selectedItem is Selected", Toast.LENGTH_LONG
+//                ).show()
+//                var choice: String = ""
+//                for (man in manList) {
+//                    if (man.icon == selectedItem) {
+//                        choice = man.id
+//                    }
+//                }
+//                firstChoiceSocket = FirstChoiceSocket(groupName, userId, gender, choice)
+//                firstChoiceSocket.set()
+//                firstChoiceSocket.makeOn()
+//            }
+//    }
 
     fun checkFirstChoiceTime() {
         timer(period = 10) {
