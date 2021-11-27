@@ -13,7 +13,7 @@ import java.net.URISyntaxException
 
 class ChatSocket(
     private val view: View,
-    private val groupRoomName: String,
+    private val groupName: String,
     private val myId: String,
     private val myIcon: String
 ) {
@@ -34,7 +34,7 @@ class ChatSocket(
     }
 
     fun makeOn() {
-        socket.on(groupRoomName, onChatConnect)
+        socket.on(groupName, onChatConnect)
     }
 
     fun disconnect() {
@@ -47,7 +47,7 @@ class ChatSocket(
         chatButton.setOnClickListener {
             val chatText = view.edit_chat_message
             val message = TempMessage(
-                groupRoomName,
+                groupName,
                 myId,
                 chatText.text.toString(),
                 myIcon

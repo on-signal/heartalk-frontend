@@ -31,6 +31,7 @@ import com.example.hatalk.model.sigRoom.MatchingUser
 import com.example.hatalk.signalRoom.sigRoom.socket.ChatSocket
 import com.example.hatalk.signalRoom.sigRoom.socket.ContentsReadySocket
 import com.example.hatalk.signalRoom.sigRoom.socket.IntroductionSocket
+import com.example.hatalk.signalRoom.sigRoom.socket.ReadyFirstChoiceSocket
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
@@ -39,6 +40,7 @@ class SignalRoomActivity : AppCompatActivity() {
     private lateinit var chatSocket: ChatSocket
     private lateinit var contentsReadySocket: ContentsReadySocket
     private lateinit var introductionSocket: IntroductionSocket
+    private lateinit var readyFirstChoiceSocket: ReadyFirstChoiceSocket
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
 
@@ -60,23 +62,34 @@ class SignalRoomActivity : AppCompatActivity() {
         /** [CometChat_init] ------------------------------------------------ */
 
         chatSocket =
-            ChatSocket(view, matchingModel.groupRoomName, matchingModel.myId, matchingModel.myIcon)
+            ChatSocket(view, matchingModel.groupName, matchingModel.myId, matchingModel.myIcon)
         chatSocket.set()
         chatSocket.makeOn()
 
-        contentsReadySocket = ContentsReadySocket(this, matchingModel.groupRoomName)
+        contentsReadySocket = ContentsReadySocket(this, matchingModel.groupName)
         contentsReadySocket.set()
         val firstContent = FirstContent(
-            matchingModel.groupRoomName,
+            matchingModel.groupName,
             matchingModel.myId
         )
         contentsReadySocket.makeOn()
         contentsReadySocket.emit(firstContent)
 
         introductionSocket =
-            IntroductionSocket(this, matchingModel.groupRoomName, matchingModel.myIcon)
+            IntroductionSocket(this, matchingModel.groupName, matchingModel.myIcon)
         introductionSocket.set()
         introductionSocket.makeOn()
+
+        readyFirstChoiceSocket = ReadyFirstChoiceSocket(
+            this,
+            matchingModel.groupName,
+            matchingModel.myId,
+            matchingModel.myGender,
+            matchingModel.manList,
+            matchingModel.womanList
+        )
+        readyFirstChoiceSocket.set()
+        readyFirstChoiceSocket.makeOn()
     }
 
     override fun onDestroy() {
@@ -84,9 +97,10 @@ class SignalRoomActivity : AppCompatActivity() {
         chatSocket.disconnect()
         contentsReadySocket.disconnect()
         introductionSocket.disconnect()
+        readyFirstChoiceSocket.disconnect()
 
         lifecycleScope.launch {
-            val deleteRoomRequest = DeleteRoomRequest(matchingModel.groupRoomName)
+            val deleteRoomRequest = DeleteRoomRequest(matchingModel.groupName)
             MatchingApi.retrofitService.deleteRoom(deleteRoomRequest)
         }
     }
@@ -197,7 +211,7 @@ class SignalRoomActivity : AppCompatActivity() {
 
         val userID: String = CometChat.getLoggedInUser().uid.toString()
 
-        matchingModel.setGroupRoomName(matchingData?.groupName.toString())
+        matchingModel.setGroupName(matchingData?.groupName.toString())
         matchingModel.setCaller(matchingData?.caller.toString())
 
         matchingModel.setMyGender(matchingData?.gender.toString())
@@ -299,7 +313,7 @@ class SignalRoomActivity : AppCompatActivity() {
         if (matchingModel.caller == matchingModel.myId) {
             Handler(Looper.getMainLooper()).postDelayed(
                 {
-                    initiateCall(matchingModel.groupRoomName)
+                    initiateCall(matchingModel.groupName)
                 },
                 1000
             )

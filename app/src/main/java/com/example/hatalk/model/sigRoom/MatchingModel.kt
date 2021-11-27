@@ -3,15 +3,15 @@ package com.example.hatalk.model.sigRoom
 import androidx.lifecycle.ViewModel
 
 data class MatchingUser(
-    private val id: String,
+    val id: String,
     private val nickname: String,
     private val gender: String,
-    public val icon: String
+    val icon: String
 )
 
 class MatchingModel : ViewModel() {
-    private var _groupRoomName: String = ""
-    val groupRoomName: String get() = _groupRoomName
+    private var _groupName: String = ""
+    val groupName: String get() = _groupName
 
     private var _caller: String = ""
     val caller: String get() = _caller
@@ -38,8 +38,8 @@ class MatchingModel : ViewModel() {
     val questionList: MutableList<String> get() = _questionList
 
 
-    fun setGroupRoomName(groupRoomName: String) {
-        _groupRoomName = groupRoomName
+    fun setGroupName(groupName: String) {
+        _groupName = groupName
     }
 
     fun setCaller(caller: String) {

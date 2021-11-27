@@ -11,7 +11,7 @@ import io.socket.emitter.Emitter
 import org.json.JSONObject
 import java.net.URISyntaxException
 
-class ContentsReadySocket(private val context: Context, private val groupRoomName: String) {
+class ContentsReadySocket(private val context: Context, private val groupName: String) {
 
     private lateinit var socket: Socket
     private val onContentsReadyConnect = Emitter.Listener { _ ->
@@ -28,7 +28,7 @@ class ContentsReadySocket(private val context: Context, private val groupRoomNam
     }
 
     fun makeOn() {
-        socket.on("${groupRoomName}Start", onContentsReadyConnect)
+        socket.on("${groupName}Start", onContentsReadyConnect)
     }
 
     fun emit(firstContent: FirstContent) {

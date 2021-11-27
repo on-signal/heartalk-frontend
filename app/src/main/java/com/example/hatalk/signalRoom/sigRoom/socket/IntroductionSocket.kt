@@ -11,7 +11,7 @@ import java.net.URISyntaxException
 
 class IntroductionSocket(
     private val context: Context,
-    private val groupRoomName: String,
+    private val groupName: String,
     private val myIcon: String
 ) {
     private lateinit var socket: Socket
@@ -30,7 +30,7 @@ class IntroductionSocket(
     }
 
     fun makeOn() {
-        socket.on("${groupRoomName}Introduction", onIntroductionConnect)
+        socket.on("${groupName}Introduction", onIntroductionConnect)
     }
 
     fun disconnect() {
@@ -42,20 +42,45 @@ class IntroductionSocket(
 
         val talkingIcon = res.getString("icon")
 
-        if (myIcon == talkingIcon) {
-            callManager.muteAudio(false)
-        } else {
-            callManager.muteAudio(true)
-        }
+        when (talkingIcon) {
+            myIcon -> {
+                callManager.muteAudio(false)
+                Thread {
+                    UiThreadUtil.runOnUiThread(Runnable {
+                        Toast.makeText(
+                            context,
+                            "$talkingIcon 소개 시간입니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    })
+                }.start()
+            }
 
-        Thread {
-            UiThreadUtil.runOnUiThread(Runnable {
-                Toast.makeText(
-                    context,
-                    "${res.getString("icon")} 소개 시간입니다.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            })
-        }.start()
+            "end" -> {
+                callManager.muteAudio(true)
+                Thread {
+                    UiThreadUtil.runOnUiThread(Runnable {
+                        Toast.makeText(
+                            context,
+                            "자기 소개가 끝났습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    })
+                }.start()
+            }
+
+            else -> {
+                callManager.muteAudio(false)
+                Thread {
+                    UiThreadUtil.runOnUiThread(Runnable {
+                        Toast.makeText(
+                            context,
+                            "$talkingIcon 소개 시간입니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    })
+                }.start()
+            }
+        }
     }
 }
