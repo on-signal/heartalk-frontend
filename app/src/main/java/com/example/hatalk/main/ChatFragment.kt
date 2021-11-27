@@ -3,8 +3,6 @@ package com.example.hatalk.main
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,13 +18,8 @@ import com.example.hatalk.R
 import com.example.hatalk.databinding.FragmentChatBinding
 import com.example.hatalk.main.chat.ChatingActivity
 import com.example.hatalk.main.data.Friends
-import com.example.hatalk.main.data.Partner
 import com.example.hatalk.main.userModel.UserModel
-import com.example.hatalk.network.UserApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Response
+
 
 
 /**
@@ -45,7 +38,7 @@ class ChatFragment : Fragment() {
         }
     }
 
-    private var friends : ArrayList<Partner> = arrayListOf()
+    private var friends : ArrayList<Friends> = arrayListOf()
 
     @SuppressLint("UserRequireInsteadOfGet")
     override fun onCreateView(
@@ -57,7 +50,7 @@ class ChatFragment : Fragment() {
 
             // do something after 1000ms
         sharedViewModel.friends?.forEach {
-            friends.add(it.partner)
+            friends.add(it)
         }
         val recyclerView = binding?.chatRecycler
         recyclerView?.layoutManager = LinearLayoutManager(requireContext())
@@ -85,15 +78,15 @@ class ChatFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-            Glide.with(holder.itemView.context).load(friends[position].photoUrl)
+            Glide.with(holder.itemView.context).load(friends[position].partner.photoUrl)
                 .apply(RequestOptions().circleCrop())
                 .into(holder.imageView)
-            holder.textView.text = friends[position].nickname
-            holder.textViewEmail.text = friends[position].id
+            holder.textView.text = friends[position].partner.nickname
+            holder.textViewEmail.text = friends[position].recentMessage?.text
 
             holder.itemView.setOnClickListener{
                 val intent = Intent(context, ChatingActivity::class.java)
-                intent.putExtra("destinationUid", friends[position].id)
+                intent.putExtra("partner", friends[position].partner)
                 context?.startActivity(intent)
             }
         }

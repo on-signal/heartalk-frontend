@@ -12,6 +12,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
+            <RelativeLayout
+                android:id="@+id/sig_room_ui11"
+                android:layout_width="1dp"
+                android:layout_height="1dp" />
 
             <TextView
                 android:layout_width="wrap_content"
