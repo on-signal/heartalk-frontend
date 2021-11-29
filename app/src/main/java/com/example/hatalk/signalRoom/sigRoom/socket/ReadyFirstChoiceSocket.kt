@@ -86,7 +86,7 @@ class ReadyFirstChoiceSocket(
                 val firstChoice =
                     JSONObject(gson.toJson(FirstChoiceRequest(groupName, myId, myGender, choice)))
                 socket.emit("firstChoiceToServer", firstChoice)
-            }
+            }.setCancelable(false)
         Thread {
             UiThreadUtil.runOnUiThread(Runnable {
                 kotlin.run {
@@ -115,7 +115,7 @@ class ReadyFirstChoiceSocket(
                 val firstChoice =
                     JSONObject(gson.toJson(FirstChoiceRequest(groupName, myId, myGender, choice)))
                 socket.emit("firstChoiceToServer", firstChoice)
-            }
+            }.setCancelable(false)
         Thread {
             UiThreadUtil.runOnUiThread(Runnable {
                 kotlin.run {
@@ -130,6 +130,7 @@ class ReadyFirstChoiceSocket(
         val firstChoiceResponse = Gson().fromJson(res.toString(), FirstChoiceResponse::class.java)
 
         var counterPartId = ""
+        var counterIcon = ""
         if (myGender == "0") {
             for (partner in firstChoiceResponse.partners) {
                 if (partner[0] == myId) {
@@ -137,10 +138,22 @@ class ReadyFirstChoiceSocket(
                     break
                 }
             }
+            for (woman in womanList) {
+                if (counterPartId == woman.id) {
+                    counterIcon = woman.icon
+                    break
+                }
+            }
         } else if (myGender == "1") {
             for (partner in firstChoiceResponse.partners) {
                 if (partner[1] == myId) {
                     counterPartId = partner[0]
+                    break
+                }
+            }
+            for (man in manList) {
+                if (counterPartId == man.id) {
+                    counterIcon = man.icon
                     break
                 }
             }
@@ -152,7 +165,8 @@ class ReadyFirstChoiceSocket(
                 Log.d(TAG, "CALL Ended successfully: " + call.toString())
 
                 val intent = Intent(context, OneToOneCallActivity::class.java)
-                val oneToOneCallObj = OnetoOneCall(myId, counterPartId, myGender)
+                val oneToOneCallObj =
+                    OnetoOneCall(myId, myGender, counterPartId, counterIcon, groupName)
 
 
                 intent.putExtra("oneToOneCallData", oneToOneCallObj)
@@ -164,7 +178,8 @@ class ReadyFirstChoiceSocket(
                 Log.d(TAG, "CALL Ended Error: $e")
 
                 val intent = Intent(context, OneToOneCallActivity::class.java)
-                val oneToOneCallObj = OnetoOneCall(myId, counterPartId, myGender)
+                val oneToOneCallObj =
+                    OnetoOneCall(myId, myGender, counterPartId, counterIcon, groupName)
 
 
                 intent.putExtra("oneToOneCallData", oneToOneCallObj)

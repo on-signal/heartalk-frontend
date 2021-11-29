@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.RelativeLayout
 import android.widget.Toast
 import com.cometchat.pro.constants.CometChatConstants
@@ -20,6 +21,7 @@ import com.cometchat.pro.models.User
 import com.example.hatalk.R
 import com.example.hatalk.databinding.ActivityOneToOneCallBinding
 import com.example.hatalk.signalRoom.PRIVATE.IDs
+import com.example.hatalk.signalRoom.sigRoom.socket.FirstCallEndSocket
 import java.util.*
 
 class OneToOneCallActivity : AppCompatActivity() {
@@ -28,6 +30,8 @@ class OneToOneCallActivity : AppCompatActivity() {
     private lateinit var myId: String
     private lateinit var counterPartId: String
     private lateinit var myGender: String
+    private lateinit var groupName: String
+    private lateinit var firstCallEndSocket: FirstCallEndSocket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,11 +48,16 @@ class OneToOneCallActivity : AppCompatActivity() {
             myId = oneToOneCallData.myId
             counterPartId = oneToOneCallData.counterPartId
             myGender = oneToOneCallData.myGender
+            groupName = oneToOneCallData.groupName
         }
 
 
         addCallListener()
         callerStart()
+
+        firstCallEndSocket = FirstCallEndSocket(this, groupName, TAG)
+        firstCallEndSocket.set()
+        firstCallEndSocket.makeOn()
     }
 
     private fun initiateOneToOneCall(receiverId: String) {
@@ -164,6 +173,7 @@ class OneToOneCallActivity : AppCompatActivity() {
                 Log.d(TAG, "OneToOneCall onAudioModesUpdated: " + call.toString());
             }
         });
+        binding.oneToOneUi.visibility = View.GONE
         Toast.makeText(this, "1대1 콜 연결 됐습니다.", Toast.LENGTH_SHORT).show()
     }
 

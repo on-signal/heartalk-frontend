@@ -6,7 +6,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class OnetoOneCall(
     val myId: String,
+    val myGender: String,
     val counterPartId: String,
-    val myGender: String
+    val counterPartIcon: String,
+    val groupName: String,
 ) : Parcelable
 

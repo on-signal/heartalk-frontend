@@ -365,7 +365,7 @@ class SignalRoomActivity : AppCompatActivity() {
                 {
                     initiateCall(matchingModel.groupName)
                 },
-                1000
+                2000
             )
         }
     }
