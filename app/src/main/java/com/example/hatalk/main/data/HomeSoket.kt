@@ -31,7 +31,9 @@ data class MatchingConfirmResponse(
 @Parcelize
 data class roomInfo(
     val user1: userData?,
-    val user2: userData?
+    val user2: userData?,
+    val user3: userData?,
+    val user4: userData?
 ) : Parcelable
 
 @Parcelize
