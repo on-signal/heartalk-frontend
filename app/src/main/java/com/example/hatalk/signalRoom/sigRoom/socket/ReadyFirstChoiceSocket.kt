@@ -29,8 +29,8 @@ class ReadyFirstChoiceSocket(
 ) {
     private lateinit var socket: Socket
     private val dialogBuilder = AlertDialog.Builder(context)
-    private val womanIconList = arrayOf("fox")
-    private val manIconList = arrayOf("wolf")
+    private val womanIconList = arrayOf("fox", "hamster")
+    private val manIconList = arrayOf("wolf", "penguin")
     private lateinit var selectedItem: String
 
     private val onFirstChoiceConnect = Emitter.Listener { _ ->

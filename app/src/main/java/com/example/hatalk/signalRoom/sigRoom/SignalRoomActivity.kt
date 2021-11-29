@@ -220,18 +220,23 @@ class SignalRoomActivity : AppCompatActivity() {
         matchingModel.setMyGender(matchingData?.gender.toString())
         matchingModel.setMyId(userID)
 
-        if (userID == matchingData?.room_info?.user1?.Id.toString()) {
-            matchingModel.setMyNickname(matchingData?.room_info?.user1?.nickname.toString())
-            matchingModel.setMyIcon(matchingData?.room_info?.user1?.icon.toString())
-        } else if (userID == matchingData?.room_info?.user2?.Id.toString()) {
-            matchingModel.setMyNickname(matchingData?.room_info?.user2?.nickname.toString())
-            matchingModel.setMyIcon(matchingData?.room_info?.user2?.icon.toString())
-        } else if (userID == matchingData?.room_info?.user3?.Id.toString()) {
-            matchingModel.setMyNickname(matchingData?.room_info?.user3?.nickname.toString())
-            matchingModel.setMyIcon(matchingData?.room_info?.user3?.icon.toString())
-        } else if (userID == matchingData?.room_info?.user4?.Id.toString()) {
-            matchingModel.setMyNickname(matchingData?.room_info?.user4?.nickname.toString())
-            matchingModel.setMyIcon(matchingData?.room_info?.user4?.icon.toString())
+        when(userID) {
+            matchingData?.room_info?.user1?.Id.toString() -> {
+                matchingModel.setMyNickname(matchingData?.room_info?.user1?.nickname.toString())
+                matchingModel.setMyIcon(matchingData?.room_info?.user1?.icon.toString())
+            }
+            matchingData?.room_info?.user2?.Id.toString() -> {
+                matchingModel.setMyNickname(matchingData?.room_info?.user2?.nickname.toString())
+                matchingModel.setMyIcon(matchingData?.room_info?.user2?.icon.toString())
+            }
+            matchingData?.room_info?.user3?.Id.toString() -> {
+                matchingModel.setMyNickname(matchingData?.room_info?.user3?.nickname.toString())
+                matchingModel.setMyIcon(matchingData?.room_info?.user3?.icon.toString())
+            }
+            matchingData?.room_info?.user4?.Id.toString() -> {
+                matchingModel.setMyNickname(matchingData?.room_info?.user4?.nickname.toString())
+                matchingModel.setMyIcon(matchingData?.room_info?.user4?.icon.toString())
+            }
         }
 
         if (matchingData?.room_info?.user1?.gender.toString() == "0") {
