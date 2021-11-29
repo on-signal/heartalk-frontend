@@ -19,7 +19,9 @@ import com.example.hatalk.databinding.FragmentChatBinding
 import com.example.hatalk.main.chat.ChatingActivity
 import com.example.hatalk.main.data.Friends
 import com.example.hatalk.main.userModel.UserModel
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 /**
@@ -85,6 +87,11 @@ class ChatFragment : Fragment() {
             holder.textViewEmail.text = friends[position].recentMessage?.text
 
             holder.itemView.setOnClickListener{
+                CoroutineScope(Dispatchers.Main).launch {
+
+                }
+
+
                 val intent = Intent(context, ChatingActivity::class.java)
                 intent.putExtra("partner", friends[position].partner)
                 context?.startActivity(intent)
