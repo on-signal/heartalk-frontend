@@ -258,7 +258,6 @@
                 android:id="@+id/sig_room_ui"
                 android:layout_width="1dp"
                 android:layout_height="1dp" />
-
         </LinearLayout>
     </ScrollView>
 </layout>

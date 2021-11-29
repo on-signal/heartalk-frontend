@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hatalk">
-
     <!-- 인터넷 사용 권한 설정 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,11 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hatalk"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".signalRoom.sigRoom.OneToOneCallActivity"
+            android:exported="false" />
+
         <service
             android:name=".main.ChatService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true"></service>
 
         <activity
             android:name=".main.chat.ChatingActivity"

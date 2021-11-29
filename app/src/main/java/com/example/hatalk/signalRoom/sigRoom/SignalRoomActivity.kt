@@ -86,7 +86,8 @@ class SignalRoomActivity : AppCompatActivity() {
             matchingModel.myId,
             matchingModel.myGender,
             matchingModel.manList,
-            matchingModel.womanList
+            matchingModel.womanList,
+            TAG
         )
         readyFirstChoiceSocket.set()
         readyFirstChoiceSocket.makeOn()
@@ -111,6 +112,8 @@ class SignalRoomActivity : AppCompatActivity() {
         val callType: String = CometChatConstants.CALL_TYPE_AUDIO
 
         val call = Call(receiverID, receiverType, callType)
+
+
 
         CometChat.initiateCall(call, object : CometChat.CallbackListener<Call>() {
             override fun onSuccess(p0: Call?) {
