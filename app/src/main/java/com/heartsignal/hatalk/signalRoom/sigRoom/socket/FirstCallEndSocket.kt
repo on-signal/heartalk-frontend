@@ -1,14 +1,11 @@
 package com.heartsignal.hatalk.signalRoom.sigRoom.socket
 
+import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import com.cometchat.pro.core.Call
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
-import com.heartsignal.hatalk.signalRoom.sigRoom.OneToOneCallActivity
-import com.heartsignal.hatalk.signalRoom.sigRoom.OnetoOneCall
-import com.heartsignal.hatalk.signalRoom.sigRoom.SignalRoomActivity
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import java.net.URISyntaxException
@@ -44,16 +41,20 @@ class FirstCallEndSocket(
                     // handle end call success
                     Log.d(TAG, "CALL Ended successfully: " + call.toString())
 
-                    val intent = Intent(context, SignalRoomActivity::class.java)
-                    context.startActivity(intent)
+                    CometChat.removeCallListener("OneToOneCallActivity")
+
+                    val activity = context as Activity
+                    activity.finish()
                 }
 
                 override fun onError(e: CometChatException) {
                     // handled end call error
                     Log.d(TAG, "CALL Ended Error: $e")
 
-                    val intent = Intent(context, SignalRoomActivity::class.java)
-                    context.startActivity(intent)
+                    CometChat.removeCallListener("OneToOneCallActivity")
+
+                    val activity = context as Activity
+                    activity.finish()
                 }
             })
     }

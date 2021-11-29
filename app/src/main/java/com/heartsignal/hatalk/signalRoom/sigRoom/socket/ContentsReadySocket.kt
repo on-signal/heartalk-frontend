@@ -1,7 +1,6 @@
 package com.heartsignal.hatalk.signalRoom.sigRoom.socket
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import com.heartsignal.hatalk.signalRoom.sigRoom.FirstContent
 import com.facebook.react.bridge.UiThreadUtil

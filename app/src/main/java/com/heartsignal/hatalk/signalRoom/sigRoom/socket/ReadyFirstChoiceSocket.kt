@@ -164,6 +164,8 @@ class ReadyFirstChoiceSocket(
                 // handle end call success
                 Log.d(TAG, "CALL Ended successfully: " + call.toString())
 
+                CometChat.removeCallListener("SignalRoomActivity")
+
                 val intent = Intent(context, OneToOneCallActivity::class.java)
                 val oneToOneCallObj =
                     OnetoOneCall(myId, myGender, counterPartId, counterIcon, groupName)
@@ -176,6 +178,8 @@ class ReadyFirstChoiceSocket(
             override fun onError(e: CometChatException) {
                 // handled end call error
                 Log.d(TAG, "CALL Ended Error: $e")
+
+                CometChat.removeCallListener("SignalRoomActivity")
 
                 val intent = Intent(context, OneToOneCallActivity::class.java)
                 val oneToOneCallObj =

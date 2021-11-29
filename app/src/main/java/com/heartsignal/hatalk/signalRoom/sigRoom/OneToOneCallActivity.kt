@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.Toast
 import com.cometchat.pro.constants.CometChatConstants
-import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.Call
 import com.cometchat.pro.core.CallSettings
 import com.cometchat.pro.core.CometChat
@@ -20,9 +19,7 @@ import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.ActivityOneToOneCallBinding
-import com.heartsignal.hatalk.signalRoom.PRIVATE.IDs
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.FirstCallEndSocket
-import java.util.*
 
 class OneToOneCallActivity : AppCompatActivity() {
     private val TAG = "HEART"
@@ -41,8 +38,6 @@ class OneToOneCallActivity : AppCompatActivity() {
 
         val intent: Intent = getIntent()
         val oneToOneCallData = intent.getParcelableExtra<OnetoOneCall>("oneToOneCallData")
-
-        initCometChat()
 
         if (oneToOneCallData != null) {
             myId = oneToOneCallData.myId
@@ -79,26 +74,8 @@ class OneToOneCallActivity : AppCompatActivity() {
         })
     }
 
-    private fun initCometChat() {
-        val appID: String = IDs.APP_ID // Replace with your App ID
-        val region: String = IDs.REGION // Replace with your App Region ("eu" or "us")
-
-        val appSettings =
-            AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region)
-                .build()
-        CometChat.init(this, appID, appSettings, object : CometChat.CallbackListener<String>() {
-            override fun onSuccess(p0: String?) {
-                Log.d(TAG, "OneToOneCall Initialization completed successfully")
-            }
-
-            override fun onError(p0: CometChatException?) {
-                Log.d(TAG, "OneToOneCall Initialization failed with exception: " + p0?.message)
-            }
-        })
-    }
-
     private fun addCallListener() {
-        val listenerID: String = "chatlist_call_" + Date().time.toString();
+        val listenerID= "OneToOneCallActivity"
 
         CometChat.addCallListener(listenerID, object : CometChat.CallListener() {
             override fun onOutgoingCallAccepted(p0: Call?) {

@@ -32,6 +32,7 @@ import com.heartsignal.hatalk.signalRoom.sigRoom.socket.ChatSocket
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.ContentsReadySocket
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.IntroductionSocket
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.ReadyFirstChoiceSocket
+import com.cometchat.pro.core.CometChat
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
@@ -91,6 +92,13 @@ class SignalRoomActivity : AppCompatActivity() {
         )
         readyFirstChoiceSocket.set()
         readyFirstChoiceSocket.makeOn()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+
+        addCallListener()
+        callerStart()
     }
 
     override fun onDestroy() {
@@ -165,12 +173,12 @@ class SignalRoomActivity : AppCompatActivity() {
                 Log.d(TAG, "onAudioModesUpdated: " + call.toString());
             }
         });
-        findViewById<RelativeLayout>(R.id.sig_room_ui).visibility = View.GONE
+        binding.sigRoomUi.visibility = View.GONE
         Toast.makeText(this, "연결 됐습니다.", Toast.LENGTH_SHORT).show()
     }
 
     private fun addCallListener() {
-        val listenerID: String = "chatlist_call_" + Date().time.toString();
+        val listenerID = "SignalRoomActivity"
 
         CometChat.addCallListener(listenerID, object : CometChat.CallListener() {
             override fun onOutgoingCallAccepted(p0: Call?) {
