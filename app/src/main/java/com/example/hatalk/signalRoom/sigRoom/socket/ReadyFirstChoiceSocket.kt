@@ -2,10 +2,15 @@ package com.example.hatalk.signalRoom.sigRoom.socket
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.cometchat.pro.core.Call
+import com.cometchat.pro.core.CometChat
+import com.cometchat.pro.core.CometChat.CallbackListener
+import com.cometchat.pro.exceptions.CometChatException
 import com.example.hatalk.model.sigRoom.MatchingUser
-import com.example.hatalk.signalRoom.sigRoom.FirstChoice
+import com.example.hatalk.signalRoom.sigRoom.*
 import com.facebook.react.bridge.UiThreadUtil
 import com.google.gson.Gson
 import io.socket.client.Socket
@@ -19,7 +24,8 @@ class ReadyFirstChoiceSocket(
     private val myId: String,
     private val myGender: String,
     private val manList: MutableList<MatchingUser>,
-    private val womanList: MutableList<MatchingUser>
+    private val womanList: MutableList<MatchingUser>,
+    private val TAG: String
 ) {
     private lateinit var socket: Socket
     private val dialogBuilder = AlertDialog.Builder(context)
@@ -78,7 +84,7 @@ class ReadyFirstChoiceSocket(
                 }
                 val gson = Gson()
                 val firstChoice =
-                    JSONObject(gson.toJson(FirstChoice(groupName, myId, myGender, choice)))
+                    JSONObject(gson.toJson(FirstChoiceRequest(groupName, myId, myGender, choice)))
                 socket.emit("firstChoiceToServer", firstChoice)
             }
         Thread {
@@ -107,7 +113,7 @@ class ReadyFirstChoiceSocket(
                 }
                 val gson = Gson()
                 val firstChoice =
-                    JSONObject(gson.toJson(FirstChoice(groupName, myId, myGender, choice)))
+                    JSONObject(gson.toJson(FirstChoiceRequest(groupName, myId, myGender, choice)))
                 socket.emit("firstChoiceToServer", firstChoice)
             }
         Thread {
@@ -121,6 +127,49 @@ class ReadyFirstChoiceSocket(
 
     private fun emitListenerForFirstChoiceAnswer(args: Array<Any>) {
         val res = JSONObject(args[0].toString())
-        Log.d("Res: ", res.toString())
+        val firstChoiceResponse = Gson().fromJson(res.toString(), FirstChoiceResponse::class.java)
+
+        var counterPartId = ""
+        if (myGender == "0") {
+            for (partner in firstChoiceResponse.partners) {
+                if (partner[0] == myId) {
+                    counterPartId = partner[1]
+                    break
+                }
+            }
+        } else if (myGender == "1") {
+            for (partner in firstChoiceResponse.partners) {
+                if (partner[1] == myId) {
+                    counterPartId = partner[0]
+                    break
+                }
+            }
+        }
+
+        CometChat.endCall(CometChat.getActiveCall().sessionId, object : CallbackListener<Call?>() {
+            override fun onSuccess(call: Call?) {
+                // handle end call success
+                Log.d(TAG, "CALL Ended successfully: " + call.toString())
+
+                val intent = Intent(context, OneToOneCallActivity::class.java)
+                val oneToOneCallObj = OnetoOneCall(myId, counterPartId, myGender)
+
+
+                intent.putExtra("oneToOneCallData", oneToOneCallObj)
+                context.startActivity(intent)
+            }
+
+            override fun onError(e: CometChatException) {
+                // handled end call error
+                Log.d(TAG, "CALL Ended Error: $e")
+
+                val intent = Intent(context, OneToOneCallActivity::class.java)
+                val oneToOneCallObj = OnetoOneCall(myId, counterPartId, myGender)
+
+
+                intent.putExtra("oneToOneCallData", oneToOneCallObj)
+                context.startActivity(intent)
+            }
+        })
     }
 }

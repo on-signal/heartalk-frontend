@@ -57,7 +57,7 @@ class IntroductionSocket(
             }
 
             "end" -> {
-                callManager.muteAudio(true)
+                callManager.muteAudio(false)
                 Thread {
                     UiThreadUtil.runOnUiThread(Runnable {
                         Toast.makeText(
@@ -70,7 +70,7 @@ class IntroductionSocket(
             }
 
             else -> {
-                callManager.muteAudio(false)
+                callManager.muteAudio(true)
                 Thread {
                     UiThreadUtil.runOnUiThread(Runnable {
                         Toast.makeText(
