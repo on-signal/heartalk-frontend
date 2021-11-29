@@ -8,11 +8,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.hatalk.main.userModel.UserModel" />
+            type="com.heartsignal.hatalk.main.userModel.UserModel" />
 
         <variable
             name="mainHomeFragment"
-            type="com.example.hatalk.main.MainHomeFragment" />
+            type="com.heartsignal.hatalk.main.MainHomeFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

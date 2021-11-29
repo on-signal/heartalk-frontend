@@ -7,11 +7,11 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.hatalk.main.userModel.UserModel" />
+            type="com.heartsignal.hatalk.main.userModel.UserModel" />
 
         <variable
             name="profileEditFragment"
-            type="com.example.hatalk.main.ProfileEditFragment" />
+            type="com.heartsignal.hatalk.main.ProfileEditFragment" />
     </data>
 
     <LinearLayout

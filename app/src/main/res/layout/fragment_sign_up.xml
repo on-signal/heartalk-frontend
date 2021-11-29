@@ -8,11 +8,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.hatalk.model.UserJoinModel" />
+            type="com.heartsignal.hatalk.model.UserJoinModel" />
 
         <variable
             name="signupFragment"
-            type="com.example.hatalk.SignUpFragment" />
+            type="com.heartsignal.hatalk.SignUpFragment" />
     </data>
 
     <LinearLayout
