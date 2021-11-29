@@ -1,16 +1,13 @@
 package com.example.hatalk.main.chat
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.hatalk.R
-import com.example.hatalk.main.ChatService
-import com.example.hatalk.main.data.MatchingSocketApplication
 import com.example.hatalk.main.data.Message
 import com.example.hatalk.main.data.Partner
 import com.google.gson.Gson
@@ -19,8 +16,8 @@ import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_chating.*
 import java.net.URISyntaxException
-import java.util.*
-import kotlin.collections.ArrayList
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ChatingActivity : AppCompatActivity() {
     val TAG = "HEART"
@@ -28,9 +25,29 @@ class ChatingActivity : AppCompatActivity() {
     lateinit var partner: Partner
     var users: Array<String> = arrayOf()
 
+
+    val gson: Gson = Gson()
+
+    //For setting the recyclerView.
+    val chatList: ArrayList<Message> = arrayListOf();
+    lateinit var chatingAdapter: ChatingAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chating)
+
+        //중요한 것은 아니며 전 액티비티에서 username을 가져왔습니다.
+        //원하시는 방법 대로 username을 가져오시면 될 듯 합니다.
+        var intent = intent;
+        partner = intent.getParcelableExtra<Partner>("partner")!!
+
+        chatingAdapter = ChatingAdapter(this, chatList);
+        chat_recycler.adapter = chatingAdapter;
+
+        val layoutManager = LinearLayoutManager(this)
+        chat_recycler.layoutManager = layoutManager
+
+
         try {
             //IO.socket 메소드는 은 저 URL 을 토대로 클라이언트 객체를 Return 합니다.
             mSocket = ChatSocketApplication.get()
@@ -39,16 +56,9 @@ class ChatingActivity : AppCompatActivity() {
             Log.e("MainActivity", e.reason)
         }
 
-        //중요한 것은 아니며 전 액티비티에서 username을 가져왔습니다.
-        //원하시는 방법 대로 username을 가져오시면 될 듯 합니다.
-        var intent = intent;
-        partner = intent.getParcelableExtra<Partner>("partner")!!
-        Log.d(TAG, partner.toString())
-
 
         // 이제 연결이 성공적으로 되게 되면, server측에서 "connect" event 를 발생시키고
         // 아래코드가 그 event 를 핸들링 합니다. onConnect는 65번째 줄로 가서 살펴 보도록 합니다.
-        mSocket.on(Socket.EVENT_CONNECT, onConnect);
         mSocket.on("newUser", onNewUser)
         mSocket.on("myMsg", onMyMessage)
         mSocket.on("newMsg", onNewMessage)
@@ -59,8 +69,6 @@ class ChatingActivity : AppCompatActivity() {
             editText.text.clear()
             mSocket.emit("say", chat)
         }
-
-
 
     }
 
@@ -116,7 +124,13 @@ class ChatingActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setTime(): String {
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("h:mm a")
 
+        return current.format(formatter)
+    }
 
 
 }

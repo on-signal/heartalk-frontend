@@ -3,6 +3,7 @@ package com.example.hatalk.main
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -38,7 +39,6 @@ import kotlinx.android.synthetic.main.fragment_main_home.*
 import org.json.JSONObject
 import java.net.URISyntaxException
 import java.util.*
-import kotlin.properties.Delegates
 
 
 /**
@@ -209,4 +209,6 @@ class MainHomeFragment : Fragment() {
          * [Socket IO Chat End]
          */
     }
+
+
 }

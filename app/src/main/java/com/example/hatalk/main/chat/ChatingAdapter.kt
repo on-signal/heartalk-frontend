@@ -23,7 +23,8 @@ class ChatingAdapter(val context : Context, val chatList : ArrayList<Message>) :
         var view : View? = null
         when(viewType){
 
-            0 ->{
+            0 ->
+            {
                 view = LayoutInflater.from(context).inflate(R.layout.item_chating_user,parent,false)
                 Log.d("user inflating","viewType : ${viewType}")
             }
@@ -33,11 +34,13 @@ class ChatingAdapter(val context : Context, val chatList : ArrayList<Message>) :
                 view = LayoutInflater.from(context).inflate(R.layout.item_chating_partner,parent,false)
                 Log.d("partner inflating","viewType : ${viewType}")
             }
-            2 -> {
+            2 ->
+            {
 //                view = LayoutInflater.from(context).inflate(R.layout.chat_into_notification,parent,false)
                 Log.d("someone in or out","viewType : ${viewType}")
             }
-            3 -> {
+            3 ->
+            {
 //                view = LayoutInflater.from(context).inflate(R.layout.chat_into_notification,parent,false)
                 Log.d("someone in or out","viewType : ${viewType}")
             }
