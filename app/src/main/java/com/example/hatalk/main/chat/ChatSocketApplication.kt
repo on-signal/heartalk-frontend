@@ -10,10 +10,14 @@ class ChatSocketApplication {
         private lateinit var socket: Socket
         fun get(): Socket {
             try {
-                socket = IO.socket("${URLs.URL}/chat")
+                socket = IO.socket("${URLs.URL}/contents")
             } catch (e: URISyntaxException) {
                 e.printStackTrace()
             }
+            return socket
+        }
+
+        fun set(): Socket {
             return socket
         }
     }

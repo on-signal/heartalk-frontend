@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hatalk.R
 import com.example.hatalk.main.data.Message
 import com.example.hatalk.main.data.Partner
+import com.example.hatalk.main.data.testData
 import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_chating.*
+import org.json.JSONObject
 import java.net.URISyntaxException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -47,27 +49,29 @@ class ChatingActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         chat_recycler.layoutManager = layoutManager
 
+        mSocket = ChatSocketApplication.set()
+        mSocket.connect()
 
-        try {
-            //IO.socket 메소드는 은 저 URL 을 토대로 클라이언트 객체를 Return 합니다.
-            mSocket = ChatSocketApplication.get()
-            mSocket.connect()
-        } catch (e: URISyntaxException) {
-            Log.e("MainActivity", e.reason)
+
+        val onTestConnect = Emitter.Listener { args ->
+            val testJSON = JSONObject(args[0].toString())
+            val temp = Gson().fromJson(testJSON.toString(), testData::class.java)
+            Log.d(TAG, temp.toString())
         }
 
+        mSocket.on("grape", onTestConnect)
 
         // 이제 연결이 성공적으로 되게 되면, server측에서 "connect" event 를 발생시키고
         // 아래코드가 그 event 를 핸들링 합니다. onConnect는 65번째 줄로 가서 살펴 보도록 합니다.
-        mSocket.on("newUser", onNewUser)
-        mSocket.on("myMsg", onMyMessage)
-        mSocket.on("newMsg", onNewMessage)
+//        mSocket.on("newUser", onNewUser)
+//        mSocket.on("myMsg", onMyMessage)
+//        mSocket.on("newMsg", onNewMessage)
 
         //send button을 누르면 "say"라는 이벤트를 서버측으로 보낸다.
         send.setOnClickListener {
             val chat = editText.text.toString()
             editText.text.clear()
-            mSocket.emit("say", chat)
+//            mSocket.emit("say", sentChat)
         }
 
     }
@@ -82,26 +86,6 @@ class ChatingActivity : AppCompatActivity() {
     }
 
 
-    val onMyMessage = Emitter.Listener {
-        Log.d("on", "Mymessage has been triggered.")
-        Log.d("mymsg : ", it[0].toString())
-    }
-
-    val onNewMessage = Emitter.Listener {
-        Log.d("on", "New message has been triggered.")
-        Log.d("new msg : ", it[0].toString())
-    }
-
-
-    val onMessageRecieved: Emitter.Listener = Emitter.Listener {
-        try {
-            val receivedData: Any = it[0]
-            Log.d(TAG, receivedData.toString())
-
-        } catch (e: Exception) {
-            Log.e(TAG, "error", e)
-        }
-    }
 
     val onNewUser: Emitter.Listener = Emitter.Listener {
 

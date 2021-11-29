@@ -1,5 +1,7 @@
 package com.example.hatalk.main
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -13,13 +15,24 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.hatalk.R
 import com.example.hatalk.databinding.FragmentSignUpLoadingBinding
+import com.example.hatalk.main.chat.ChatSocketApplication
+import com.example.hatalk.main.data.MatchingConfirmData
+import com.example.hatalk.main.data.MatchingConfirmResponse
+import com.example.hatalk.main.data.Partner
+import com.example.hatalk.main.data.testData
 import com.example.hatalk.main.userModel.UserModel
 import com.example.hatalk.model.userInfo
 import com.example.hatalk.network.UserApi
+import com.facebook.react.bridge.UiThreadUtil
+import com.google.gson.Gson
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.net.URISyntaxException
 
 
 class HomeActivity : AppCompatActivity(R.layout.activity_home) {
@@ -27,6 +40,9 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
     private var binding: FragmentSignUpLoadingBinding? = null
     private val sharedViewModel: UserModel by viewModels()
     private lateinit var navController: NavController
+    lateinit var mSocket: Socket
+    lateinit var partner: Partner
+    var users: Array<String> = arrayOf()
 
 
     private val requiredPermissions = arrayOf(
@@ -59,10 +75,17 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
             sharedViewModel.setAccessToken(userInfo.accessToken)
         }
 
+        /**
+         * [ChatSocket__OPEN]
+         */
+        mSocket = ChatSocketApplication.get()
+        mSocket.connect()
+
         navController = findNavController(R.id.home_fragment)
 
         setupActionBarWithNavController(navController)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.tabs, menu)

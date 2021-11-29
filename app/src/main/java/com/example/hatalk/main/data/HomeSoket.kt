@@ -45,3 +45,9 @@ data class userData(
 ) : Parcelable
 
 
+data class testData(
+    val name: String,
+    val groupName: String,
+    val text: String,
+    val icon: String
+)
