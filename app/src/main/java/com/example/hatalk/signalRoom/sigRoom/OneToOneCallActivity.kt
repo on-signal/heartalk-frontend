@@ -172,7 +172,8 @@ class OneToOneCallActivity : AppCompatActivity() {
             Handler(Looper.getMainLooper()).postDelayed(
                 {
                     initiateOneToOneCall(counterPartId)
-                }, 1000
+                },
+                2000
             )
 
         }
