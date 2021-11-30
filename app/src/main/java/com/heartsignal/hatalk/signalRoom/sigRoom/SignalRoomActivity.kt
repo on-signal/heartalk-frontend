@@ -432,8 +432,10 @@ class SignalRoomActivity : AppCompatActivity() {
             answerModel.appendOwnerIdList(reply.owner)
         }
 
-        FirstAnswerFragmentDialog().show(
-            supportFragmentManager, "FirstAnswerDialog"
-        )
+        if (matchingModel.myGender == "1") {
+            FirstAnswerFragmentDialog().show(
+                supportFragmentManager, "FirstAnswerDialog"
+            )
+        }
     }
 }
