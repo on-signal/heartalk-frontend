@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginTop="80dp"
                     android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginTop="80dp"
                     android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
@@ -295,7 +295,7 @@
                 android:layout_width="match_parent"
                 android:background="@color/keyboard"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_weight="1">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
