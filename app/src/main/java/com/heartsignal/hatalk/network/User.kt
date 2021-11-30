@@ -52,3 +52,14 @@ data class DeleteUserRequest(
 data class DeleteUserResponse(
         val msg: String
 )
+
+data class UpdateUserRequest(
+        val kakaoUserId: String,
+        val nickname: String,
+        val email: String,
+        val phoneNumber: String
+)
+
+data class UpdateUserResponse(
+        val msg: String
+)

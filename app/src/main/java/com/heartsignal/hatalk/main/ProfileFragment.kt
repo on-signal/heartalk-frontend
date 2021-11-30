@@ -11,11 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.heartsignal.hatalk.GlobalApplication
 import com.heartsignal.hatalk.MainActivity
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.FragmentMainHomeBinding
@@ -66,12 +68,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val profileEditButton: Button? = binding?.profileEditButton
-        profileEditButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_profileEditFragment)
-        }
-
-
         val kakaoLogoutButton: Button? = binding?.kakaoLogoutButton
         kakaoLogoutButton?.setOnClickListener {
             UserApiClient.instance.logout { error ->
@@ -120,31 +116,42 @@ class ProfileFragment : Fragment() {
             .setArrowSize(10)
             .setArrowOrientation(ArrowOrientation.TOP)
             .setArrowPosition(0.5f)
-            .setWidthRatio(0.55f)
             .setHeight(250)
             .setCornerRadius(4f)
-            .setBackgroundColor(ContextCompat.getColor(tempContext, R.color.black))
+            .setBackgroundColor(ContextCompat.getColor(tempContext, R.color.primaryDarkColor))
             .setBalloonAnimation(BalloonAnimation.CIRCULAR)
             .setLifecycleOwner(viewLifecycleOwner)
             .build()
 
+        val button: Button =
+            balloon.getContentView().findViewById(R.id.button_edit)
+        button.setOnClickListener {
+            profileEdit()
+            balloon.dismiss()
+        }
+        val circleImage: ImageView =
+            balloon.getContentView().findViewById(R.id.circleImageView)
+        Glide.with(this)
+            .load(sharedViewModel.photoUrl)
+            .into(circleImage)
+        val balloonName: TextView =
+            balloon.getContentView().findViewById(R.id.balloon_name)
+        balloonName.text = sharedViewModel.nickname
 
-        profileImage.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                when (event?.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        profileImage.showAlignBottom(balloon)
-                    }
+
+        profileImage.setOnTouchListener(View.OnTouchListener { v, event ->
+            when (event?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    profileImage.showAlignBottom(balloon)
                 }
-                return true
             }
+            true
         })
 
 
+    }
 
-
-//        balloon.dismiss()
-
-
+    private fun profileEdit() {
+        findNavController().navigate(R.id.action_profileFragment_to_profileEditFragment)
     }
 }

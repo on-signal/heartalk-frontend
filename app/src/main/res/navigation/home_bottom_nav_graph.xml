@@ -20,16 +20,7 @@
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
         <action
-            android:id="@+id/action_chatFragment_to_alarmFragment"
-            app:destination="@id/alarmFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/alarmFragment"
-        android:name="com.heartsignal.hatalk.main.AlarmFragment"
-        android:label="fragment_alarm"
-        tools:layout="@layout/fragment_alarm" >
-        <action
-            android:id="@+id/action_alarmFragment_to_profileFragment"
+            android:id="@+id/action_chatFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
     <fragment
@@ -53,5 +44,9 @@
     <fragment
         android:id="@+id/profileEditFragment"
         android:name="com.heartsignal.hatalk.main.ProfileEditFragment"
-        android:label="ProfileEditFragment" />
+        android:label="ProfileEditFragment" >
+        <action
+            android:id="@+id/action_profileEditFragment_to_mainHomeFragment"
+            app:destination="@id/mainHomeFragment" />
+    </fragment>
 </navigation>

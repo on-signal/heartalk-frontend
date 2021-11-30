@@ -72,9 +72,10 @@ class MainHomeFragment : Fragment() {
         sharedViewModel.setProfileUrl(userInfo.photoUrl)
         sharedViewModel.setGender(userInfo.gender)
         sharedViewModel.setAge(userInfo.age)
+        sharedViewModel.setPhoneNumber(userInfo.phoneNumber)
         sharedViewModel.setKakaoUserId(userInfo.kakaoUserId)
         sharedViewModel.setAccessToken(userInfo.accessToken)
-        Log.d(TAG, sharedViewModel.gender)
+        Log.d(TAG, sharedViewModel.phoneNumber)
 
         return binding?.root
     }

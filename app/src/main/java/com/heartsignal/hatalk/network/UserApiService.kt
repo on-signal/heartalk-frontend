@@ -49,6 +49,9 @@ interface UserApiService {
 
     @GET("chats/user/{roomId}")
     suspend fun getChatMessages(@Path(value = "roomId", encoded = true) roomId: String): Response<ChatData>
+
+    @PATCH("users")
+    suspend fun updateUser(@Header("Authorization") jwt: String, @Body body: UpdateUserRequest): Response<UpdateUserResponse>
 }
 
 object UserApi {
