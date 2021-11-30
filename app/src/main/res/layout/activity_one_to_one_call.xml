@@ -81,10 +81,11 @@
                             android:src="@drawable/penguin" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="40dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="75dp"
+                            android:layout_marginLeft="70dp"
                             android:layout_marginTop="110dp"
+                            android:textAlignment="center"
                             android:textStyle="bold"
                             android:textColor="@color/black"
                             android:text="펭귄"/>
@@ -119,10 +120,11 @@
                             android:src="@drawable/hamster" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="40dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="70dp"
                             android:layout_marginTop="110dp"
+                            android:textAlignment="center"
                             android:textStyle="bold"
                             android:textColor="@color/black"
                             android:text="햄스터"/>
