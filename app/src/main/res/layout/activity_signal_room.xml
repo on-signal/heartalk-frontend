@@ -35,14 +35,14 @@
                     android:textSize="20dp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
+                    android:layout_width="350dp"
+                    android:layout_height="160dp"
                     android:layout_gravity="center"
                     android:layout_weight="7"
                     android:background="@drawable/border_background"
                     android:gravity="center"
                     android:text="@string/guideIntroduce"
-                    android:padding="32dp"
+                    android:padding="25dp"
                     android:textSize="16dp" />
 
             </GridLayout>
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
@@ -96,7 +96,7 @@
                             android:layout_marginTop="80dp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:text="Lion"/>
+                            android:text="사자"/>
 
 
                     </FrameLayout>
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
@@ -145,7 +145,7 @@
                             android:layout_marginTop="80dp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:text="Bee"/>
+                            android:text="꿀벌"/>
 
 
                     </FrameLayout>
@@ -194,7 +194,7 @@
                             android:layout_marginTop="80dp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:text="Penguin"/>
+                            android:text="펭귄"/>
 
                     </FrameLayout>
 
@@ -238,11 +238,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="80dp"
+                            android:layout_marginLeft="95dp"
                             android:layout_marginTop="80dp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:text="Hamster"/>
+                            android:text="햄스터"/>
 
                     </FrameLayout>
 
@@ -290,7 +290,7 @@
                             android:layout_marginTop="80dp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:text="Wolf"/>
+                            android:text="늑대"/>
 
                     </FrameLayout>
 
@@ -339,7 +339,7 @@
                             android:layout_marginTop="80dp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:text="Fox"/>
+                            android:text="여우"/>
 
                     </FrameLayout>
 
