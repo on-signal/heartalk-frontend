@@ -11,4 +11,15 @@
     <color name="signal">#FFEBEE</color>
     <color name="heart">#F66257</color>
     <color name="keyboard">#EEEEEE</color>
+
+
+
+    <color name="primaryColor">#ffcdc0</color>
+    <color name="primaryLightColor">#fffff3</color>
+    <color name="primaryDarkColor">#cb9c90</color>
+    <color name="secondaryColor">#fff7d9</color>
+    <color name="secondaryLightColor">#ffffff</color>
+    <color name="secondaryDarkColor">#ccc4a7</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#000000</color>
 </resources>
