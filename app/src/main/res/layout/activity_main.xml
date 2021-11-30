@@ -27,51 +27,25 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
+        android:background="@drawable/bg"
         android:gravity="center">
 
 
         <ImageView
+            android:id="@+id/logo_login"
+            android:layout_width="match_parent"
+            android:layout_height="276dp"
+            android:src="@drawable/temp_logo" />
+
+        <ImageView
             android:id="@+id/kako_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/kakao_login_medium_narrow" />
-
-
-        <EditText
-            android:id="@+id/login_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="UserName" />
-
-        <Button
-            android:id="@+id/comet_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="닉네임 저장" />
-
-        <Button
-            android:id="@+id/initiate_call"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="시그널 룸 입장하기" />
+            android:layout_height="70dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/kakao_login_medium_narrow_new" />
 
     </LinearLayout>
 
 
-
-
-    <!--    <androidx.fragment.app.FragmentContainerView-->
-    <!--        android:id="@+id/nav_host_fragment"-->
-    <!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:defaultNavHost="true"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--        app:layout_constraintRight_toRightOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:navGraph="@navigation/home_nav" />-->
 
 </LinearLayout>

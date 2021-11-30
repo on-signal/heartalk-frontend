@@ -25,4 +25,14 @@ class MainHomeActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
+    override fun onResume() {
+        super.onResume()
+        supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        supportActionBar?.hide()
+    }
 }

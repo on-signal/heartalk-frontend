@@ -5,7 +5,6 @@
     tools:context=".main.MainHomeFragment">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.heartsignal.hatalk.main.userModel.UserModel" />

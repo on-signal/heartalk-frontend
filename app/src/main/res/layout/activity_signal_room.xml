@@ -4,255 +4,407 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".signalRoom.sigRoom.SignalRoomActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="10">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <GridLayout
+                android:layout_width="match_parent"
+                android:columnCount="1"
+                android:layout_weight="2"
+                android:weightSum="10"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="28dp"
-                android:layout_marginTop="10dp"
-                android:padding="12dp"
-                android:text="시그널 룸" />
+                android:background="@color/signal"
+                android:useDefaultMargins="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="16dp"
-                android:layout_marginTop="40dp"
-                android:text="@string/guideIntroduce" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="3"
+                    android:textColor="@color/black"
+                    android:padding="12dp"
+                    android:text="시그널 룸"
+                    android:textSize="20dp" />
 
+                <TextView
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="7"
+                    android:elevation="10dp"
+                    android:background="@drawable/border_background"
+                    android:gravity="center"
+                    android:text="@string/guideIntroduce"
+                    android:padding="50dp"
+                    android:textSize="16dp" />
+
+            </GridLayout>
 
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:useDefaultMargins="true"
-                android:layout_marginTop="50dp" >
+                android:layout_weight="7"
+                android:background="@color/signal"
+                android:useDefaultMargins="true">
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
+                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:orientation="horizontal"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_rowWeight="1" >
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/lion"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="center"
-                        android:src="@drawable/lion" />
-
-                    <TextView
-                        android:id="@+id/lion_text"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textSize="12dp"
-                        android:text="안녕하세요 남자 1호입니다."
-                        android:background="@drawable/border_background" />
-                </LinearLayout>
+                        android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_rowWeight="1" >
+                        <TextView
+                            android:id="@+id/lion_text"
+                            android:layout_width="140dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="25dp"
+                            android:background="@drawable/border_background"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="..."
+                            android:textSize="12dp" />
 
-                    <ImageView
-                        android:id="@+id/bee"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="left"
-                        android:src="@drawable/bee" />
+                        <ImageView
+                            android:id="@+id/lion"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="65dp"
+                            android:gravity="center"
+                            android:src="@drawable/lion" />
 
-                    <TextView
-                        android:id="@+id/bee_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textSize="12dp"
-                        android:text="안녕하세요 여자 1호입니다."
-                        android:background="@drawable/border_background" />
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginTop="80dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="사자"/>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_rowWeight="1" >
-                    <ImageView
-                        android:id="@+id/penguin"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="left"
-                        android:src="@drawable/penguin" />
 
-                    <TextView
-                        android:id="@+id/penguin_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textSize="12dp"
-                        android:text="안녕하세요 남자 2호입니다."
-                        android:background="@drawable/border_background" />
-                </LinearLayout>
+                    </FrameLayout>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_rowWeight="1" >
-
-                    <ImageView
-                        android:id="@+id/hamster"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="left"
-                        android:src="@drawable/hamster" />
-
-                    <TextView
-                        android:id="@+id/hamster_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_row="0"
-                        android:layout_column="5"
-                        android:gravity="center"
-                        android:textSize="12dp"
-                        android:text="안녕하세요 여자 2호입니다."
-                        android:background="@drawable/border_background"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
+                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:orientation="horizontal"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_rowWeight="1" >
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/wolf"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="left"
-                        android:src="@drawable/wolf" />
-
-                    <TextView
-                        android:id="@+id/wolf_text"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textSize="12dp"
-                        android:text="안녕하세요 남자 3호입니다."
-                        android:background="@drawable/border_background" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/bee_text"
+                            android:layout_width="140dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="25dp"
+                            android:background="@drawable/border_background"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="..."
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            android:id="@+id/bee"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_marginLeft="140dp"
+                            android:layout_marginTop="65dp"
+                            android:gravity="left"
+                            android:src="@drawable/bee" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="110dp"
+                            android:layout_marginTop="80dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="꿀벌"/>
+
+
+                    </FrameLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
+                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:orientation="horizontal"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_rowWeight="1" >
+                    android:layout_marginEnd="10dp"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/fox"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="left"
-                        android:src="@drawable/fox" />
-
-                    <TextView
-                        android:id="@+id/fox_text"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textSize="12dp"
-                        android:text="안녕하세요 여자 3호입니다."
-                        android:background="@drawable/border_background" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/penguin_text"
+                            android:layout_width="140dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="25dp"
+                            android:background="@drawable/border_background"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="..."
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            android:id="@+id/penguin"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="65dp"
+                            android:gravity="left"
+                            android:src="@drawable/penguin" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginTop="80dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="펭귄"/>
+
+                    </FrameLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/hamster_text"
+                            android:layout_width="140dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="25dp"
+                            android:background="@drawable/border_background"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="..."
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            android:id="@+id/hamster"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_marginLeft="140dp"
+                            android:layout_marginTop="65dp"
+                            android:gravity="left"
+                            android:src="@drawable/hamster" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="95dp"
+                            android:layout_marginTop="80dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="햄스터"/>
+
+                    </FrameLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/wolf_text"
+                            android:layout_width="140dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="25dp"
+                            android:background="@drawable/border_background"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="..."
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            android:id="@+id/wolf"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="65dp"
+                            android:gravity="left"
+                            android:src="@drawable/wolf" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginTop="80dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="늑대"/>
+
+                    </FrameLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/fox_text"
+                            android:layout_width="140dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="25dp"
+                            android:background="@drawable/border_background"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="..."
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            android:id="@+id/fox"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_row="0"
+                            android:layout_gravity="fill_horizontal"
+                            android:layout_marginLeft="140dp"
+                            android:layout_marginTop="65dp"
+                            android:gravity="left"
+                            android:src="@drawable/fox" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="110dp"
+                            android:layout_marginTop="80dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="여우"/>
+
+                    </FrameLayout>
+
+
                 </LinearLayout>
 
             </GridLayout>
 
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <GridLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-                <RelativeLayout
-                    android:id="@+id/layout_chat_chatbox"
+                android:background="@color/keyboard"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    android:layout_height="wrap_content">
 
-
-                    <EditText
-                        android:id="@+id/edit_chat_message"
+                    <LinearLayout
+                        android:id="@+id/layout_chat_chatbox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="-2dp"
-                        android:layout_toStartOf="@+id/button_chat_send"
-                        android:background="@drawable/border_background"
-                        android:hint="Enter Message"
-                        android:inputType="text"
-                        android:maxLines="6"
-                        android:minHeight="48dp"
-                        tools:ignore="Autofill" />
+                        android:padding="5dp"
+                        android:weightSum="10"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
 
-                    <Button
-                        android:id="@+id/button_chat_send"
-                        android:layout_width="64dp"
-                        android:layout_height="48dp"
-                        android:layout_alignParentEnd="true"
-                        android:background="@color/gray"
-                        android:text="Send"
-                        android:textColor="@color/white"
-                        android:textSize="10dp" />
+                        <EditText
+                            android:id="@+id/edit_chat_message"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/button_chat_send"
+                            android:background="@drawable/border_background"
+                            android:hint="Enter Message"
+                            android:inputType="text"
+                            android:maxLines="9"
+                            android:layout_weight="10"
+                            android:minHeight="30dp"
+                            android:padding="10dp"
+                            tools:ignore="Autofill" />
 
-                </RelativeLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <ImageButton
+                            android:id="@+id/button_chat_send"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_weight="1"
+                            android:background="@color/keyboard"
+                            android:src="@drawable/sendsend"
+                            android:text="Send"
+                            android:textColor="@color/white"/>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </GridLayout>
 
             <RelativeLayout
                 android:id="@+id/sig_room_ui"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
+
         </LinearLayout>
-    </ScrollView>
+
+    </LinearLayout>
 </layout>
+
