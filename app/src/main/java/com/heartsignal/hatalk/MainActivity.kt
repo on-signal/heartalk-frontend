@@ -184,6 +184,16 @@ class MainActivity : AppCompatActivity(com.heartsignal.hatalk.R.layout.activity_
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        supportActionBar?.hide()
+    }
+
     /** [CometChat] to remove callListener */
     override fun onDestroy() {
         super.onDestroy()
