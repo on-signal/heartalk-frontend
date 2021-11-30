@@ -51,3 +51,12 @@ data class testData(
     val text: String,
     val icon: String
 )
+
+data class MatchingCancelData (
+    val userId: String,
+    val gender: String
+)
+
+data class MatchingCancelResponse (
+    val msg: String
+)

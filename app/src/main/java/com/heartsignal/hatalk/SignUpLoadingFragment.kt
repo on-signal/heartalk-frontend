@@ -54,9 +54,9 @@ class SignUpLoadingFragment : Fragment() {
                 UserApi.retrofitService.getCurrentUser("Bearer ${signUpResponse.body()?.accessToken.toString()}")
 
             val gender = if (getProfileResponse.body()?.gender == 0) {
-                "남성"
+                "0"
             } else {
-                "여성"
+                "1"
             }
 
             val userInfo = userInfo(
