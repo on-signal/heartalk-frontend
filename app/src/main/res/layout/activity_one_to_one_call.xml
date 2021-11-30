@@ -41,6 +41,7 @@
                     android:layout_weight="7"
                     android:background="@drawable/border_background"
                     android:gravity="center"
+                    android:elevation="10dp"
                     android:textStyle="bold"
                     android:text="@string/guideOneToOneCall"
                     android:padding="25dp"
