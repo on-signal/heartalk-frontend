@@ -29,7 +29,13 @@ import kotlinx.coroutines.launch
 import java.util.*
 import com.heartsignal.hatalk.model.sigRoom.MatchingUser
 import com.cometchat.pro.core.CometChat
+import com.google.gson.Gson
+import com.heartsignal.hatalk.model.sigRoom.AnswerModel
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.*
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
+import org.json.JSONObject
+import java.net.URISyntaxException
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
@@ -40,9 +46,13 @@ class SignalRoomActivity : AppCompatActivity() {
     private lateinit var introductionSocket: IntroductionSocket
     private lateinit var readyFirstChoiceSocket: ReadyFirstChoiceSocket
     private lateinit var firstQuestionSocket: FirstQuestionSocket
-    private lateinit var firstAnswerSocket: FirstAnswerSocket
+    private lateinit var firstAnswerSocket: Socket
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
+    private val answerModel: AnswerModel by viewModels()
+    private val onFirstAnswer = Emitter.Listener {
+        args -> firstAnswerEmitListener(args)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,9 +112,18 @@ class SignalRoomActivity : AppCompatActivity() {
         firstQuestionSocket.set()
         firstQuestionSocket.makeOn()
 
-        firstAnswerSocket = FirstAnswerSocket(this, matchingModel.groupName)
-        firstAnswerSocket.set()
-        firstAnswerSocket.makeOn()
+//        firstAnswerSocket = FirstAnswerSocket(this, matchingModel.groupName, answerModel, supportFragmentManager)
+//        firstAnswerSocket.set()
+//        firstAnswerSocket.makeOn()
+
+        try {
+            firstAnswerSocket = ContentsSocketApplication.get()
+            firstAnswerSocket.connect()
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
+        }
+
+        firstAnswerSocket.on("${matchingModel.groupName}AnswerChoice", onFirstAnswer)
     }
 
     override fun onRestart() {
@@ -391,5 +410,20 @@ class SignalRoomActivity : AppCompatActivity() {
                 2000
             )
         }
+    }
+
+    private fun firstAnswerEmitListener(args: Array<Any>) {
+        val res = JSONObject(args[0].toString())
+        val firstAnswerResponse = Gson().fromJson(res.toString(), FirstAnswerResponse::class.java)
+
+        for (reply in firstAnswerResponse.answers) {
+            val answerInfo = AnswerInfo(reply.owner, reply.answer, reply.already, reply.selector)
+            answerModel.appendAnswerList(answerInfo)
+            answerModel.appendOwnerIdList(reply.owner)
+        }
+
+        FirstAnswerFragmentDialog().show(
+            supportFragmentManager, "FirstAnswerDialog"
+        )
     }
 }
