@@ -3,6 +3,7 @@ package com.heartsignal.hatalk.main
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +18,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.FragmentChatBinding
 import com.heartsignal.hatalk.main.chat.ChatingActivity
+import com.heartsignal.hatalk.main.data.ChatData
 import com.heartsignal.hatalk.main.data.Friends
 import com.heartsignal.hatalk.main.userModel.UserModel
+import com.heartsignal.hatalk.network.UserApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,14 +90,23 @@ class ChatFragment : Fragment() {
             holder.textViewEmail.text = friends[position].recentMessage?.text
 
             holder.itemView.setOnClickListener{
+                var roomId : String
                 CoroutineScope(Dispatchers.Main).launch {
+                    val intent = Intent(context, ChatingActivity::class.java)
+                    intent.putExtra("partner", friends[position].partner)
+                    if (sharedViewModel.gender == "0") {
+                        roomId = sharedViewModel.kakaoUserId.plus(friends[position].partner.id)
+                    }   else {
+                        roomId = (friends[position].partner.id).plus(sharedViewModel.kakaoUserId)
+                    }
+                    val chatData: ChatData? = UserApi.retrofitService.getChatMessages(roomId).body()
+                    intent.putExtra("chatMessage", chatData)
+
+                    context?.startActivity(intent)
 
                 }
 
 
-                val intent = Intent(context, ChatingActivity::class.java)
-                intent.putExtra("partner", friends[position].partner)
-                context?.startActivity(intent)
             }
         }
 

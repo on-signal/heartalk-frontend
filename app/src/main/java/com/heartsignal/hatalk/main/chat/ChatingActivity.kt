@@ -1,6 +1,5 @@
 package com.heartsignal.hatalk.main.chat
 
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,16 +7,13 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.heartsignal.hatalk.R
-import com.heartsignal.hatalk.main.data.Message
-import com.heartsignal.hatalk.main.data.Partner
-import com.heartsignal.hatalk.main.data.testData
 import com.google.gson.Gson
-import io.socket.client.IO
+import com.heartsignal.hatalk.GlobalApplication
+import com.heartsignal.hatalk.main.data.*
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_chating.*
 import org.json.JSONObject
-import java.net.URISyntaxException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -25,26 +21,30 @@ class ChatingActivity : AppCompatActivity() {
     val TAG = "HEART"
     lateinit var mSocket: Socket
     lateinit var partner: Partner
+    lateinit var chatData: ChatData
     var users: Array<String> = arrayOf()
 
 
     val gson: Gson = Gson()
 
     //For setting the recyclerView.
-    val chatList: ArrayList<Message> = arrayListOf();
+    var chatList: MutableList<ChatMessage>? = null
     lateinit var chatingAdapter: ChatingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chating)
 
-        //중요한 것은 아니며 전 액티비티에서 username을 가져왔습니다.
-        //원하시는 방법 대로 username을 가져오시면 될 듯 합니다.
+
         var intent = intent;
         partner = intent.getParcelableExtra<Partner>("partner")!!
+        chatData = intent.getParcelableExtra<ChatData>("chatMessage")!!
+        chatList = chatData.messages
 
-        chatingAdapter = ChatingAdapter(this, chatList);
-        chat_recycler.adapter = chatingAdapter;
+        if (chatList != null) {
+            chatingAdapter = ChatingAdapter(this, chatList!!)
+            chat_recycler.adapter = chatingAdapter;
+        }
 
         val layoutManager = LinearLayoutManager(this)
         chat_recycler.layoutManager = layoutManager
@@ -70,7 +70,15 @@ class ChatingActivity : AppCompatActivity() {
         //send button을 누르면 "say"라는 이벤트를 서버측으로 보낸다.
         send.setOnClickListener {
             val chat = editText.text.toString()
+            val tempMessage = ChatMessage(
+                "",
+                chat,
+                GlobalApplication.userInfo.kakaoUserId,
+                chatData.chatName
+            )
+            addItemToRecyclerView(tempMessage)
             editText.text.clear()
+
 //            mSocket.emit("say", sentChat)
         }
 
@@ -116,6 +124,17 @@ class ChatingActivity : AppCompatActivity() {
         return current.format(formatter)
     }
 
+    private fun addItemToRecyclerView(chatMessage: ChatMessage) {
+
+        //Since this function is inside of the listener,
+        // You need to do it on UIThread!
+        runOnUiThread {
+            chatList?.add(chatMessage)
+            Log.d(TAG, chatList!!.size.toString())
+            chatingAdapter.notifyItemInserted(chatList!!.size)
+            chat_recycler.scrollToPosition(chatList!!.size - 1) //move focus on last message
+        }
+    }
 
 }
 

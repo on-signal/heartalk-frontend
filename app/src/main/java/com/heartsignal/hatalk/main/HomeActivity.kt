@@ -41,8 +41,6 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
     private val sharedViewModel: UserModel by viewModels()
     private lateinit var navController: NavController
     lateinit var mSocket: Socket
-    lateinit var partner: Partner
-    var users: Array<String> = arrayOf()
 
 
     private val requiredPermissions = arrayOf(
@@ -59,27 +57,15 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
         requestAudioPermission()
 
 
-        val userInfo = intent?.getParcelableExtra<userInfo>("userInfo")
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val getProfileResponse =
-                UserApi.retrofitService.getCurrentUser("Bearer ${userInfo?.accessToken}")
-            val profile = getProfileResponse.body()
-            sharedViewModel.setEmail(profile?.email.toString())
-            sharedViewModel.setName(profile?.name.toString())
-            sharedViewModel.setNickname(profile?.nickname.toString())
-            sharedViewModel.setProfileUrl(profile?.photoUrl.toString())
-            sharedViewModel.setGender(profile?.gender.toString())
-            sharedViewModel.setAge(profile!!.age)
-            sharedViewModel.setKakaoUserId(userInfo!!.kakaoUserId)
-            sharedViewModel.setAccessToken(userInfo.accessToken)
-        }
+        /**  [ChatSocket__OPEN]  */
 
-        /**
-         * [ChatSocket__OPEN]
-         */
+
         mSocket = ChatSocketApplication.get()
         mSocket.connect()
+
+        /**  [ChatSocket__OPEN]  */
+
 
         navController = findNavController(R.id.home_fragment)
 

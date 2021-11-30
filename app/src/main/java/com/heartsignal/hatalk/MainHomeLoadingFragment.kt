@@ -77,9 +77,11 @@ class MainHomeLoadingFragment : Fragment() {
                         sharedViewModel.age
                     )
 
+                    GlobalApplication.userInfo = userInfo
+
                     activity?.let {
                         val intent = Intent(it, HomeActivity::class.java)
-                        intent.putExtra("userInfo", userInfo)
+//                        intent.putExtra("userInfo", userInfo)
                         it.startActivity(intent)
 //                        startActivity(intent)
                     }

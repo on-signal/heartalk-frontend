@@ -3,6 +3,8 @@ package com.heartsignal.hatalk.network
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.heartsignal.hatalk.main.data.ChatData
+import com.heartsignal.hatalk.main.data.ChatMessage
 import com.heartsignal.hatalk.main.data.Friends
 import com.heartsignal.hatalk.signalRoom.PRIVATE.URLs
 import com.squareup.moshi.Moshi
@@ -45,6 +47,8 @@ interface UserApiService {
     @GET("chats/{userId}")
     suspend fun getUserFriend(@Path(value = "userId", encoded = true)userId: String): Response<Array<Friends>>
 
+    @GET("chats/user/{roomId}")
+    suspend fun getChatMessages(@Path(value = "roomId", encoded = true) roomId: String): Response<ChatData>
 }
 
 object UserApi {
