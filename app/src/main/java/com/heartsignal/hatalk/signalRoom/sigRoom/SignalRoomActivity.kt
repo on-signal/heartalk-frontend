@@ -121,6 +121,7 @@ class SignalRoomActivity : AppCompatActivity() {
         introductionSocket.disconnect()
         readyFirstChoiceSocket.disconnect()
         firstQuestionSocket.disconnect()
+        firstAnswerSocket.disconnect()
 
         lifecycleScope.launch {
             val deleteRoomRequest = DeleteRoomRequest(matchingModel.groupName)
