@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".signalRoom.sigRoom.SignalRoomActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -12,12 +12,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="20">
+            android:weightSum="10">
 
             <GridLayout
                 android:layout_width="match_parent"
                 android:columnCount="1"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:weightSum="10"
                 android:layout_height="wrap_content"
                 android:background="@color/signal"
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:layout_weight="14"
+                android:layout_weight="7"
                 android:background="@color/signal"
                 android:useDefaultMargins="true">
 
@@ -68,7 +68,7 @@
                         <TextView
                             android:id="@+id/lion_text"
                             android:layout_width="140dp"
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_marginLeft="25dp"
                             android:background="@drawable/border_background"
                             android:gravity="center"
@@ -82,7 +82,7 @@
                             android:layout_height="40dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="85dp"
+                            android:layout_marginTop="65dp"
                             android:gravity="center"
                             android:src="@drawable/lion" />
 
@@ -108,7 +108,7 @@
                         <TextView
                             android:id="@+id/bee_text"
                             android:layout_width="140dp"
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_marginLeft="25dp"
                             android:background="@drawable/border_background"
                             android:gravity="center"
@@ -122,7 +122,7 @@
                             android:layout_height="40dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_marginLeft="140dp"
-                            android:layout_marginTop="85dp"
+                            android:layout_marginTop="65dp"
                             android:gravity="left"
                             android:src="@drawable/bee" />
 
@@ -148,7 +148,7 @@
                         <TextView
                             android:id="@+id/penguin_text"
                             android:layout_width="140dp"
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_marginLeft="25dp"
                             android:background="@drawable/border_background"
                             android:gravity="center"
@@ -162,7 +162,7 @@
                             android:layout_height="40dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="85dp"
+                            android:layout_marginTop="65dp"
                             android:gravity="left"
                             android:src="@drawable/penguin" />
 
@@ -187,7 +187,7 @@
                         <TextView
                             android:id="@+id/hamster_text"
                             android:layout_width="140dp"
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_marginLeft="25dp"
                             android:background="@drawable/border_background"
                             android:gravity="center"
@@ -201,7 +201,7 @@
                             android:layout_height="40dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_marginLeft="140dp"
-                            android:layout_marginTop="85dp"
+                            android:layout_marginTop="65dp"
                             android:gravity="left"
                             android:src="@drawable/hamster" />
 
@@ -226,7 +226,7 @@
                         <TextView
                             android:id="@+id/wolf_text"
                             android:layout_width="140dp"
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_marginLeft="25dp"
                             android:background="@drawable/border_background"
                             android:gravity="center"
@@ -240,7 +240,7 @@
                             android:layout_height="40dp"
                             android:layout_gravity="fill_horizontal"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="85dp"
+                            android:layout_marginTop="65dp"
                             android:gravity="left"
                             android:src="@drawable/wolf" />
 
@@ -265,7 +265,7 @@
                         <TextView
                             android:id="@+id/fox_text"
                             android:layout_width="140dp"
-                            android:layout_height="100dp"
+                            android:layout_height="80dp"
                             android:layout_marginLeft="25dp"
                             android:background="@drawable/border_background"
                             android:gravity="center"
@@ -278,10 +278,9 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_row="0"
-                            android:layout_column="5"
                             android:layout_gravity="fill_horizontal"
                             android:layout_marginLeft="140dp"
-                            android:layout_marginTop="85dp"
+                            android:layout_marginTop="65dp"
                             android:gravity="left"
                             android:src="@drawable/fox" />
 
@@ -296,7 +295,7 @@
                 android:layout_width="match_parent"
                 android:background="@color/keyboard"
                 android:layout_height="wrap_content"
-                android:layout_weight="3">
+                android:layout_weight="2">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -348,6 +347,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
 </layout>
 
