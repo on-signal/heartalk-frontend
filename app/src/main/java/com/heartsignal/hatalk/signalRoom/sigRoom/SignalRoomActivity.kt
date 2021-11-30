@@ -114,6 +114,16 @@ class SignalRoomActivity : AppCompatActivity() {
         callerStart()
     }
 
+    override fun onResume() {
+        super.onResume()
+        supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        supportActionBar?.hide()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         chatSocket.disconnect()

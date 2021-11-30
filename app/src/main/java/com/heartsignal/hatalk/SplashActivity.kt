@@ -15,6 +15,15 @@ class SplashActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }, 1300)
+    }
 
+    override fun onResume() {
+        super.onResume()
+        supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        supportActionBar?.hide()
     }
 }
