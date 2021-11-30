@@ -58,4 +58,8 @@ class FirstCallEndSocket(
                 }
             })
     }
+
+    fun disconnect() {
+        socket.disconnect()
+    }
 }

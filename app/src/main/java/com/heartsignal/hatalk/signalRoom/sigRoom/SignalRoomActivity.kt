@@ -28,11 +28,8 @@ import kotlinx.android.synthetic.main.activity_signal_room.view.*
 import kotlinx.coroutines.launch
 import java.util.*
 import com.heartsignal.hatalk.model.sigRoom.MatchingUser
-import com.heartsignal.hatalk.signalRoom.sigRoom.socket.ChatSocket
-import com.heartsignal.hatalk.signalRoom.sigRoom.socket.ContentsReadySocket
-import com.heartsignal.hatalk.signalRoom.sigRoom.socket.IntroductionSocket
-import com.heartsignal.hatalk.signalRoom.sigRoom.socket.ReadyFirstChoiceSocket
 import com.cometchat.pro.core.CometChat
+import com.heartsignal.hatalk.signalRoom.sigRoom.socket.*
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
@@ -42,6 +39,8 @@ class SignalRoomActivity : AppCompatActivity() {
     private lateinit var contentsReadySocket: ContentsReadySocket
     private lateinit var introductionSocket: IntroductionSocket
     private lateinit var readyFirstChoiceSocket: ReadyFirstChoiceSocket
+    private lateinit var firstQuestionSocket: FirstQuestionSocket
+    private lateinit var firstAnswerSocket: FirstAnswerSocket
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
 
@@ -92,6 +91,20 @@ class SignalRoomActivity : AppCompatActivity() {
         )
         readyFirstChoiceSocket.set()
         readyFirstChoiceSocket.makeOn()
+
+        firstQuestionSocket =
+            FirstQuestionSocket(
+                this,
+                matchingModel.groupName,
+                matchingModel.myId,
+                matchingModel.myGender
+            )
+        firstQuestionSocket.set()
+        firstQuestionSocket.makeOn()
+
+        firstAnswerSocket = FirstAnswerSocket(this, matchingModel.groupName)
+        firstAnswerSocket.set()
+        firstAnswerSocket.makeOn()
     }
 
     override fun onRestart() {
@@ -107,6 +120,7 @@ class SignalRoomActivity : AppCompatActivity() {
         contentsReadySocket.disconnect()
         introductionSocket.disconnect()
         readyFirstChoiceSocket.disconnect()
+        firstQuestionSocket.disconnect()
 
         lifecycleScope.launch {
             val deleteRoomRequest = DeleteRoomRequest(matchingModel.groupName)
@@ -228,7 +242,7 @@ class SignalRoomActivity : AppCompatActivity() {
         matchingModel.setMyGender(matchingData?.gender.toString())
         matchingModel.setMyId(userID)
 
-        when(userID) {
+        when (userID) {
             matchingData?.room_info?.user1?.Id.toString() -> {
                 matchingModel.setMyNickname(matchingData?.room_info?.user1?.nickname.toString())
                 matchingModel.setMyIcon(matchingData?.room_info?.user1?.icon.toString())

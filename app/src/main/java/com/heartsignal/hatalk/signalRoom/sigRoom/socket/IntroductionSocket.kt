@@ -16,7 +16,7 @@ class IntroductionSocket(
 ) {
     private lateinit var socket: Socket
     private val onIntroductionConnect = Emitter.Listener { args ->
-        emiListener(args)
+        emitListener(args)
     }
     private val callManager = CallManager.getInstance()
 
@@ -37,7 +37,7 @@ class IntroductionSocket(
         socket.disconnect()
     }
 
-    private fun emiListener(args: Array<Any>) {
+    private fun emitListener(args: Array<Any>) {
         val res = JSONObject(args[0].toString())
 
         val talkingIcon = res.getString("icon")

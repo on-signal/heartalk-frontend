@@ -55,6 +55,12 @@ class OneToOneCallActivity : AppCompatActivity() {
         firstCallEndSocket.makeOn()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        firstCallEndSocket.disconnect()
+    }
+
     private fun initiateOneToOneCall(receiverId: String) {
         val receiverType: String = CometChatConstants.RECEIVER_TYPE_USER
         val callType: String = CometChatConstants.CALL_TYPE_AUDIO
