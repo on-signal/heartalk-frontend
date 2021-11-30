@@ -41,18 +41,6 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!--        <TextView-->
-<!--            android:id="@+id/main_home_age"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@{@string/main_home_age(viewModel.age)}"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/main_home_gender"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            />-->
-
-
         <ImageView
             android:id="@+id/home_profile_image"
             android:layout_width="350dp"

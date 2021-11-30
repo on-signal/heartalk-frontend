@@ -55,9 +55,9 @@ class MainHomeLoadingFragment : Fragment() {
                     sharedViewModel.setName(getProfileResponse.body()?.name.toString())
 
                     val gender = if (getProfileResponse.body()?.gender == 0) {
-                        "남성"
+                        "0"
                     } else {
-                        "여성"
+                        "1"
                     }
 
                     sharedViewModel.setGender(gender)

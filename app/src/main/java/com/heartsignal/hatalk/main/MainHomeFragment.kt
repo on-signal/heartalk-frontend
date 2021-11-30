@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -23,16 +24,13 @@ import com.cometchat.pro.models.Group
 import com.cometchat.pro.models.User
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.FragmentMainHomeBinding
-import com.heartsignal.hatalk.main.data.MatchingConfirmData
-import com.heartsignal.hatalk.main.data.MatchingConfirmResponse
-import com.heartsignal.hatalk.main.data.MatchingSocketApplication
-import com.heartsignal.hatalk.main.data.MatchingStartData
 import com.heartsignal.hatalk.main.userModel.UserModel
 import com.heartsignal.hatalk.signalRoom.PRIVATE.IDs
 import com.heartsignal.hatalk.signalRoom.sigRoom.SignalRoomActivity
 import com.facebook.react.bridge.UiThreadUtil.runOnUiThread
 import com.google.gson.Gson
 import com.heartsignal.hatalk.GlobalApplication
+import com.heartsignal.hatalk.main.data.*
 import com.heartsignal.hatalk.model.userInfo
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -55,6 +53,7 @@ class MainHomeFragment : Fragment() {
     private var binding: FragmentMainHomeBinding? = null
     private val sharedViewModel: UserModel by activityViewModels()
     lateinit var mSocket: Socket
+    private var matchingStatus: Boolean = false
 
     private lateinit var GUID: String
 
@@ -75,6 +74,7 @@ class MainHomeFragment : Fragment() {
         sharedViewModel.setAge(userInfo.age)
         sharedViewModel.setKakaoUserId(userInfo.kakaoUserId)
         sharedViewModel.setAccessToken(userInfo.accessToken)
+        Log.d(TAG, sharedViewModel.gender)
 
         return binding?.root
     }
@@ -106,11 +106,13 @@ class MainHomeFragment : Fragment() {
         /** [MatchingButton] */
         val matchingButton = binding?.matchingButton
         matchingButton?.setOnClickListener {
-//            goToSigRoom()
-            matching()
+            if (matchingStatus) matchingCancel() else matching(it as Button)
         }
 
+        mSocket.on("ready-${sharedViewModel.kakaoUserId}", onMatchingConnect)
+        mSocket.on(sharedViewModel.kakaoUserId, onMatchingConfirmConnect)
 
+        mSocket.on("cancel-${sharedViewModel.kakaoUserId}", onMatchingCancelConnect)
     }
 
 
@@ -136,9 +138,21 @@ class MainHomeFragment : Fragment() {
     }
 
 
+    private fun matchingCancel() {
+
+        val matchingCancelMessage = MatchingCancelData(sharedViewModel.kakaoUserId, sharedViewModel.gender)
+        val gson = Gson()
+        val matchingCancelObj = JSONObject(gson.toJson(matchingCancelMessage))
+
+        mSocket.emit("cancel", matchingCancelObj)
+
+    }
 
 
-    private fun matching() {
+    private fun matching(button: Button) {
+        matchingStatus = true
+        button.text = "매칭 중.."
+
 
         val userId = sharedViewModel.kakaoUserId
 
@@ -147,75 +161,12 @@ class MainHomeFragment : Fragment() {
             sharedViewModel.nickname,
             sharedViewModel.gender
         )
-        Log.d(TAG, "here is matchingButton onClick")
+
+//        Log.d(TAG, matchingStartMessage.toString())
+
         val gson = Gson()
         val matchingObj = JSONObject(gson.toJson(matchingStartMessage))
-        val onMatchingConnect = Emitter.Listener { args ->
-            Log.d(TAG, args[0].toString())
-            val matchingResponse = JSONObject(args[0].toString())
-            GUID = matchingResponse.getString("groupName")
-            //팝업창을 띄우기
-            val matchingConfirmSuccessMessage = MatchingConfirmData(
-                userId,
-                GUID,
-                true
-            )
-            val matchingConfirmFailMessage = MatchingConfirmData(
-                userId,
-                GUID,
-                false
-            )
-            val matchingConfirmSuccessObj = JSONObject(gson.toJson(matchingConfirmSuccessMessage))
-            val matchingConfirmFailObj = JSONObject(gson.toJson(matchingConfirmFailMessage))
-            val dialogBuilder = AlertDialog.Builder(context)
-            dialogBuilder.setTitle("매칭")
-                .setMessage("매칭을 수락하시겠습니까?")
-                .setPositiveButton("수락",
-                    DialogInterface.OnClickListener{ dialog, id ->
-                        mSocket.emit("imready", matchingConfirmSuccessObj)
-                })
-                .setNegativeButton("취소",
-                    DialogInterface.OnClickListener{ dialog, id ->
-                        mSocket.emit("imready", matchingConfirmFailObj)
-                    }
-                )
-            Thread {
-                runOnUiThread(Runnable {
-                    kotlin.run {
-                        dialogBuilder.show()
-                    }
-                })
-            }.start()
-        }
-        val onMatchingConfirmConnect = Emitter.Listener { args ->
-            val matchingConfirmJSON = JSONObject(args[0].toString())
-            val matchingConfirmResponse = Gson().fromJson(matchingConfirmJSON.toString(), MatchingConfirmResponse::class.java)
-            Log.d(TAG, matchingConfirmResponse.toString())
-            CometChat.joinGroup(matchingConfirmResponse.groupName,
-                CometChatConstants.GROUP_TYPE_PUBLIC,
-                "",
-                object : CometChat.CallbackListener<Group>() {
-                    override fun onSuccess(p0: Group?) {
-                        Log.d(TAG, p0.toString())
-                    }
 
-                    override fun onError(p0: CometChatException?) {
-                        Log.d(
-                            TAG,
-                            "Group joining failed with exception: " + p0?.message
-                        )
-                    }
-                })
-
-            activity?.let {
-                val intent = Intent(it, SignalRoomActivity::class.java)
-                intent.putExtra("matchingData", matchingConfirmResponse)
-                it.startActivity(intent)
-            }
-        }
-
-        mSocket.on("ready-${userId}", onMatchingConnect)
-        mSocket.on("${userId}", onMatchingConfirmConnect)
         mSocket.emit("matchstart", matchingObj)
 
         /**
@@ -223,5 +174,85 @@ class MainHomeFragment : Fragment() {
          */
     }
 
+    val onMatchingCancelConnect = Emitter.Listener { args ->
+        val matchingCancelJSON = JSONObject(args[0].toString())
+        val matchingCancelResponse = Gson().fromJson(matchingCancelJSON.toString(), MatchingCancelResponse::class.java)
 
+        if (matchingCancelResponse.msg == "success") {
+            matchingStatus = false
+            val matchingButton = binding?.matchingButton
+            runOnUiThread {
+                matchingButton?.text = "매칭하기"
+            }
+        } else {
+            Log.d(TAG, "FAIL CANCEL")
+        }
+    }
+
+    val onMatchingConfirmConnect = Emitter.Listener { args ->
+        val matchingConfirmJSON = JSONObject(args[0].toString())
+        val matchingConfirmResponse = Gson().fromJson(matchingConfirmJSON.toString(), MatchingConfirmResponse::class.java)
+        Log.d(TAG, matchingConfirmResponse.toString())
+        CometChat.joinGroup(matchingConfirmResponse.groupName,
+            CometChatConstants.GROUP_TYPE_PUBLIC,
+            "",
+            object : CometChat.CallbackListener<Group>() {
+                override fun onSuccess(p0: Group?) {
+                    Log.d(TAG, p0.toString())
+                }
+
+                override fun onError(p0: CometChatException?) {
+                    Log.d(
+                        TAG,
+                        "Group joining failed with exception: " + p0?.message
+                    )
+                }
+            })
+
+        activity?.let {
+            val intent = Intent(it, SignalRoomActivity::class.java)
+            intent.putExtra("matchingData", matchingConfirmResponse)
+            it.startActivity(intent)
+        }
+    }
+
+
+    val onMatchingConnect = Emitter.Listener { args ->
+        val userId = sharedViewModel.kakaoUserId
+        val matchingResponse = JSONObject(args[0].toString())
+        GUID = matchingResponse.getString("groupName")
+        //팝업창을 띄우기
+        val matchingConfirmSuccessMessage = MatchingConfirmData(
+            userId,
+            GUID,
+            true
+        )
+        val matchingConfirmFailMessage = MatchingConfirmData(
+            userId,
+            GUID,
+            false
+        )
+        val gson = Gson()
+        val matchingConfirmSuccessObj = JSONObject(gson.toJson(matchingConfirmSuccessMessage))
+        val matchingConfirmFailObj = JSONObject(gson.toJson(matchingConfirmFailMessage))
+        val dialogBuilder = AlertDialog.Builder(context)
+        dialogBuilder.setTitle("매칭")
+            .setMessage("매칭을 수락하시겠습니까?")
+            .setPositiveButton("수락",
+                DialogInterface.OnClickListener{ dialog, id ->
+                    mSocket.emit("imready", matchingConfirmSuccessObj)
+                })
+            .setNegativeButton("취소",
+                DialogInterface.OnClickListener{ dialog, id ->
+                    mSocket.emit("imready", matchingConfirmFailObj)
+                }
+            )
+        Thread {
+            runOnUiThread(Runnable {
+                kotlin.run {
+                    dialogBuilder.show()
+                }
+            })
+        }.start()
+    }
 }
