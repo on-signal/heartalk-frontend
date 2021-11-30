@@ -3,6 +3,7 @@ package com.heartsignal.hatalk.main.userModel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.heartsignal.hatalk.GlobalApplication
 import com.heartsignal.hatalk.main.data.Friends
 import com.heartsignal.hatalk.network.UserApi
 import kotlinx.coroutines.launch
@@ -12,9 +13,10 @@ import java.lang.Exception
 class UserModel: ViewModel() {
     init {
         Log.d("HEART", "model init")
+
     }
 
-    private var _kakaoUserId: String = ""
+    private var _kakaoUserId: String = GlobalApplication.userInfo.kakaoUserId
     val kakaoUserId: String get() = _kakaoUserId
 
     private var _email:String = ""
@@ -60,6 +62,7 @@ class UserModel: ViewModel() {
                 _friends = friendsResponse.body()
                 }
             catch (e: Exception) {
+                Log.d("HEART", "Frineds fail")
             }
         }
     }

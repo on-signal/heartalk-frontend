@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.heartsignal.hatalk.GlobalApplication
 import com.heartsignal.hatalk.R
-import com.heartsignal.hatalk.main.data.Message
+import com.heartsignal.hatalk.main.data.ChatMessage
 
-class ChatingAdapter(val context : Context, val chatList : ArrayList<Message>) : RecyclerView.Adapter<ChatingAdapter.ViewHolder>() {
+class ChatingAdapter(val context: Context, val chatList: MutableList<ChatMessage>) : RecyclerView.Adapter<ChatingAdapter.ViewHolder>() {
 
     val CHAT_MINE = 0
     val CHAT_PARTNER = 1
@@ -19,7 +20,6 @@ class ChatingAdapter(val context : Context, val chatList : ArrayList<Message>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        Log.d("HEART",chatList.size.toString())
         var view : View? = null
         when(viewType){
 
@@ -34,34 +34,24 @@ class ChatingAdapter(val context : Context, val chatList : ArrayList<Message>) :
                 view = LayoutInflater.from(context).inflate(R.layout.item_chating_partner,parent,false)
                 Log.d("partner inflating","viewType : ${viewType}")
             }
-            2 ->
-            {
-//                view = LayoutInflater.from(context).inflate(R.layout.chat_into_notification,parent,false)
-                Log.d("someone in or out","viewType : ${viewType}")
-            }
-            3 ->
-            {
-//                view = LayoutInflater.from(context).inflate(R.layout.chat_into_notification,parent,false)
-                Log.d("someone in or out","viewType : ${viewType}")
-            }
         }
 
         return ViewHolder(view!!)
     }
 
     override fun getItemCount(): Int {
-        return chatList.size
+        return chatList?.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return chatList[position].viewType
+        return if (chatList[position].senderId == GlobalApplication.userInfo.kakaoUserId) 0 else 1
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val messageData  = chatList[position]
-        val userName = messageData.userName;
-        val content = messageData.messageContent;
-        val viewType = messageData.viewType;
+        val userName = messageData.senderId
+        val content = messageData.text
+        val viewType = getItemViewType(position)
 
         when(viewType) {
 
@@ -71,14 +61,6 @@ class ChatingAdapter(val context : Context, val chatList : ArrayList<Message>) :
             CHAT_PARTNER ->{
                 holder.userName.setText(userName)
                 holder.message.setText(content)
-            }
-            USER_JOIN -> {
-                val text = "${userName} has entered the room"
-                holder.text.setText(text)
-            }
-            USER_LEAVE -> {
-                val text = "${userName} has leaved the room"
-                holder.text.setText(text)
             }
         }
 

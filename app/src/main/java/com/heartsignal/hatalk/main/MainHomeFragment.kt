@@ -32,6 +32,8 @@ import com.heartsignal.hatalk.signalRoom.PRIVATE.IDs
 import com.heartsignal.hatalk.signalRoom.sigRoom.SignalRoomActivity
 import com.facebook.react.bridge.UiThreadUtil.runOnUiThread
 import com.google.gson.Gson
+import com.heartsignal.hatalk.GlobalApplication
+import com.heartsignal.hatalk.model.userInfo
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_signal_room.view.*
@@ -63,6 +65,16 @@ class MainHomeFragment : Fragment() {
         val fragmentBinding = FragmentMainHomeBinding.inflate(inflater, container, false)
         binding = fragmentBinding
 
+        val userInfo: userInfo = GlobalApplication.userInfo
+
+        sharedViewModel.setEmail(userInfo.email)
+        sharedViewModel.setName(userInfo.name)
+        sharedViewModel.setNickname(userInfo.nickname)
+        sharedViewModel.setProfileUrl(userInfo.photoUrl)
+        sharedViewModel.setGender(userInfo.gender)
+        sharedViewModel.setAge(userInfo.age)
+        sharedViewModel.setKakaoUserId(userInfo.kakaoUserId)
+        sharedViewModel.setAccessToken(userInfo.accessToken)
 
         return binding?.root
     }
@@ -82,8 +94,9 @@ class MainHomeFragment : Fragment() {
             e.printStackTrace();
         }
 
+
         Glide.with(this)
-            .load(sharedViewModel.photoUrl)
+            .load(GlobalApplication.userInfo.photoUrl)
             .into(binding!!.homeProfileImage)
 
 
