@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".signalRoom.sigRoom.SignalRoomActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -12,12 +12,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="10">
+            android:weightSum="20">
 
             <GridLayout
                 android:layout_width="match_parent"
                 android:columnCount="1"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:weightSum="10"
                 android:layout_height="wrap_content"
                 android:background="@color/signal"
@@ -48,8 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:layout_marginTop="-1dp"
-                android:layout_weight="7"
+                android:layout_weight="14"
                 android:background="@color/signal"
                 android:useDefaultMargins="true">
 
@@ -58,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="100dp"
                     android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
@@ -98,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="100dp"
                     android:layout_marginEnd="10dp"
                     android:orientation="vertical">
 
@@ -297,7 +296,7 @@
                 android:layout_width="match_parent"
                 android:background="@color/keyboard"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_weight="3">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -349,6 +348,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 </layout>
 
