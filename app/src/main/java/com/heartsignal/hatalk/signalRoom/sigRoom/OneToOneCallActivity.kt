@@ -17,9 +17,15 @@ import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
+import com.google.gson.Gson
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.ActivityOneToOneCallBinding
+import com.heartsignal.hatalk.signalRoom.sigRoom.socket.ContentsSocketApplication
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.FirstCallEndSocket
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
+import org.json.JSONObject
+import java.net.URISyntaxException
 
 class OneToOneCallActivity : AppCompatActivity() {
     private val TAG = "HEART"
@@ -29,6 +35,10 @@ class OneToOneCallActivity : AppCompatActivity() {
     private lateinit var myGender: String
     private lateinit var groupName: String
     private lateinit var firstCallEndSocket: FirstCallEndSocket
+    private lateinit var oneToOneCallAvailableSocket: Socket
+    private val onOneToOneCallAvailable = Emitter.Listener { _ ->
+        callerStart()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +56,16 @@ class OneToOneCallActivity : AppCompatActivity() {
             groupName = oneToOneCallData.groupName
         }
 
+        try {
+            oneToOneCallAvailableSocket = ContentsSocketApplication.get()
+            oneToOneCallAvailableSocket.connect()
+        } catch(e:URISyntaxException) {
+            e.printStackTrace()
+        }
+
+        oneToOneCallAvailableSocket.on("${groupName}firstCall", onOneToOneCallAvailable)
 
         addCallListener()
-        callerStart()
 
         firstCallEndSocket = FirstCallEndSocket(this, groupName, TAG)
         firstCallEndSocket.set()
@@ -76,12 +93,12 @@ class OneToOneCallActivity : AppCompatActivity() {
             override fun onError(p0: CometChatException?) {
                 Log.d(TAG, "OneToOneCall initialization failed with exception: " + p0?.message)
             }
-
         })
     }
 
     private fun addCallListener() {
-        val listenerID= "OneToOneCallActivity"
+        val listenerID = "OneToOneCallActivity"
+
 
         CometChat.addCallListener(listenerID, object : CometChat.CallListener() {
             override fun onOutgoingCallAccepted(p0: Call?) {
@@ -102,6 +119,12 @@ class OneToOneCallActivity : AppCompatActivity() {
                 Log.d(TAG, "Outgoing OneToOneCall rejected: " + p0?.toString())
             }
         })
+
+        val gson = Gson()
+        val oneToOneCallAvailableObj =
+            JSONObject(gson.toJson(OneToOneCallAvailable(groupName, "firstCall")))
+
+        oneToOneCallAvailableSocket.emit("callInit", oneToOneCallAvailableObj)
     }
 
     private fun acceptCall(call: Call) {
@@ -162,13 +185,7 @@ class OneToOneCallActivity : AppCompatActivity() {
 
     private fun callerStart() {
         if (myGender == "0") {
-            Handler(Looper.getMainLooper()).postDelayed(
-                {
-                    initiateOneToOneCall(counterPartId)
-                },
-                2000
-            )
-
+            initiateOneToOneCall(counterPartId)
         }
     }
 }

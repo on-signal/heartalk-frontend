@@ -12,3 +12,8 @@ data class OnetoOneCall(
     val groupName: String,
 ) : Parcelable
 
+@Parcelize
+data class OneToOneCallAvailable(
+    val groupName: String,
+    val contents: String
+) : Parcelable
