@@ -45,13 +45,6 @@ data class userData(
 ) : Parcelable
 
 
-data class testData(
-    val name: String,
-    val groupName: String,
-    val text: String,
-    val icon: String
-)
-
 data class MatchingCancelData (
     val userId: String,
     val gender: String
@@ -59,4 +52,13 @@ data class MatchingCancelData (
 
 data class MatchingCancelResponse (
     val msg: String
+)
+
+data class CallReadyRequest (
+    val groupName: String,
+    val contents: String
+)
+
+data class CallReadyResponse (
+    val msg: Boolean
 )

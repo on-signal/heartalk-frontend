@@ -32,8 +32,12 @@ import com.heartsignal.hatalk.model.sigRoom.MatchingUser
 import com.cometchat.pro.core.CometChat
 import com.facebook.react.bridge.UiThreadUtil
 import com.google.gson.Gson
+import com.heartsignal.hatalk.main.data.CallReadyRequest
+import com.heartsignal.hatalk.main.data.MatchingSocketApplication
 import com.heartsignal.hatalk.model.sigRoom.AnswerModel
+import com.heartsignal.hatalk.signalRoom.PRIVATE.URLs
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.*
+import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import org.json.JSONObject
@@ -437,7 +441,7 @@ class SignalRoomActivity : AppCompatActivity() {
                 {
                     initiateCall(matchingModel.groupName)
                 },
-                2000
+                100
             )
         }
     }
