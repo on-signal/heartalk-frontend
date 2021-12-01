@@ -32,6 +32,8 @@ import com.google.gson.Gson
 import com.heartsignal.hatalk.GlobalApplication
 import com.heartsignal.hatalk.main.data.*
 import com.heartsignal.hatalk.model.userInfo
+import com.heartsignal.hatalk.signalRoom.PRIVATE.URLs
+import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_signal_room.view.*
@@ -53,7 +55,9 @@ class MainHomeFragment : Fragment() {
     private var binding: FragmentMainHomeBinding? = null
     private val sharedViewModel: UserModel by activityViewModels()
     lateinit var mSocket: Socket
+    lateinit var contentsSocket: Socket
     private var matchingStatus: Boolean = false
+    private var matchingConfirmResponse: MatchingConfirmResponse? = null
 
     private lateinit var GUID: String
 
@@ -94,6 +98,13 @@ class MainHomeFragment : Fragment() {
             e.printStackTrace();
         }
 
+        try {
+            contentsSocket = IO.socket("${URLs.URL}/room")
+            contentsSocket.connect()
+        } catch (e: URISyntaxException) {
+            e.printStackTrace();
+        }
+
 
         Glide.with(this)
             .load(GlobalApplication.userInfo.photoUrl)
@@ -113,6 +124,11 @@ class MainHomeFragment : Fragment() {
         mSocket.on(sharedViewModel.kakaoUserId, onMatchingConfirmConnect)
 
         mSocket.on("cancel-${sharedViewModel.kakaoUserId}", onMatchingCancelConnect)
+
+
+        Log.d("HEART", "${matchingConfirmResponse?.groupName}groupCall")
+        contentsSocket.on("groupCall", onCallStartConnect)
+
     }
 
 
@@ -135,6 +151,7 @@ class MainHomeFragment : Fragment() {
         super.onDestroyView()
         binding = null
         mSocket.disconnect()
+        contentsSocket.disconnect()
     }
 
 
@@ -191,14 +208,16 @@ class MainHomeFragment : Fragment() {
 
     val onMatchingConfirmConnect = Emitter.Listener { args ->
         val matchingConfirmJSON = JSONObject(args[0].toString())
-        val matchingConfirmResponse = Gson().fromJson(matchingConfirmJSON.toString(), MatchingConfirmResponse::class.java)
-        if (matchingConfirmResponse.msg == "success") {
-            CometChat.joinGroup(matchingConfirmResponse.groupName,
+        matchingConfirmResponse = Gson().fromJson(matchingConfirmJSON.toString(), MatchingConfirmResponse::class.java)
+        val groupName = matchingConfirmResponse?.groupName
+        if (matchingConfirmResponse?.msg == "success") {
+            CometChat.joinGroup(groupName!!,
                 CometChatConstants.GROUP_TYPE_PUBLIC,
                 "",
                 object : CometChat.CallbackListener<Group>() {
                     override fun onSuccess(p0: Group?) {
                         Log.d(TAG, p0.toString())
+                        callReadyEmit(groupName)
                     }
 
                     override fun onError(p0: CometChatException?) {
@@ -209,13 +228,19 @@ class MainHomeFragment : Fragment() {
                     }
                 }
             )
+        }
+    }
+
+    private val onCallStartConnect = Emitter.Listener { args ->
+        val callReadyJSON = JSONObject(args[0].toString())
+        val callReadyMsg = Gson().fromJson(callReadyJSON.toString(), CallReadyResponse::class.java)
+        if (callReadyMsg.msg == true) {
             activity?.let {
                 val intent = Intent(it, SignalRoomActivity::class.java)
                 intent.putExtra("matchingData", matchingConfirmResponse)
                 it.startActivity(intent)
             }
         }
-
     }
 
 
@@ -260,5 +285,14 @@ class MainHomeFragment : Fragment() {
                 }
             })
         }.start()
+    }
+
+    private fun callReadyEmit(groupId: String) {
+        val callReadyMsg = CallReadyRequest(groupId, "groupCall")
+        val gson = Gson()
+        val callReadyObj = JSONObject(gson.toJson(callReadyMsg))
+        Log.d(TAG, "emit")
+
+        contentsSocket.emit("callInit", callReadyObj)
     }
 }

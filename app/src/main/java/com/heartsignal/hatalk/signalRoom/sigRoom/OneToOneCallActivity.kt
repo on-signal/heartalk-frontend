@@ -166,7 +166,7 @@ class OneToOneCallActivity : AppCompatActivity() {
                 {
                     initiateOneToOneCall(counterPartId)
                 },
-                2000
+                3000
             )
 
         }

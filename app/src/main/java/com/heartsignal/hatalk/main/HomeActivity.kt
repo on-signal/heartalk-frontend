@@ -19,7 +19,6 @@ import com.heartsignal.hatalk.main.chat.ChatSocketApplication
 import com.heartsignal.hatalk.main.data.MatchingConfirmData
 import com.heartsignal.hatalk.main.data.MatchingConfirmResponse
 import com.heartsignal.hatalk.main.data.Partner
-import com.heartsignal.hatalk.main.data.testData
 import com.heartsignal.hatalk.main.userModel.UserModel
 import com.heartsignal.hatalk.model.userInfo
 import com.heartsignal.hatalk.network.UserApi
