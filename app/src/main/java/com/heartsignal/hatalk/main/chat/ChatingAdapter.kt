@@ -61,10 +61,9 @@ class ChatingAdapter(val context: Context, val chatList: MutableList<ChatMessage
         val messageData  = chatList[position]
         val nickName = GlobalApplication.tempPartner?.nickname
         val content = messageData.text
-        val formatter = DateTimeFormatter.ofPattern("h:mm")
-        val tempTime: LocalDateTime = LocalDateTime.parse(messageData.createdAt, DateTimeFormatter.ISO_DATE)
-        val currentTime = tempTime.toString()
-        Log.d("HEART", tempTime.toString())
+
+        val currentTime = messageData.sendTime
+
 
         val viewType = getItemViewType(position)
 

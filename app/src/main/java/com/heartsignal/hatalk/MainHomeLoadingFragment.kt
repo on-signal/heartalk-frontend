@@ -76,7 +76,6 @@ class MainHomeLoadingFragment : Fragment() {
                         sharedViewModel.gender,
                         sharedViewModel.age
                     )
-                    Log.d("HEART", userInfo.toString())
 
                     GlobalApplication.userInfo = userInfo
 
