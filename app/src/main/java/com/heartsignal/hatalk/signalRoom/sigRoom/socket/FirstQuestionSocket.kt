@@ -19,7 +19,8 @@ class FirstQuestionSocket(
     private val context: Context,
     private val groupName: String,
     private val myId: String,
-    private val myGender: String
+    private val myGender: String,
+    private val question: String,
 ) {
     private lateinit var socket: Socket
     private val dialogBuilder = AlertDialog.Builder(context)
@@ -48,7 +49,7 @@ class FirstQuestionSocket(
 
     private fun renderingForMan() {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.first_question_dialog, null)
-        dialogBuilder.setView(dialogView).setTitle("답변을 적어주세요.").setCancelable(false)
+        dialogBuilder.setView(dialogView).setTitle(question).setCancelable(false)
             .setPositiveButton("확인") { _, _ ->
                 val answer = dialogView.findViewById<EditText>(R.id.first_question_answer).text
                 Toast.makeText(context, "$answer", Toast.LENGTH_LONG).show()

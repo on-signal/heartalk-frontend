@@ -110,7 +110,8 @@ class SignalRoomActivity : AppCompatActivity() {
                 this,
                 matchingModel.groupName,
                 matchingModel.myId,
-                matchingModel.myGender
+                matchingModel.myGender,
+                matchingModel.questionList[0]
             )
         firstQuestionSocket.set()
         firstQuestionSocket.makeOn()

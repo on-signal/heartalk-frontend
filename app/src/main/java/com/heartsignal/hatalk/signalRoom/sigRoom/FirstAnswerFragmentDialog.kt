@@ -46,7 +46,8 @@ class FirstAnswerFragmentDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
-            viewModel = answerModel
+            answerViewModel = answerModel
+            matchingViewModel = matchingModel
             lifecycleOwner = viewLifecycleOwner
             firstAnswerDialogFragment = this@FirstAnswerFragmentDialog
         }

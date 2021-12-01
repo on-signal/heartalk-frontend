@@ -7,8 +7,12 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="answerViewModel"
             type="com.heartsignal.hatalk.model.sigRoom.AnswerModel" />
+
+        <variable
+            name="matchingViewModel"
+            type="com.heartsignal.hatalk.model.sigRoom.MatchingModel" />
 
         <variable
             name="firstAnswerDialogFragment"
@@ -20,15 +24,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/first_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="72dp"
+            android:text="@{matchingViewModel.questionList[0]}" />
+
         <Button
             android:id="@+id/first_reply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="72dp"
-            android:enabled="@{viewModel.answerList[0].already == 0}"
+            android:enabled="@{answerViewModel.answerList[0].already == 0}"
             android:onClick="@{() -> firstAnswerDialogFragment.selectFirstOne()}"
-            android:text="@{viewModel.answerList[0].answer}" />
+            android:text="@{answerViewModel.answerList[0].answer}" />
 
         <Button
             android:id="@+id/second_reply"
@@ -36,8 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="72dp"
-            android:enabled="@{viewModel.answerList[1].already == 0}"
+            android:enabled="@{answerViewModel.answerList[1].already == 0}"
             android:onClick="@{() -> firstAnswerDialogFragment.selectSecondOne()}"
-            android:text="@{viewModel.answerList[1].answer}" />
+            android:text="@{answerViewModel.answerList[1].answer}" />
     </LinearLayout>
 </layout>
