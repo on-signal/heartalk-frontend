@@ -95,9 +95,9 @@ class ChatFragment : Fragment() {
                     val intent = Intent(context, ChatingActivity::class.java)
                     intent.putExtra("partner", friends[position].partner)
                     if (sharedViewModel.gender == "0") {
-                        roomId = sharedViewModel.kakaoUserId.plus(friends[position].partner.id)
+                        roomId = sharedViewModel.kakaoUserId.plus(friends[position].partner.kakaoUserId)
                     }   else {
-                        roomId = (friends[position].partner.id).plus(sharedViewModel.kakaoUserId)
+                        roomId = (friends[position].partner.kakaoUserId).plus(sharedViewModel.kakaoUserId)
                     }
                     val chatData: ChatData? = UserApi.retrofitService.getChatMessages(roomId).body()
                     intent.putExtra("chatMessage", chatData)

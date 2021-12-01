@@ -6,19 +6,19 @@ import kotlinx.android.parcel.RawValue
 
 data class Friends (
     var _id : String,
-    var chatName : String,
-    var ownerId : String,
+    var name : String,
     var partner : Partner,
     var createdAt : String,
     var updatedAt : String,
     var __v : Int,
+    var ownerKakaoUserId : String,
     var recentMessage: recentMessage?,
     var id: String
 )
 
 @Parcelize
 data class Partner (
-    var id : String,
+    var kakaoUserId : String,
     var nickname : String,
     var photoUrl : String
 ) : Parcelable
@@ -27,14 +27,17 @@ data class Partner (
 data class recentMessage (
     var _id: String,
     var text: String,
-    var senderId: String,
-    var chatName: String
+    var senderKakaoUserId: String,
+    var chatName: String,
+    var createdAt: String,
+    var updatedAt: String,
+    var __v: Int
 )
+
 @Parcelize
 data class ChatData (
     var _id : String,
-    var chatName : String,
-    var ownerId : String,
+    var name : String,
     var partner : Partner,
     var createdAt : String,
     var updatedAt : String,
@@ -48,8 +51,12 @@ data class ChatData (
 data class ChatMessage (
     var _id : String,
     var text: String,
-    var senderId: String,
-    var chatName: String
+    var senderKakaoUserId: String,
+    var chatName: String,
+    var createdAt: String,
+    var updatedAt: String,
+    var __v: Int
 ) : Parcelable
+
 
 data class Message (val userName: String, val messageContent : String, val roomName: String, var viewType: Int)

@@ -38,16 +38,16 @@ interface UserApiService {
     @POST("users/signup")
     suspend fun signUp(@Body body: SignUpRequest): Response<SignUpResponse>
 
-    @GET("users")
+    @GET("users/me")
     suspend fun getCurrentUser(@Header("Authorization") jwt: String): Response<GetProfileResponse>
 
     @POST("users/delete")
     suspend fun deleteUser(@Header("Authorization") jwt: String, @Body body: DeleteUserRequest): Response<DeleteUserResponse>
 
-    @GET("chats/{userId}")
+    @GET("chats/user/{userId}")
     suspend fun getUserFriend(@Path(value = "userId", encoded = true)userId: String): Response<Array<Friends>>
 
-    @GET("chats/user/{roomId}")
+    @GET("chats/name/{roomId}")
     suspend fun getChatMessages(@Path(value = "roomId", encoded = true) roomId: String): Response<ChatData>
 
     @PATCH("users")

@@ -75,7 +75,6 @@ class MainHomeFragment : Fragment() {
         sharedViewModel.setPhoneNumber(userInfo.phoneNumber)
         sharedViewModel.setKakaoUserId(userInfo.kakaoUserId)
         sharedViewModel.setAccessToken(userInfo.accessToken)
-        Log.d(TAG, sharedViewModel.phoneNumber)
 
         return binding?.root
     }

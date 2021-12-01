@@ -33,6 +33,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.net.URISyntaxException
+import io.socket.client.Manager
+import io.socket.client.IO
+
+
+
+
+
+
 
 
 class HomeActivity : AppCompatActivity(R.layout.activity_home) {
@@ -63,8 +71,6 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
 
         mSocket = ChatSocketApplication.get()
         mSocket.connect()
-
-        /**  [ChatSocket__OPEN]  */
 
 
         navController = findNavController(R.id.home_fragment)

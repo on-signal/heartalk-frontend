@@ -62,7 +62,7 @@ class UserModel: ViewModel() {
                 _friends = friendsResponse.body()
                 }
             catch (e: Exception) {
-                Log.d("HEART", "Frineds fail")
+                Log.d("HEART", e.toString())
             }
         }
     }
