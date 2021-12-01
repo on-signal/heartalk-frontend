@@ -16,7 +16,7 @@ class FirstCallEndSocket(
     private val TAG: String
 ) {
     private lateinit var socket: Socket
-    private val onFirstCallEnd = Emitter.Listener {
+    private val onCallEnd = Emitter.Listener {
         emitListener()
     }
 
@@ -30,7 +30,8 @@ class FirstCallEndSocket(
     }
 
     fun makeOn() {
-        socket.on("${groupName}FirstCallEnd", onFirstCallEnd)
+        socket.on("${groupName}FirstCallEnd", onCallEnd)
+        socket.on("${groupName}SecondCallEnd", onCallEnd)
     }
 
     private fun emitListener() {

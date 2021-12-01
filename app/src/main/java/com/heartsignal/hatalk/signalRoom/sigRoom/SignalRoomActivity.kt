@@ -1,6 +1,7 @@
 package com.heartsignal.hatalk.signalRoom.sigRoom
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.*
@@ -29,6 +30,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import com.heartsignal.hatalk.model.sigRoom.MatchingUser
 import com.cometchat.pro.core.CometChat
+import com.facebook.react.bridge.UiThreadUtil
 import com.google.gson.Gson
 import com.heartsignal.hatalk.model.sigRoom.AnswerModel
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.*
@@ -47,6 +49,7 @@ class SignalRoomActivity : AppCompatActivity() {
     private lateinit var readyFirstChoiceSocket: ReadyFirstChoiceSocket
     private lateinit var firstQuestionSocket: FirstQuestionSocket
     private lateinit var firstAnswerSocket: Socket
+    private lateinit var finalChoiceSocket: Socket
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
     private val answerModel: AnswerModel by viewModels()
@@ -55,6 +58,9 @@ class SignalRoomActivity : AppCompatActivity() {
     }
     private val onSecondCall = Emitter.Listener { args ->
         secondCallEmitListener(args)
+    }
+    private val onFinalChoice = Emitter.Listener { _ ->
+        finalChoiceEmitListener()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -129,6 +135,15 @@ class SignalRoomActivity : AppCompatActivity() {
 
         firstAnswerSocket.on("${matchingModel.groupName}AnswerChoice", onFirstAnswer)
         firstAnswerSocket.on("${matchingModel.groupName}SecondCall", onSecondCall)
+
+        try {
+            finalChoiceSocket = ContentsSocketApplication.get()
+            finalChoiceSocket.connect()
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
+        }
+
+        finalChoiceSocket.on("${matchingModel.groupName}FinalChoice", onFinalChoice)
     }
 
     override fun onRestart() {
@@ -523,5 +538,85 @@ class SignalRoomActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             })
+    }
+
+    private fun finalChoiceEmitListener() {
+        val dialogBuilder = AlertDialog.Builder(this)
+        val womanIconList = arrayOf("fox", "hamster")
+        val manIconList = arrayOf("wolf", "penguin")
+        lateinit var selectedItem: String
+        if (matchingModel.myGender == "0") {
+            dialogBuilder.setTitle("최종선택")
+                .setSingleChoiceItems(womanIconList, -1) { _, pos ->
+                selectedItem = womanIconList[pos]
+            }.setPositiveButton("OK") { _, _ ->
+                Toast.makeText(
+                    this,
+                    "$selectedItem is Selected", Toast.LENGTH_LONG
+                ).show()
+                var choice = ""
+                for (woman in matchingModel.womanList) {
+                    if (woman.icon == selectedItem) {
+                        choice = woman.id
+                    }
+                }
+                val gson = Gson()
+                val finalChoice =
+                    JSONObject(
+                        gson.toJson(
+                            FirstChoiceRequest(
+                                matchingModel.groupName,
+                                matchingModel.myId,
+                                matchingModel.myGender,
+                                choice
+                            )
+                        )
+                    )
+                finalChoiceSocket.emit("finalChoiceToServer", finalChoice)
+            }.setCancelable(false)
+            Thread {
+                UiThreadUtil.runOnUiThread(Runnable {
+                    kotlin.run {
+                        dialogBuilder.show()
+                    }
+                })
+            }.start()
+        } else if (matchingModel.myGender == "1") {
+            dialogBuilder.setTitle("최종선택")
+                .setSingleChoiceItems(manIconList, -1) { _, pos ->
+                    selectedItem = manIconList[pos]
+                }.setPositiveButton("OK") { _, _ ->
+                    Toast.makeText(
+                        this,
+                        "$selectedItem is Selected", Toast.LENGTH_LONG
+                    ).show()
+                    var choice = ""
+                    for (man in matchingModel.manList) {
+                        if (man.icon == selectedItem) {
+                            choice = man.id
+                        }
+                    }
+                    val gson = Gson()
+                    val finalChoice =
+                        JSONObject(
+                            gson.toJson(
+                                FirstChoiceRequest(
+                                    matchingModel.groupName,
+                                    matchingModel.myId,
+                                    matchingModel.myGender,
+                                    choice
+                                )
+                            )
+                        )
+                    finalChoiceSocket.emit("finalChoiceToServer", finalChoice)
+                }.setCancelable(false)
+            Thread {
+                UiThreadUtil.runOnUiThread(Runnable {
+                    kotlin.run {
+                        dialogBuilder.show()
+                    }
+                })
+            }.start()
+        }
     }
 }
