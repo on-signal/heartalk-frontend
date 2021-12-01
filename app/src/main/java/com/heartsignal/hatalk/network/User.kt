@@ -15,7 +15,8 @@ data class LoginRequest (
         )
 
 data class LoginResponse (
-        val accessToken: String,
+        val nickname: String,
+        val accessToken: String
 //        val refreshToken: String
         )
 
@@ -36,6 +37,7 @@ data class SignUpResponse (
         )
 
 data class GetProfileResponse(
+        val kakaoUserId: String,
         val email: String,
         val name: String,
         val nickname: String,

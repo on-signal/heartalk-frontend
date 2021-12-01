@@ -66,6 +66,7 @@ class ProfileEditFragment : Fragment() {
                     tempEmail,
                     tempPhoneNumber
                 )
+                Log.d(TAG, sharedViewModel.accessToken)
                 val updateUserResponse: Response<UpdateUserResponse> = UserApi.retrofitService.updateUser("Bearer ${sharedViewModel.accessToken}", updateUserRequest)
                 Log.d(TAG, updateUserResponse.body()?.msg.toString())
                 if (updateUserResponse.body()?.msg == "success") {
