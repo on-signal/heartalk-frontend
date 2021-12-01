@@ -5,24 +5,39 @@
     tools:context=".signalRoom.sigRoom.FirstAnswerFragmentDialog">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.heartsignal.hatalk.model.sigRoom.AnswerModel"/>
+            type="com.heartsignal.hatalk.model.sigRoom.AnswerModel" />
+
         <variable
             name="firstAnswerDialogFragment"
-            type="com.heartsignal.hatalk.signalRoom.sigRoom.FirstAnswerFragmentDialog"/>
+            type="com.heartsignal.hatalk.signalRoom.sigRoom.FirstAnswerFragmentDialog" />
     </data>
 
-    <Button
-        android:id="@+id/first_reply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:text="@{viewModel.answerList[0].answer}"
-        android:onClick="@{() -> firstAnswerDialogFragment.selectFirstOne()}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <Button
+            android:id="@+id/first_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="72dp"
+            android:enabled="@{viewModel.answerList[0].already == 0}"
+            android:onClick="@{() -> firstAnswerDialogFragment.selectFirstOne()}"
+            android:text="@{viewModel.answerList[0].answer}" />
 
+        <Button
+            android:id="@+id/second_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="72dp"
+            android:enabled="@{viewModel.answerList[1].already == 0}"
+            android:onClick="@{() -> firstAnswerDialogFragment.selectSecondOne()}"
+            android:text="@{viewModel.answerList[1].answer}" />
+    </LinearLayout>
 </layout>

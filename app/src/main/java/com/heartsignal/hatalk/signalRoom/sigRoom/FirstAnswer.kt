@@ -18,6 +18,6 @@ data class FirstAnswerResponse(
 data class AnswerInfo(
     val owner: String,
     val answer: String,
-    val already: Int,
-    val selector: String
+    var already: Int,
+    var selector: String
 ) : Parcelable

@@ -50,8 +50,11 @@ class SignalRoomActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
     private val answerModel: AnswerModel by viewModels()
-    private val onFirstAnswer = Emitter.Listener {
-        args -> firstAnswerEmitListener(args)
+    private val onFirstAnswer = Emitter.Listener { args ->
+        firstAnswerEmitListener(args)
+    }
+    private val onSecondCall = Emitter.Listener { args ->
+        secondCallEmitListener(args)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -124,6 +127,7 @@ class SignalRoomActivity : AppCompatActivity() {
         }
 
         firstAnswerSocket.on("${matchingModel.groupName}AnswerChoice", onFirstAnswer)
+        firstAnswerSocket.on("${matchingModel.groupName}SecondCall", onSecondCall)
     }
 
     override fun onRestart() {
@@ -437,5 +441,86 @@ class SignalRoomActivity : AppCompatActivity() {
                 supportFragmentManager, "FirstAnswerDialog"
             )
         }
+    }
+
+    private fun secondCallEmitListener(args: Array<Any>) {
+        val res = JSONObject(args[0].toString())
+        val secondCallResponse = Gson().fromJson(res.toString(), SecondCallResponse::class.java)
+
+        var counterPartId = ""
+        var counterIcon = ""
+        if (matchingModel.myGender == "0") {
+            for (partner in secondCallResponse.partners) {
+                if (partner[0] == matchingModel.myId) {
+                    counterPartId = partner[1]
+                    break
+                }
+            }
+            for (woman in matchingModel.womanList) {
+                if (counterPartId == woman.id) {
+                    counterIcon = woman.icon
+                    break
+                }
+            }
+        } else if (matchingModel.myGender == "1") {
+            for (partner in secondCallResponse.partners) {
+                if (partner[1] == matchingModel.myId) {
+                    counterPartId = partner[0]
+                    break
+                }
+            }
+            for (man in matchingModel.manList) {
+                if (counterPartId == man.id) {
+                    counterIcon = man.icon
+                    break
+                }
+            }
+        }
+
+        CometChat.endCall(
+            CometChat.getActiveCall().sessionId,
+            object : CometChat.CallbackListener<Call?>() {
+                override fun onSuccess(call: Call?) {
+                    // handle end call success
+                    Log.d(TAG, "CALL Ended successfully: " + call.toString())
+
+                    CometChat.removeCallListener("SignalRoomActivity")
+
+                    val intent = Intent(this@SignalRoomActivity, OneToOneCallActivity::class.java)
+                    val oneToOneCallObj =
+                        OnetoOneCall(
+                            matchingModel.myId,
+                            matchingModel.myGender,
+                            counterPartId,
+                            counterIcon,
+                            matchingModel.groupName
+                        )
+
+
+                    intent.putExtra("oneToOneCallData", oneToOneCallObj)
+                    startActivity(intent)
+                }
+
+                override fun onError(e: CometChatException) {
+                    // handled end call error
+                    Log.d(TAG, "CALL Ended Error: $e")
+
+                    CometChat.removeCallListener("SignalRoomActivity")
+
+                    val intent = Intent(this@SignalRoomActivity, OneToOneCallActivity::class.java)
+                    val oneToOneCallObj =
+                        OnetoOneCall(
+                            matchingModel.myId,
+                            matchingModel.myGender,
+                            counterPartId,
+                            counterIcon,
+                            matchingModel.groupName
+                        )
+
+
+                    intent.putExtra("oneToOneCallData", oneToOneCallObj)
+                    startActivity(intent)
+                }
+            })
     }
 }
