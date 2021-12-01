@@ -25,6 +25,7 @@ import com.heartsignal.hatalk.model.userInfo
 import com.heartsignal.hatalk.network.UserApi
 import com.facebook.react.bridge.UiThreadUtil
 import com.google.gson.Gson
+import com.heartsignal.hatalk.GlobalApplication
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_home.*
@@ -68,8 +69,7 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
 
         /**  [ChatSocket__OPEN]  */
 
-
-        mSocket = ChatSocketApplication.get()
+        mSocket = ChatSocketApplication.get(GlobalApplication.userInfo.accessToken)
         mSocket.connect()
 
 

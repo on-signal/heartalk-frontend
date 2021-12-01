@@ -51,6 +51,7 @@ data class ChatData (
 data class ChatMessage (
     var _id : String,
     var text: String,
+    var sendTime: String?,
     var senderKakaoUserId: String,
     var chatName: String,
     var createdAt: String,
@@ -58,5 +59,18 @@ data class ChatMessage (
     var __v: Int
 ) : Parcelable
 
+
+data class EmitData (
+    var text: String,
+    var chatName: String,
+    var sendTime: String
+)
+
+data class ListenData (
+    var text: String,
+    var chatName: String,
+    var sendTime: String,
+    var senderKakaoUserId: String
+)
 
 data class Message (val userName: String, val messageContent : String, val roomName: String, var viewType: Int)
