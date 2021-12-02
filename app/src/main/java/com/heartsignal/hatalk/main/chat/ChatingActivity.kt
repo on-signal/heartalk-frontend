@@ -86,6 +86,7 @@ class ChatingActivity : AppCompatActivity() {
         send.setOnClickListener {
             val chat = edit_text.text.toString()
             val tempTime = setTime()
+            Log.d(TAG, tempTime)
             val tempMessage = ChatMessage(
                 "",
                 chat,

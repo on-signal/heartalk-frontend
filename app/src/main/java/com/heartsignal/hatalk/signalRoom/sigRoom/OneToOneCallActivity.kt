@@ -55,6 +55,16 @@ class OneToOneCallActivity : AppCompatActivity() {
         firstCallEndSocket.makeOn()
     }
 
+    override fun onResume() {
+        super.onResume()
+        supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        supportActionBar?.hide()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 
