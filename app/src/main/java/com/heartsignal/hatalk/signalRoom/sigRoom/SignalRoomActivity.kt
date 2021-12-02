@@ -393,28 +393,28 @@ class SignalRoomActivity : AppCompatActivity() {
     }
 
     private fun setMyButton(view: View) {
-        var userImageVIew: ImageView? = null
+        var userTextView: TextView? = null
         when (matchingModel.myIcon) {
             "lion" -> {
-                userImageVIew = view.lion
+                userTextView = view.lion_text
             }
             "bee" -> {
-                userImageVIew = view.bee
+                userTextView = view.bee_text
             }
             "penguin" -> {
-                userImageVIew = view.penguin
+                userTextView = view.penguin_text
             }
             "hamster" -> {
-                userImageVIew = view.hamster
+                userTextView = view.hamster_text
             }
             "wolf" -> {
-                userImageVIew = view.wolf
+                userTextView = view.wolf_text
             }
             "fox" -> {
-                userImageVIew = view.fox
+                userTextView = view.fox_text
             }
         }
-        userImageVIew?.setBackgroundColor(Color.parseColor("#472a2b"))
+        userTextView?.setBackgroundColor(Color.parseColor("#fff7d9"))
     }
 
     private fun initCometChat() {

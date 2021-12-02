@@ -63,7 +63,7 @@ class OneToOneCallActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        oneToOneCallAvailableSocket.on("${groupName}firstCall", onOneToOneCallAvailable)
+        oneToOneCallAvailableSocket.on("${groupName}OneToOneCall", onOneToOneCallAvailable)
 
         addCallListener()
 
@@ -122,7 +122,7 @@ class OneToOneCallActivity : AppCompatActivity() {
 
         val gson = Gson()
         val oneToOneCallAvailableObj =
-            JSONObject(gson.toJson(OneToOneCallAvailable(groupName, "firstCall")))
+            JSONObject(gson.toJson(OneToOneCallAvailable(groupName, "oneToOneCall")))
 
         oneToOneCallAvailableSocket.emit("callInit", oneToOneCallAvailableObj)
     }
