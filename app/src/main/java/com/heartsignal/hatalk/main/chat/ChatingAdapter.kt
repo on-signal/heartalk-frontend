@@ -62,8 +62,7 @@ class ChatingAdapter(val context: Context, val chatList: MutableList<ChatMessage
         val nickName = GlobalApplication.tempPartner?.nickname
         val content = messageData.text
 
-        val currentTime = messageData.sendTime
-
+        val currentTime = messageData.sendTime.toString()
 
         val viewType = getItemViewType(position)
 
@@ -71,6 +70,7 @@ class ChatingAdapter(val context: Context, val chatList: MutableList<ChatMessage
 
             CHAT_MINE -> {
                 holder.message.text = content
+                holder.time.text = currentTime
             }
             CHAT_PARTNER ->{
                 holder.userName.text = nickName.toString()
@@ -79,7 +79,6 @@ class ChatingAdapter(val context: Context, val chatList: MutableList<ChatMessage
                 Glide.with(holder.itemView.context).load(GlobalApplication.tempPartner?.photoUrl)
                     .apply(RequestOptions().circleCrop())
                     .into(holder.profile)
-
             }
         }
 

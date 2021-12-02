@@ -63,7 +63,7 @@ class ChatFragment : Fragment() {
         recyclerView?.adapter = RecyclerViewAdapter()
 
         Log.d(TAG, friends.size.toString())
-        recyclerView?.scrollToPosition(friends.size - 1)
+
 
         return binding?.root
     }

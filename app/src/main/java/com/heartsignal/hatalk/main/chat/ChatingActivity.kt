@@ -62,23 +62,7 @@ class ChatingActivity : AppCompatActivity() {
         enterRoom(chatData.name)
 
 
-        val onListenConnect = Emitter.Listener { args ->
-            Log.d(TAG, "Hello onListen")
-            val messageJSON = JSONObject(args[0].toString())
-            val listenMessage = Gson().fromJson(messageJSON.toString(), ListenData::class.java)
-            Log.d(TAG, listenMessage.toString())
-            val tempMessage = ChatMessage(
-                "",
-                listenMessage.text,
-                listenMessage.sendTime,
-                listenMessage.senderKakaoUserId,
-                listenMessage.chatName,
-                listenMessage.sendTime,
-                listenMessage.sendTime,
-                0
-            )
-            addItemToRecyclerView(tempMessage)
-        }
+
 
         mSocket.on("messageAdded", onListenConnect)
 
@@ -86,7 +70,7 @@ class ChatingActivity : AppCompatActivity() {
         send.setOnClickListener {
             val chat = edit_text.text.toString()
             val tempTime = setTime()
-            Log.d(TAG, tempTime)
+            Log.d(TAG, "tempTime ${tempTime}")
             val tempMessage = ChatMessage(
                 "",
                 chat,
@@ -102,6 +86,24 @@ class ChatingActivity : AppCompatActivity() {
             edit_text.text.clear()
         }
 
+    }
+
+    val onListenConnect = Emitter.Listener { args ->
+        Log.d(TAG, "Hello onListen")
+        val messageJSON = JSONObject(args[0].toString())
+        val listenMessage = Gson().fromJson(messageJSON.toString(), ListenData::class.java)
+        Log.d(TAG, listenMessage.toString())
+        val tempMessage = ChatMessage(
+            "",
+            listenMessage.text,
+            listenMessage.sendTime,
+            listenMessage.senderKakaoUserId,
+            listenMessage.chatName,
+            listenMessage.sendTime,
+            listenMessage.sendTime,
+            0
+        )
+        addItemToRecyclerView(tempMessage)
     }
 
     private fun emitMessage(chatText: String, roomName: String, time: String) {
