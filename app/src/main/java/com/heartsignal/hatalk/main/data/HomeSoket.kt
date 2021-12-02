@@ -24,7 +24,7 @@ data class MatchingConfirmResponse(
     val remain_time: String?,
     val groupName: String,
     val gender: String?,
-    val room_info: @RawValue roomInfo?,
+    val room_info: roomInfo?,
     val question_list: Array<String>?
 ) : Parcelable
 

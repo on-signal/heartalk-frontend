@@ -22,6 +22,7 @@ import com.heartsignal.hatalk.main.data.ChatData
 import com.heartsignal.hatalk.main.data.Friends
 import com.heartsignal.hatalk.main.userModel.UserModel
 import com.heartsignal.hatalk.network.UserApi
+import kotlinx.android.synthetic.main.activity_chating.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -61,6 +62,8 @@ class ChatFragment : Fragment() {
         recyclerView?.layoutManager = LinearLayoutManager(requireContext())
         recyclerView?.adapter = RecyclerViewAdapter()
 
+        Log.d(TAG, friends.size.toString())
+        recyclerView?.scrollToPosition(friends.size - 1)
 
         return binding?.root
     }
