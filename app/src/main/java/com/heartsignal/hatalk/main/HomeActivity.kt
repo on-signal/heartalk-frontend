@@ -127,9 +127,7 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
                 if(grantResults.isNotEmpty()) {
                     for((i, permission) in permissions.withIndex()) {
                         if(grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                            //권한 획득 실패
-                            Log.i("TAG", "The user has denied to $permission")
-                            Log.i("TAG", "I can't work for you anymore then. ByeBye!")
+                            finishAffinity()
                         }
                     }
                 }
