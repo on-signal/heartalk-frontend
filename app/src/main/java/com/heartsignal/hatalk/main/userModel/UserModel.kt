@@ -19,8 +19,8 @@ class UserModel: ViewModel() {
     private var _kakaoUserId: String = GlobalApplication.userInfo.kakaoUserId
     val kakaoUserId: String get() = _kakaoUserId
 
-    private var _email:String = ""
-    val email: String get() = _email
+    private var _email:String? = ""
+    val email: String? get() = _email
 
     private var _photoUrl:String = ""
     val photoUrl: String get() = _photoUrl
@@ -73,7 +73,7 @@ class UserModel: ViewModel() {
     }
 
 
-    fun setEmail(email: String) {
+    fun setEmail(email: String?) {
         _email = email
     }
 

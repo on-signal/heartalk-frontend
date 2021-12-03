@@ -6,8 +6,8 @@ class UserJoinModel: ViewModel() {
     private var _kakaoUserId: String = ""
     val kakaoUserId: String get() = _kakaoUserId
 
-    private var _email:String = ""
-    val email: String get() = _email
+    private var _email:String? = ""
+    val email: String? get() = _email
 
     private var _photoUrl:String = ""
     val photoUrl: String get() = _photoUrl
@@ -45,7 +45,11 @@ class UserJoinModel: ViewModel() {
 
 
     fun setEmail(email: String?) {
+<<<<<<< HEAD
         _email = email.toString()
+=======
+        _email = email
+>>>>>>> ff3afb5e687d5f8a2ae583a69f9bf68b047c97bd
     }
 
     fun setProfileUrl(profileUrl: String) {

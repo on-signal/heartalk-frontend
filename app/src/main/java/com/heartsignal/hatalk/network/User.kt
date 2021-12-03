@@ -22,7 +22,7 @@ data class LoginResponse (
 
 data class SignUpRequest (
         val kakaoUserId: String,
-        val email: String,
+        val email: String?,
         val name: String,
         val socialNumber: String,
         val carrier: String,
@@ -38,7 +38,7 @@ data class SignUpResponse (
 
 data class GetProfileResponse(
         val kakaoUserId: String,
-        val email: String,
+        val email: String?,
         val name: String,
         val nickname: String,
         val photoUrl: String,
