@@ -78,7 +78,7 @@ class IntroductionSocket(
                     UiThreadUtil.runOnUiThread(Runnable {
                         Toast.makeText(
                             context,
-                            "자기 소개가 끝났습니다.",
+                            "$animalName 소개가 끝났습니다.",
                             Toast.LENGTH_SHORT
                         ).show()
                     })
