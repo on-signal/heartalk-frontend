@@ -127,7 +127,7 @@ class ReadyFirstChoiceSocket(
 
     private fun emitListenerForFirstChoiceAnswer(args: Array<Any>) {
         val res = JSONObject(args[0].toString())
-        val firstChoiceResponse = Gson().fromJson(res.toString(), FirstChoiceResponse::class.java)
+        val firstChoiceResponse = Gson().fromJson(res.toString(), CallMatchingResponse::class.java)
 
         var counterPartId = ""
         var counterIcon = ""

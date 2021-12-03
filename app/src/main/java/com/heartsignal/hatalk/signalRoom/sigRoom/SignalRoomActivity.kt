@@ -458,7 +458,7 @@ class SignalRoomActivity : AppCompatActivity() {
 
     private fun secondCallEmitListener(args: Array<Any>) {
         val res = JSONObject(args[0].toString())
-        val secondCallResponse = Gson().fromJson(res.toString(), SecondCallResponse::class.java)
+        val secondCallResponse = Gson().fromJson(res.toString(), CallMatchingResponse::class.java)
 
         var counterPartId = ""
         var counterIcon = ""

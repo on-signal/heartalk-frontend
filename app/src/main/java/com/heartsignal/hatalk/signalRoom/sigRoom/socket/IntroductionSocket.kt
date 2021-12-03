@@ -50,6 +50,7 @@ class IntroductionSocket(
         val res = JSONObject(args[0].toString())
 
         val talkingIcon = res.getString("icon")
+        val animalName = res.getString("name")
         if (talkingIcon != "end") {
             Thread {
                 UiThreadUtil.runOnUiThread(Runnable {
@@ -64,7 +65,7 @@ class IntroductionSocket(
                     UiThreadUtil.runOnUiThread(Runnable {
                         Toast.makeText(
                             context,
-                            "$talkingIcon 소개 시간입니다.",
+                            "$animalName 소개 시간입니다.",
                             Toast.LENGTH_SHORT
                         ).show()
                     })
@@ -90,7 +91,7 @@ class IntroductionSocket(
                     UiThreadUtil.runOnUiThread(Runnable {
                         Toast.makeText(
                             context,
-                            "$talkingIcon 소개 시간입니다.",
+                            "$animalName 소개 시간입니다.",
                             Toast.LENGTH_SHORT
                         ).show()
                     })

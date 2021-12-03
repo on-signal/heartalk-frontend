@@ -4,6 +4,6 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class SecondCallResponse(
+data class CallMatchingResponse(
     val partners: Array<Array<String>>
 ) : Parcelable
