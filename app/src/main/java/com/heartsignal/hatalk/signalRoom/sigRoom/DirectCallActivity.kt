@@ -197,4 +197,7 @@ class DirectCallActivity : AppCompatActivity() {
             initiateDirectCall(counterPartId)
         }
     }
+
+    override fun onBackPressed() {
+    }
 }

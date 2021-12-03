@@ -62,7 +62,6 @@ class ChatFragment : Fragment() {
         recyclerView?.layoutManager = LinearLayoutManager(requireContext())
         recyclerView?.adapter = RecyclerViewAdapter()
 
-        Log.d(TAG, friends.size.toString())
 
 
         return binding?.root

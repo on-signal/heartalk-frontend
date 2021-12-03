@@ -29,9 +29,9 @@ data class recentMessage (
     var text: String,
     var senderKakaoUserId: String,
     var chatName: String,
-    var createdAt: String,
-    var updatedAt: String,
-    var __v: Int
+    var createdAt: String?,
+    var updatedAt: String?,
+    var __v: Int?
 )
 
 @Parcelize
