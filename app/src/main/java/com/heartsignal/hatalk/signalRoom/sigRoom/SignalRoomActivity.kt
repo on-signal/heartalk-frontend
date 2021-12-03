@@ -152,9 +152,6 @@ class SignalRoomActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-
-        addCallListener()
-        callerStart()
     }
 
     override fun onResume() {
@@ -497,51 +494,18 @@ class SignalRoomActivity : AppCompatActivity() {
             }
         }
 
-        CometChat.endCall(
-            CometChat.getActiveCall().sessionId,
-            object : CometChat.CallbackListener<Call?>() {
-                override fun onSuccess(call: Call?) {
-                    // handle end call success
-                    Log.d(TAG, "CALL Ended successfully: " + call.toString())
+        val intent = Intent(this@SignalRoomActivity, OneToOneCallActivity::class.java)
+        val oneToOneCallObj =
+            OnetoOneCall(
+                matchingModel.myId,
+                matchingModel.myGender,
+                counterPartId,
+                counterIcon,
+                matchingModel.groupName
+            )
 
-                    CometChat.removeCallListener("SignalRoomActivity")
-
-                    val intent = Intent(this@SignalRoomActivity, OneToOneCallActivity::class.java)
-                    val oneToOneCallObj =
-                        OnetoOneCall(
-                            matchingModel.myId,
-                            matchingModel.myGender,
-                            counterPartId,
-                            counterIcon,
-                            matchingModel.groupName
-                        )
-
-
-                    intent.putExtra("oneToOneCallData", oneToOneCallObj)
-                    startActivity(intent)
-                }
-
-                override fun onError(e: CometChatException) {
-                    // handled end call error
-                    Log.d(TAG, "CALL Ended Error: $e")
-
-                    CometChat.removeCallListener("SignalRoomActivity")
-
-                    val intent = Intent(this@SignalRoomActivity, OneToOneCallActivity::class.java)
-                    val oneToOneCallObj =
-                        OnetoOneCall(
-                            matchingModel.myId,
-                            matchingModel.myGender,
-                            counterPartId,
-                            counterIcon,
-                            matchingModel.groupName
-                        )
-
-
-                    intent.putExtra("oneToOneCallData", oneToOneCallObj)
-                    startActivity(intent)
-                }
-            })
+        intent.putExtra("oneToOneCallData", oneToOneCallObj)
+        startActivity(intent)
     }
 
     private fun finalChoiceEmitListener() {
@@ -552,32 +516,32 @@ class SignalRoomActivity : AppCompatActivity() {
         if (matchingModel.myGender == "0") {
             dialogBuilder.setTitle("최종선택")
                 .setSingleChoiceItems(womanIconList, -1) { _, pos ->
-                selectedItem = womanIconList[pos]
-            }.setPositiveButton("OK") { _, _ ->
-                Toast.makeText(
-                    this,
-                    "$selectedItem is Selected", Toast.LENGTH_LONG
-                ).show()
-                var choice = ""
-                for (woman in matchingModel.womanList) {
-                    if (woman.icon == selectedItem) {
-                        choice = woman.id
+                    selectedItem = womanIconList[pos]
+                }.setPositiveButton("OK") { _, _ ->
+                    Toast.makeText(
+                        this,
+                        "$selectedItem is Selected", Toast.LENGTH_LONG
+                    ).show()
+                    var choice = ""
+                    for (woman in matchingModel.womanList) {
+                        if (woman.icon == selectedItem) {
+                            choice = woman.id
+                        }
                     }
-                }
-                val gson = Gson()
-                val finalChoice =
-                    JSONObject(
-                        gson.toJson(
-                            FirstChoiceRequest(
-                                matchingModel.groupName,
-                                matchingModel.myId,
-                                matchingModel.myGender,
-                                choice
+                    val gson = Gson()
+                    val finalChoice =
+                        JSONObject(
+                            gson.toJson(
+                                FirstChoiceRequest(
+                                    matchingModel.groupName,
+                                    matchingModel.myId,
+                                    matchingModel.myGender,
+                                    choice
+                                )
                             )
                         )
-                    )
-                finalChoiceSocket.emit("finalChoiceToServer", finalChoice)
-            }.setCancelable(false)
+                    finalChoiceSocket.emit("finalChoiceToServer", finalChoice)
+                }.setCancelable(false)
             Thread {
                 UiThreadUtil.runOnUiThread(Runnable {
                     kotlin.run {
