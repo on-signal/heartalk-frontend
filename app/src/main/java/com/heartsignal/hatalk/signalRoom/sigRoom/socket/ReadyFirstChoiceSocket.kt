@@ -166,12 +166,12 @@ class ReadyFirstChoiceSocket(
 
                 CometChat.removeCallListener("SignalRoomActivity")
 
-                val intent = Intent(context, OneToOneCallActivity::class.java)
-                val oneToOneCallObj =
-                    OnetoOneCall(myId, myGender, counterPartId, counterIcon, groupName)
+                val intent = Intent(context, DirectCallActivity::class.java)
+                val directCallObj =
+                    DirectCall(myId, myGender, counterPartId, counterIcon, groupName)
 
 
-                intent.putExtra("oneToOneCallData", oneToOneCallObj)
+                intent.putExtra("directCallData", directCallObj)
                 context.startActivity(intent)
             }
 
@@ -181,12 +181,12 @@ class ReadyFirstChoiceSocket(
 
                 CometChat.removeCallListener("SignalRoomActivity")
 
-                val intent = Intent(context, OneToOneCallActivity::class.java)
-                val oneToOneCallObj =
-                    OnetoOneCall(myId, myGender, counterPartId, counterIcon, groupName)
+                val intent = Intent(context, DirectCallActivity::class.java)
+                val directCallObj =
+                    DirectCall(myId, myGender, counterPartId, counterIcon, groupName)
 
 
-                intent.putExtra("oneToOneCallData", oneToOneCallObj)
+                intent.putExtra("directCallData", directCallObj)
                 context.startActivity(intent)
             }
         })

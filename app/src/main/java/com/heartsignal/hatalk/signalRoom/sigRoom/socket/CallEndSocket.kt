@@ -10,7 +10,7 @@ import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import java.net.URISyntaxException
 
-class FirstCallEndSocket(
+class CallEndSocket(
     private val context: Context,
     private val groupName: String,
     private val TAG: String

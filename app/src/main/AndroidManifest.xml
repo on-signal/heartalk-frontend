@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Hatalk"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".signalRoom.sigRoom.OneToOneCallActivity"
+            android:name=".signalRoom.sigRoom.DirectCallActivity"
             android:exported="false" />
 
         <service

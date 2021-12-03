@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class OnetoOneCall(
+data class DirectCall(
     val myId: String,
     val myGender: String,
     val counterPartId: String,
@@ -13,7 +13,7 @@ data class OnetoOneCall(
 ) : Parcelable
 
 @Parcelize
-data class OneToOneCallAvailable(
+data class DirectCallAvailable(
     val groupName: String,
     val contents: String
 ) : Parcelable
