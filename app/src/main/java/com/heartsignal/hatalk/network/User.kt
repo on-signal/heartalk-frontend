@@ -12,7 +12,7 @@ data class User (
 
 data class LoginRequest (
         val kakaoUserId: String
-        )
+)
 
 data class LoginResponse (
         val nickname: String,

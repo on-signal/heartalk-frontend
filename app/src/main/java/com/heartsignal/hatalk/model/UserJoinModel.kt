@@ -44,8 +44,8 @@ class UserJoinModel: ViewModel() {
     }
 
 
-    fun setEmail(email: String) {
-        _email = email
+    fun setEmail(email: String?) {
+        _email = email.toString()
     }
 
     fun setProfileUrl(profileUrl: String) {

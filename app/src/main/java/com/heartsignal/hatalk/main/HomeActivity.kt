@@ -118,4 +118,8 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
     private fun requestAudioPermission() {
         requestPermissions(requiredPermissions, HomeActivity.REQUEST_RECORD_AUDIO_PERMISSION)
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
 }

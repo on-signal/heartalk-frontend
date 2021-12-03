@@ -37,6 +37,7 @@ class MainHomeLoadingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         UserApiClient.instance.me { user, error ->
+            Log.d("KAKAO", user?.kakaoAccount?.email.toString())
             sharedViewModel.setEmail(user?.kakaoAccount?.email.toString())
             sharedViewModel.setProfileUrl(user?.kakaoAccount?.profile?.profileImageUrl.toString())
             sharedViewModel.setKakaoUserId(user?.id.toString())

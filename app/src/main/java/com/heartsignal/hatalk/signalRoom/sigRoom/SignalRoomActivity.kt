@@ -623,4 +623,7 @@ class SignalRoomActivity : AppCompatActivity() {
             }.start()
         }
     }
+
+    override fun onBackPressed() {
+    }
 }

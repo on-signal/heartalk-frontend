@@ -98,13 +98,6 @@ class MainHomeFragment : Fragment() {
             e.printStackTrace();
         }
 
-        try {
-            contentsSocket = IO.socket("${URLs.URL}/room")
-            contentsSocket.connect()
-        } catch (e: URISyntaxException) {
-            e.printStackTrace();
-        }
-
 
         Glide.with(this)
             .load(GlobalApplication.userInfo.photoUrl)
@@ -127,7 +120,7 @@ class MainHomeFragment : Fragment() {
 
 
         Log.d("HEART", "${matchingConfirmResponse?.groupName}groupCall")
-        contentsSocket.on("groupCall", onCallStartConnect)
+        mSocket.on("groupCall", onCallStartConnect)
 
     }
 
@@ -151,7 +144,6 @@ class MainHomeFragment : Fragment() {
         super.onDestroyView()
         binding = null
         mSocket.disconnect()
-        contentsSocket.disconnect()
     }
 
 
@@ -293,6 +285,6 @@ class MainHomeFragment : Fragment() {
         val callReadyObj = JSONObject(gson.toJson(callReadyMsg))
         Log.d(TAG, "emit")
 
-        contentsSocket.emit("callInit", callReadyObj)
+        mSocket.emit("callInit", callReadyObj)
     }
 }
