@@ -99,7 +99,7 @@ class SignalRoomActivity : AppCompatActivity() {
         contentsReadySocket.emit(firstContent)
 
         introductionSocket =
-            IntroductionSocket(this, matchingModel.groupName, matchingModel.myIcon)
+            IntroductionSocket(this, matchingModel.groupName, matchingModel.myIcon, view)
         introductionSocket.set()
         introductionSocket.makeOn()
 

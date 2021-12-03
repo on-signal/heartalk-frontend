@@ -198,4 +198,7 @@ class OneToOneCallActivity : AppCompatActivity() {
             initiateOneToOneCall(counterPartId)
         }
     }
+
+    override fun onBackPressed() {
+    }
 }

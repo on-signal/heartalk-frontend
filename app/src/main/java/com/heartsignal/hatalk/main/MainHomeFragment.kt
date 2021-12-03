@@ -171,7 +171,6 @@ class MainHomeFragment : Fragment() {
             sharedViewModel.gender
         )
 
-//        Log.d(TAG, matchingStartMessage.toString())
 
         val gson = Gson()
         val matchingObj = JSONObject(gson.toJson(matchingStartMessage))
@@ -213,10 +212,7 @@ class MainHomeFragment : Fragment() {
                     }
 
                     override fun onError(p0: CometChatException?) {
-                        Log.d(
-                            TAG,
-                            "Group joining failed with exception: " + p0?.message
-                        )
+                        Log.d( TAG,"Group joining failed with exception: " + p0?.message)
                     }
                 }
             )

@@ -1,9 +1,12 @@
 package com.heartsignal.hatalk.main.chat
 
+import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,6 +63,7 @@ class ChatingActivity : AppCompatActivity() {
         mSocket.connect()
 
         enterRoom(chatData.name)
+
 
 
 
@@ -162,6 +166,16 @@ class ChatingActivity : AppCompatActivity() {
             chat_recycler.scrollToPosition(chatList!!.size - 1) //move focus on last message
         }
     }
+
+
+    private fun closeKeyBoard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
 
 }
 
