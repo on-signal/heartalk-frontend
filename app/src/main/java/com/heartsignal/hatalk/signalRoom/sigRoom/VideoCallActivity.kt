@@ -1,11 +1,12 @@
 package com.heartsignal.hatalk.signalRoom.sigRoom
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.RelativeLayout
 import android.widget.Toast
 import com.cometchat.pro.constants.CometChatConstants
@@ -18,6 +19,7 @@ import com.cometchat.pro.models.User
 import com.google.gson.Gson
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.ActivityVideoCallBinding
+import com.heartsignal.hatalk.signalRoom.sigRoom.dataFormat.KeepTalking
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.ContentsSocketApplication
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -33,6 +35,9 @@ class VideoCallActivity : AppCompatActivity() {
     private lateinit var groupName: String
     private lateinit var videoCallAvailableSocket: Socket
     private val onVideoCallAvailable = Emitter.Listener { _ -> callerStart() }
+    private val onKeepTalking = Emitter.Listener { args ->
+        keepTalkingEmitListener(args)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +64,7 @@ class VideoCallActivity : AppCompatActivity() {
         }
 
         videoCallAvailableSocket.on("${groupName}OneToOneCall", onVideoCallAvailable)
+        videoCallAvailableSocket.on("${myId}KeepTalking", onKeepTalking)
 
         addCallListener()
     }
@@ -187,5 +193,28 @@ class VideoCallActivity : AppCompatActivity() {
         if (myGender == "0") {
             initiateVideoCall(counterPartId)
         }
+    }
+
+    private fun keepTalkingEmitListener(args: Array<Any>) {
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setTitle("인연").setMessage("이분과 계속 인연을 이어가시겠습니까?")
+            .setPositiveButton("수락", DialogInterface.OnClickListener { _, _ ->
+                val gson = Gson()
+                val finalChoice =
+                    JSONObject(gson.toJson(KeepTalking(groupName, myId, "yes")))
+                videoCallAvailableSocket.emit("keepTalkingToServer", finalChoice)
+            }).setNegativeButton("취소", DialogInterface.OnClickListener { _, _ ->
+                val gson = Gson()
+                val finalChoice =
+                    JSONObject(gson.toJson(KeepTalking(groupName, myId, "no")))
+                videoCallAvailableSocket.emit("keepTalkingToServer", finalChoice)
+            })
+        Thread {
+            runOnUiThread() {
+                kotlin.run {
+                    dialogBuilder.show()
+                }
+            }
+        }.start()
     }
 }

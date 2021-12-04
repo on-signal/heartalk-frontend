@@ -6,7 +6,8 @@ import kotlinx.android.parcel.RawValue
 
 data class FirstContent (
     val groupName: String,
-    val userId: String
+    val userId: String,
+    val gender: String
         )
 
 @Parcelize

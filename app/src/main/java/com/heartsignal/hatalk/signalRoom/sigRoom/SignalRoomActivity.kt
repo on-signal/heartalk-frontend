@@ -101,7 +101,8 @@ class SignalRoomActivity : AppCompatActivity() {
         contentsReadySocket.set()
         val firstContent = FirstContent(
             matchingModel.groupName,
-            matchingModel.myId
+            matchingModel.myId,
+            matchingModel.myGender
         )
         contentsReadySocket.makeOn()
         contentsReadySocket.emit(firstContent)
