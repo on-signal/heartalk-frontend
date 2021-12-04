@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.*
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -36,6 +37,7 @@ import com.heartsignal.hatalk.model.sigRoom.AnswerModel
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.*
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
+import kotlinx.android.synthetic.main.activity_signal_room.*
 import org.json.JSONObject
 import java.net.URISyntaxException
 
@@ -72,6 +74,13 @@ class SignalRoomActivity : AppCompatActivity() {
         binding = ActivitySignalRoomBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        full_layout.setOnClickListener(View.OnClickListener { view ->
+            val inputMethodManager =
+                view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        })
 
         /** [Cometchat_init] ------------------------------------------------ */
 

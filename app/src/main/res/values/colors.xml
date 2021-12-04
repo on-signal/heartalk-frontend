@@ -22,4 +22,8 @@
     <color name="secondaryDarkColor">#ccc4a7</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
+
+
+    <color name="icon_man">#b3e5fc</color>
+    <color name="icon_woman">#f8bbd0</color>
 </resources>
