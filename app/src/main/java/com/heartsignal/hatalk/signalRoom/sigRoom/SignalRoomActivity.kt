@@ -62,6 +62,9 @@ class SignalRoomActivity : AppCompatActivity() {
     private val onFinalChoice = Emitter.Listener { _ ->
         finalChoiceEmitListener()
     }
+    private val onFinalCall = Emitter.Listener { args ->
+        finalCallEmitListener(args)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,10 +147,7 @@ class SignalRoomActivity : AppCompatActivity() {
         }
 
         finalChoiceSocket.on("${matchingModel.groupName}FinalChoice", onFinalChoice)
-    }
-
-    override fun onRestart() {
-        super.onRestart()
+        finalChoiceSocket.on("${matchingModel.groupName}FinalCall", onFinalCall)
     }
 
     override fun onResume() {
@@ -582,6 +582,59 @@ class SignalRoomActivity : AppCompatActivity() {
                 })
             }.start()
         }
+    }
+
+    private fun finalCallEmitListener(args: Array<Any>) {
+        val res = JSONObject(args[0].toString())
+        val finalCallResponse = Gson().fromJson(res.toString(), CallMatchingResponse::class.java)
+
+        var counterPartId = ""
+        var counterIcon = ""
+        var canVideoCall = false
+        if (matchingModel.myGender == "0") {
+            for (partner in finalCallResponse.partners) {
+                if (partner[0] == matchingModel.myId) {
+                    counterPartId = partner[1]
+                    canVideoCall = true
+                    break
+                }
+            }
+            for (woman in matchingModel.womanList) {
+                if (counterPartId == woman.id) {
+                    counterIcon = woman.icon
+                    break
+                }
+            }
+        } else if (matchingModel.myGender == "1") {
+            for (partner in finalCallResponse.partners) {
+                if (partner[1] == matchingModel.myId) {
+                    counterPartId = partner[0]
+                    canVideoCall = true
+                    break
+                }
+            }
+            for (man in matchingModel.manList) {
+                if (counterPartId == man.id) {
+                    counterIcon = man.icon
+                    break
+                }
+            }
+        }
+
+        if (canVideoCall) {
+            val intent = Intent(this, VideoCallActivity::class.java)
+            val directCallObj =
+                DirectCall(
+                    matchingModel.myId,
+                    matchingModel.myGender,
+                    counterPartId,
+                    counterIcon,
+                    matchingModel.groupName
+                )
+
+            intent.putExtra("directCallData", directCallObj)
+            startActivity(intent)
+        } else finish()
     }
 
     override fun onBackPressed() {
