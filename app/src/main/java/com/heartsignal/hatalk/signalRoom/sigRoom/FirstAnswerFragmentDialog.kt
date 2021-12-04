@@ -116,4 +116,18 @@ class FirstAnswerFragmentDialog : DialogFragment() {
         )
         firstComeSocket.emit("answerChoiceToServer", selection)
     }
+
+    fun selectThirdOne() {
+        val gson = Gson()
+        val selection = JSONObject(
+            gson.toJson(
+                AnswerSelectRequest(
+                    matchingModel.myId,
+                    answerModel.ownerIdList[2],
+                    matchingModel.groupName
+                )
+            )
+        )
+        firstComeSocket.emit("answerChoiceToServer", selection)
+    }
 }

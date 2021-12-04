@@ -516,8 +516,8 @@ class SignalRoomActivity : AppCompatActivity() {
 
     private fun finalChoiceEmitListener() {
         val dialogBuilder = AlertDialog.Builder(this)
-        val womanIconList = arrayOf("fox", "hamster")
-        val manIconList = arrayOf("wolf", "penguin")
+        val womanIconList = arrayOf("fox", "hamster", "bee")
+        val manIconList = arrayOf("wolf", "penguin", "lion")
         lateinit var selectedItem: String
         if (matchingModel.myGender == "0") {
             dialogBuilder.setTitle("최종선택")
