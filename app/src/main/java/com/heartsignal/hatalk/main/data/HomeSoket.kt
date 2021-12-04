@@ -33,7 +33,9 @@ data class roomInfo(
     val user1: userData?,
     val user2: userData?,
     val user3: userData?,
-    val user4: userData?
+    val user4: userData?,
+    val user5: userData?,
+    val user6: userData?
 ) : Parcelable
 
 @Parcelize

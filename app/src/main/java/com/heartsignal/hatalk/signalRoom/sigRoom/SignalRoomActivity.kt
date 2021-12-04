@@ -316,6 +316,14 @@ class SignalRoomActivity : AppCompatActivity() {
                 matchingModel.setMyNickname(matchingData?.room_info?.user4?.nickname.toString())
                 matchingModel.setMyIcon(matchingData?.room_info?.user4?.icon.toString())
             }
+            matchingData?.room_info?.user5?.Id.toString() -> {
+                matchingModel.setMyNickname(matchingData?.room_info?.user5?.nickname.toString())
+                matchingModel.setMyIcon(matchingData?.room_info?.user5?.icon.toString())
+            }
+            matchingData?.room_info?.user6?.Id.toString() -> {
+                matchingModel.setMyNickname(matchingData?.room_info?.user6?.nickname.toString())
+                matchingModel.setMyIcon(matchingData?.room_info?.user6?.icon.toString())
+            }
         }
 
         if (matchingData?.room_info?.user1?.gender.toString() == "0") {
@@ -386,6 +394,42 @@ class SignalRoomActivity : AppCompatActivity() {
                 matchingData?.room_info?.user4?.nickname.toString(),
                 matchingData?.room_info?.user4?.gender.toString(),
                 matchingData?.room_info?.user4?.icon.toString()
+            )
+            matchingModel.appendWomanList(womanUser)
+        }
+
+        if(matchingData?.room_info?.user5?.gender.toString() == "0") {
+            val manUser = MatchingUser(
+                matchingData?.room_info?.user5?.Id.toString(),
+                matchingData?.room_info?.user5?.nickname.toString(),
+                matchingData?.room_info?.user5?.gender.toString(),
+                matchingData?.room_info?.user5?.icon.toString(),
+            )
+            matchingModel.appendManList(manUser)
+        } else {
+            val womanUser = MatchingUser(
+                matchingData?.room_info?.user5?.Id.toString(),
+                matchingData?.room_info?.user5?.nickname.toString(),
+                matchingData?.room_info?.user5?.gender.toString(),
+                matchingData?.room_info?.user5?.icon.toString()
+            )
+            matchingModel.appendWomanList(womanUser)
+        }
+
+        if(matchingData?.room_info?.user6?.gender.toString() == "0") {
+            val manUser = MatchingUser(
+                matchingData?.room_info?.user6?.Id.toString(),
+                matchingData?.room_info?.user6?.nickname.toString(),
+                matchingData?.room_info?.user6?.gender.toString(),
+                matchingData?.room_info?.user6?.icon.toString(),
+            )
+            matchingModel.appendManList(manUser)
+        } else {
+            val womanUser = MatchingUser(
+                matchingData?.room_info?.user6?.Id.toString(),
+                matchingData?.room_info?.user6?.nickname.toString(),
+                matchingData?.room_info?.user6?.gender.toString(),
+                matchingData?.room_info?.user6?.icon.toString()
             )
             matchingModel.appendWomanList(womanUser)
         }
