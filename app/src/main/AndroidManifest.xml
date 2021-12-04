@@ -25,7 +25,8 @@
 
         <activity
             android:name=".main.chat.ChatingActivity"
-            android:exported="false" />
+            android:exported="false" >
+        </activity>
         <activity
             android:name=".SplashActivity"
             android:exported="true">

@@ -10,7 +10,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.heartsignal.hatalk.R
 import com.google.gson.Gson
 import com.heartsignal.hatalk.GlobalApplication
@@ -48,16 +50,18 @@ class ChatingActivity : AppCompatActivity() {
         chatData = intent.getParcelableExtra<ChatData>("chatMessage")!!
         chatList = chatData.messages
 
+        val chatRecyclerview: RecyclerView = findViewById(R.id.chat_recycler)
+
         if (chatList != null) {
             chatingAdapter = ChatingAdapter(this, chatList!!)
-            chat_recycler.adapter = chatingAdapter;
+            chatRecyclerview.adapter = chatingAdapter;
         }
 
         val layoutManager = LinearLayoutManager(this)
-        chat_recycler.layoutManager = layoutManager
+        chatRecyclerview.layoutManager = layoutManager
 
-        chat_recycler.scrollToPosition(chatList!!.size - 1)
-        val partnerNameView: TextView = findViewById<TextView>(R.id.partner_name)
+        chatRecyclerview.scrollToPosition(chatList!!.size - 1)
+        val partnerNameView: TextView = findViewById(R.id.partner_name)
         partnerNameView.text = partner.nickname
 
         mSocket = ChatSocketApplication.set()
@@ -91,6 +95,21 @@ class ChatingActivity : AppCompatActivity() {
             edit_text.text.clear()
         }
 
+        (chatRecyclerview.getLayoutManager() as LinearLayoutManager).stackFromEnd = true
+
+        val fullLayout = findViewById<ConstraintLayout>(R.id.full_layout)
+        chatRecyclerview.setOnTouchListener { v, event ->
+            val inputMethodManager =
+                v.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+
+            inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
+        }
+//        chatRecyclerview.setOnClickListener(View.OnClickListener { view ->
+//            val inputMethodManager =
+//                view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+//
+//            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+//        })
     }
 
     val onListenConnect = Emitter.Listener { args ->
@@ -149,13 +168,7 @@ class ChatingActivity : AppCompatActivity() {
         leaveRoom()
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        if (currentFocus != null) {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
-        }
-        return super.dispatchTouchEvent(ev)
-    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setTime(): String {
@@ -184,6 +197,8 @@ class ChatingActivity : AppCompatActivity() {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
+
+
 
 
 }
