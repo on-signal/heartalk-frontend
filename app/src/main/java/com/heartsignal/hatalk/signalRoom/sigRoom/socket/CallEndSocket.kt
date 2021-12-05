@@ -42,7 +42,7 @@ class CallEndSocket(
                     // handle end call success
                     Log.d(TAG, "CALL Ended successfully: " + call.toString())
 
-                    CometChat.removeCallListener("OneToOneCallActivity")
+                    CometChat.removeCallListener("DirectCallActivity")
 
                     val activity = context as Activity
                     activity.finish()
@@ -52,7 +52,7 @@ class CallEndSocket(
                     // handled end call error
                     Log.d(TAG, "CALL Ended Error: $e")
 
-                    CometChat.removeCallListener("OneToOneCallActivity")
+                    CometChat.removeCallListener("DirectCallActivity")
 
                     val activity = context as Activity
                     activity.finish()

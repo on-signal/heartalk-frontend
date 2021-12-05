@@ -36,14 +36,14 @@ data class recentMessage (
 
 @Parcelize
 data class ChatData (
-    var _id : String,
-    var name : String,
-    var partner : Partner,
-    var createdAt : String,
-    var updatedAt : String,
-    var __v : Int,
+    var _id : String?,
+    var name : String?,
+    var partner : Partner?,
+    var createdAt : String?,
+    var updatedAt : String?,
+    var __v : Int?,
     var messages: MutableList<ChatMessage>?,
-    var id: String
+    var id: String?
 ) : Parcelable
 
 
@@ -53,7 +53,7 @@ data class ChatMessage (
     var text: String,
     var sendTime: String?,
     var senderKakaoUserId: String,
-    var chatName: String,
+    var chatName: String?,
     var createdAt: String,
     var updatedAt: String,
     var __v: Int
@@ -62,7 +62,7 @@ data class ChatMessage (
 
 data class EmitData (
     var text: String,
-    var chatName: String,
+    var chatName: String?,
     var sendTime: String
 )
 

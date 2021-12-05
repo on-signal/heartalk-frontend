@@ -67,7 +67,7 @@ class ChatingActivity : AppCompatActivity() {
         mSocket = ChatSocketApplication.set()
         mSocket.connect()
 
-        enterRoom(chatData.name)
+        chatData.name?.let { enterRoom(it) }
 
 
 
@@ -130,7 +130,7 @@ class ChatingActivity : AppCompatActivity() {
         addItemToRecyclerView(tempMessage)
     }
 
-    private fun emitMessage(chatText: String, roomName: String, time: String) {
+    private fun emitMessage(chatText: String, roomName: String?, time: String) {
         val emitMessage = EmitData(chatText, roomName, time)
         val gson = Gson()
         val emitMessageObj = JSONObject(gson.toJson(emitMessage))
