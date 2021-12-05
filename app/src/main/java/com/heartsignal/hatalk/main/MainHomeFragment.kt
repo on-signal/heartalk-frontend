@@ -242,9 +242,10 @@ class MainHomeFragment : Fragment() {
             GUID,
             true
         )
-        val matchingConfirmFailMessage = MatchingCancelData(
+        val matchingConfirmFailMessage = MatchingConfirmData(
             userId,
-            sharedViewModel.gender
+            GUID,
+            false
         )
         val gson = Gson()
         val matchingConfirmSuccessObj = JSONObject(gson.toJson(matchingConfirmSuccessMessage))
@@ -258,7 +259,7 @@ class MainHomeFragment : Fragment() {
                 })
             .setNegativeButton("취소",
                 DialogInterface.OnClickListener{ dialog, id ->
-                    mSocket.emit("readycancel", matchingConfirmFailObj)
+                    mSocket.emit("imready", matchingConfirmFailObj)
                     matchingStatus = false
                     val matchingButton = binding?.matchingButton
                     runOnUiThread {

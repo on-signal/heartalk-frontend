@@ -21,7 +21,7 @@ data class MatchingConfirmData(
 data class MatchingConfirmResponse(
     val msg: String?,
     var caller: String?,
-    val remain_time: String?,
+    val nickname: String?,
     val groupName: String,
     val gender: String?,
     val room_info: @RawValue roomInfo?,

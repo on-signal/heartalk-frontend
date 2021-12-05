@@ -1,149 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/signal"
+    android:id="@+id/full_layout"
     tools:context=".signalRoom.sigRoom.SignalRoomActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_name"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/main_notify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/signal"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/signal_room"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/little_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_name" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/border_background"
+            android:gravity="center"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="10dp"
+            android:text="@string/direct_room"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_board"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintBottom_toTopOf="@id/main_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/main_name">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/border_background"
+            android:elevation="6dp"
+            android:gravity="center"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="50dp"
+            android:text="@string/saying_first"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_board"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/man_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:weightSum="10">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/progress_circular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
 
-            <GridLayout
-                android:layout_width="match_parent"
-                android:columnCount="1"
-                android:layout_weight="2"
-                android:weightSum="10"
+            <ImageView
+                android:id="@+id/man_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:src="@drawable/lion" />
+
+            <TextView
+                android:id="@+id/man_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/signal"
-                android:useDefaultMargins="true">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="3"
-                    android:textColor="@color/black"
-                    android:padding="12dp"
-                    android:text="시그널 룸"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:layout_width="350dp"
-                    android:layout_height="160dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="7"
-                    android:background="@drawable/border_background"
-                    android:gravity="center"
-                    android:elevation="10dp"
-                    android:textStyle="bold"
-                    android:text="@string/guideOneToOneCall"
-                    android:padding="25dp"
-                    android:textSize="16dp" />
-
-            </GridLayout>
-
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:layout_weight="8"
-                android:background="@color/signal"
-                android:useDefaultMargins="true">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="150dp"
-                    android:layout_marginEnd="10dp"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/one_to_one_counterpart"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="fill_horizontal"
-                            android:layout_marginLeft="70dp"
-                            android:layout_marginTop="65dp"
-                            android:gravity="left"
-                            android:src="@drawable/penguin" />
-
-                        <TextView
-                            android:layout_width="40dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="70dp"
-                            android:layout_marginTop="110dp"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:text="펭귄"/>
-
-                    </FrameLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="150dp"
-                    android:layout_marginEnd="10dp"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-
-                        <ImageView
-                            android:id="@+id/one_to_one_myself"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="fill_horizontal"
-                            android:layout_marginLeft="70dp"
-                            android:layout_marginTop="65dp"
-                            android:gravity="left"
-                            android:src="@drawable/hamster" />
-
-                        <TextView
-                            android:layout_width="40dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="70dp"
-                            android:layout_marginTop="110dp"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:text="햄스터"/>
-
-                    </FrameLayout>
-
-
-                </LinearLayout>
-
-
-            </GridLayout>
-
-            <RelativeLayout
-                android:id="@+id/direct_ui"
-                android:layout_width="0dp"
-                android:layout_height="0dp" />
+                android:text="사자"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
-    </LinearLayout>
-</layout>
+        <LinearLayout
+            android:id="@+id/woman_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/progress_circular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/woman_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/bee" />
+
+                <TextView
+                    android:id="@+id/woman_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="꿀벌"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <com.view.circulartimerview.CircularTimerView
+            android:id="@+id/progress_circular"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:backgroundColor="@color/signal"
+            app:isClockwise="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/woman_layout"
+            app:layout_constraintStart_toEndOf="@id/man_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxValue="100"
+            app:backgroundWidth="6"
+            app:progressBackgroundColor="@color/black"
+            app:progressColor="@color/signal"
+            app:progressText="60"
+            app:progressTextColor="@color/black"
+            app:startingPoint="top"
+            app:textSize="12sp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/direct_ui"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:ignore="MissingConstraints" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
 

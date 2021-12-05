@@ -22,6 +22,8 @@ allprojects {
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
         // Cometchat
         maven { url "https://dl.cloudsmith.io/public/cometchat/cometchat-pro-android/maven/" }
+        // 원형 타이머
+        maven { url "https://jitpack.io"}
     }
 }
 

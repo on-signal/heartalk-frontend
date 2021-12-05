@@ -19,6 +19,7 @@
     <string name="login_button">로그인으로</string>
     <string name="signal_room"><b>시그널 룸</b></string>
     <string name="guideIntroduce">"<b>"시그널 룸 입주를 환영합니다!"</b>"\n\n 잠시 후 자기소개가 시작됩니다.\n\n 간단한 인사를 나누세요 :)</string>
+    <string name="saying_first">“사랑은 결정이 아니다.\n 사랑은 감정이다.\n 누구를 사랑할 수 있다면 훨씬 더 간단하겠지만 마법처럼 느껴지지는 않을 것이다.”\n - 트레이 파커</string>
     <string name="guideOneToOneCall">1:1 음성 통화 시간입니다.</string>
     <string name="name_input">이름을 입력하세요</string>
     <string name="social_number_input">주민번호 7자리를 입력하세요</string>
@@ -26,6 +27,7 @@
     <string name="phone_number">휴대폰 번호를 입력하세요</string>
     <string name="nickname">닉네임을 입력하세요</string>
     <string name="register_image">사진 등록</string>
+    <string name="direct_room"><b>서로를 조금 더 알아갈 수 있는 시간입니다.</b></string>
     <!--    SendBird APP ID-->
     <string name="comet_key">1977065b668f17f5</string>
     <!--    Test마다 변경해서 해줘야 합니다-->

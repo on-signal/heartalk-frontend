@@ -7,6 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class DirectCall(
     val myId: String,
     val myGender: String,
+    val myIcon: String,
     val counterPartId: String,
     val counterPartIcon: String,
     val groupName: String,

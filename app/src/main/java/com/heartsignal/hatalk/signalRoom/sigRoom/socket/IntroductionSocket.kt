@@ -12,9 +12,14 @@ import com.cometchat.pro.core.CallManager
 import com.facebook.react.bridge.UiThreadUtil
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.signalRoom.sigRoom.SignalRoomActivity
+import com.view.circulartimerview.CircularTimerListener
+import com.view.circulartimerview.CircularTimerView
+import com.view.circulartimerview.TimeFormatEnum
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import org.json.JSONObject
+import org.w3c.dom.Text
+import java.lang.Math.ceil
 import java.net.URISyntaxException
 
 class IntroductionSocket(
@@ -55,6 +60,7 @@ class IntroductionSocket(
             Thread {
                 UiThreadUtil.runOnUiThread(Runnable {
                     rotationStartAnimation(talkingIcon)
+                    timerSetting()
                 })
             }.start()
         }
@@ -63,11 +69,7 @@ class IntroductionSocket(
                 callManager.muteAudio(false)
                 Thread {
                     UiThreadUtil.runOnUiThread(Runnable {
-                        Toast.makeText(
-                            context,
-                            "$animalName 소개 시간입니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        introduceNotify(animalName)
                     })
                 }.start()
             }
@@ -76,11 +78,7 @@ class IntroductionSocket(
                 callManager.muteAudio(true)
                 Thread {
                     UiThreadUtil.runOnUiThread(Runnable {
-                        Toast.makeText(
-                            context,
-                            "$animalName 소개가 끝났습니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        introduceNotify(animalName)
                     })
                 }.start()
             }
@@ -89,11 +87,7 @@ class IntroductionSocket(
                 callManager.muteAudio(true)
                 Thread {
                     UiThreadUtil.runOnUiThread(Runnable {
-                        Toast.makeText(
-                            context,
-                            "$animalName 소개 시간입니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        introduceNotify(animalName)
                     })
                 }.start()
             }
@@ -131,6 +125,42 @@ class IntroductionSocket(
             },
             10000
         )
+    }
+
+    private fun timerSetting() {
+        val progressBar: CircularTimerView? = view.findViewById(R.id.progress_circular)
+        progressBar!!.progress = 0f
+
+        progressBar.setCircularTimerListener(object : CircularTimerListener {
+            override fun updateDataOnTick(remainingTimeInMs: Long): String? {
+                return ceil((remainingTimeInMs / 1000).toDouble()).toInt().toString()
+            }
+
+            override fun onTimerFinished() {
+                progressBar.setProgressBackgroundColor("#FF808080")
+                progressBar.setTextColor("#FF808080")
+            }
+        }, 10, TimeFormatEnum.SECONDS, 10)
+
+        progressBar.startTimer()
+    }
+
+    private fun introduceNotify(animalName: String) {
+        val notificationHeader = view.findViewById<TextView>(R.id.notification_header)
+        val nextAnimal = when(animalName) {
+            "늑대" -> "여우"
+            "여우" -> "펭귄"
+            "펭귄" -> "햄스터"
+            "햄스터" -> "사자"
+            "사자" -> "꿀벌"
+            "꿀벌" -> "1대1 음성통화"
+            else -> "끝"
+        }
+        if (nextAnimal == "끝") {
+            notificationHeader.text = "${animalName}님 목소리 공개 끝! ${nextAnimal}님 준비해주세요"
+        } else {
+            notificationHeader.text = "${animalName}님 자기소개 중 입니다. (다음: ${nextAnimal})"
+        }
     }
 
 }

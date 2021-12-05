@@ -40,6 +40,16 @@ import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_signal_room.*
 import org.json.JSONObject
 import java.net.URISyntaxException
+import com.view.circulartimerview.TimeFormatEnum
+
+import android.widget.Toast
+
+import com.heartsignal.hatalk.MainActivity
+
+import com.view.circulartimerview.CircularTimerListener
+
+import com.view.circulartimerview.CircularTimerView
+import kotlin.math.ceil
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
@@ -82,6 +92,10 @@ class SignalRoomActivity : AppCompatActivity() {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         })
 
+        /** * [Timer설정] */
+
+
+
         /** [Cometchat_init] ------------------------------------------------ */
 
         initCometChat()
@@ -117,6 +131,7 @@ class SignalRoomActivity : AppCompatActivity() {
             matchingModel.groupName,
             matchingModel.myId,
             matchingModel.myGender,
+            matchingModel.myIcon,
             matchingModel.manList,
             matchingModel.womanList,
             TAG
@@ -160,7 +175,15 @@ class SignalRoomActivity : AppCompatActivity() {
         finalChoiceSocket.on("${matchingModel.groupName}FinalCall", onFinalCall)
     }
 
+    override fun onStop() {
+        super.onStop()
+        supportActionBar?.hide()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        supportActionBar?.hide()
+    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -541,6 +564,7 @@ class SignalRoomActivity : AppCompatActivity() {
             DirectCall(
                 matchingModel.myId,
                 matchingModel.myGender,
+                matchingModel.myIcon,
                 counterPartId,
                 counterIcon,
                 matchingModel.groupName
@@ -673,6 +697,7 @@ class SignalRoomActivity : AppCompatActivity() {
                 DirectCall(
                     matchingModel.myId,
                     matchingModel.myGender,
+                    matchingModel.myIcon,
                     counterPartId,
                     counterIcon,
                     matchingModel.groupName

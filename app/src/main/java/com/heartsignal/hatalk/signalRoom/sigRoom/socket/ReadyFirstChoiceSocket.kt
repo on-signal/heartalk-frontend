@@ -23,6 +23,7 @@ class ReadyFirstChoiceSocket(
     private val groupName: String,
     private val myId: String,
     private val myGender: String,
+    private val myIcon: String,
     private val manList: MutableList<MatchingUser>,
     private val womanList: MutableList<MatchingUser>,
     private val TAG: String
@@ -168,7 +169,7 @@ class ReadyFirstChoiceSocket(
 
                 val intent = Intent(context, DirectCallActivity::class.java)
                 val directCallObj =
-                    DirectCall(myId, myGender, counterPartId, counterIcon, groupName)
+                    DirectCall(myId, myGender, myIcon, counterPartId, counterIcon, groupName)
 
 
                 intent.putExtra("directCallData", directCallObj)
@@ -183,7 +184,7 @@ class ReadyFirstChoiceSocket(
 
                 val intent = Intent(context, DirectCallActivity::class.java)
                 val directCallObj =
-                    DirectCall(myId, myGender, counterPartId, counterIcon, groupName)
+                    DirectCall(myId, myGender, myIcon, counterPartId, counterIcon, groupName)
 
 
                 intent.putExtra("directCallData", directCallObj)

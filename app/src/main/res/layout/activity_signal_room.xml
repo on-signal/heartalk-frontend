@@ -7,49 +7,39 @@
     android:background="@color/signal"
     android:id="@+id/full_layout"
     tools:context=".signalRoom.sigRoom.SignalRoomActivity">
-    <LinearLayout
+
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/main_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/main_notify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:background="@color/signal"
-            android:textColor="@color/black"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/signal_room"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/notification_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/signal"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="잠시 후, 늑대님의 목소리가 공개됩니다."
-            android:textSize="16sp" />
 
-    </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/main_board"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:paddingVertical="20dp"
         android:paddingHorizontal="20dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintBottom_toTopOf="@id/notification_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_name">
@@ -59,342 +49,388 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/border_background"
-            android:elevation="10dp"
+            android:elevation="6dp"
             android:gravity="center"
             android:paddingHorizontal="30dp"
             android:paddingVertical="50dp"
             android:text="@string/guideIntroduce"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/lion_layout"
+    <TextView
+        android:id="@+id/notification_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:background="@drawable/border_background"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="잠시 후, 늑대님의 목소리가 공개됩니다."
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/main_message"
+        app:layout_constraintEnd_toStartOf="@id/progress_circular"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/bee_layout"
-        app:layout_constraintBottom_toTopOf="@id/penguin_layout"
-        app:layout_constraintTop_toBottomOf="@id/main_board">
+        app:layout_constraintTop_toBottomOf="@+id/main_board" />
 
-        <FrameLayout
+    <com.view.circulartimerview.CircularTimerView
+        android:id="@+id/progress_circular"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:backgroundColor="@color/signal"
+        app:isClockwise="true"
+        app:layout_constraintBottom_toTopOf="@+id/main_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/notification_header"
+        app:layout_constraintTop_toBottomOf="@id/main_board"
+        app:maxValue="100"
+        app:backgroundWidth="6"
+        app:progressBackgroundColor="@color/black"
+        app:progressColor="@color/signal"
+        app:progressText="10"
+        app:progressTextColor="@color/black"
+        app:startingPoint="top"
+        app:textSize="12sp" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notification_header"
+        app:layout_constraintBottom_toTopOf="@id/layout_chat_chatbox">
+
+        <LinearLayout
+            android:id="@+id/lion_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/lion_text"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="25dp"
-                android:background="@drawable/border_background"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="..."
-                android:textSize="12dp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bee_layout"
+            app:layout_constraintBottom_toTopOf="@id/penguin_layout"
+            app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="65dp"
-                android:background="@drawable/icon_background_man">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/lion"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/lion" />
+                <TextView
+                    android:id="@+id/lion_text"
+                    android:layout_width="140dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="25dp"
+                    android:background="@drawable/border_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="..."
+                    android:textSize="12dp" />
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="65dp"
+                    android:background="@drawable/icon_background_man">
+
+                    <ImageView
+                        android:id="@+id/lion"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/lion" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="80dp"
+                    android:text="사자"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+
             </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
-                android:layout_marginTop="80dp"
-                android:text="사자"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
 
+        </LinearLayout>
 
-        </FrameLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/bee_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/lion_layout"
-        app:layout_constraintBottom_toTopOf="@id/hamster_layout"
-        app:layout_constraintTop_toBottomOf="@id/main_board">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/bee_text"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                android:layout_marginEnd="25dp"
-                android:background="@drawable/border_background"
-                android:gravity="center"
-                android:layout_gravity="right"
-                android:padding="10dp"
-                android:text="..."
-                android:textSize="12dp" />
+        <LinearLayout
+            android:id="@+id/bee_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lion_layout"
+            app:layout_constraintBottom_toTopOf="@id/hamster_layout"
+            app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:layout_marginTop="65dp"
-                android:background="@drawable/icon_background_woman">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/bee"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/bee" />
+                <TextView
+                    android:id="@+id/bee_text"
+                    android:layout_width="140dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="25dp"
+                    android:background="@drawable/border_background"
+                    android:gravity="center"
+                    android:layout_gravity="right"
+                    android:padding="10dp"
+                    android:text="..."
+                    android:textSize="12dp" />
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="65dp"
+                    android:background="@drawable/icon_background_woman">
+
+                    <ImageView
+                        android:id="@+id/bee"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/bee" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="55dp"
+                    android:layout_marginTop="80dp"
+                    android:text="꿀벌"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
             </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginEnd="55dp"
-                android:layout_marginTop="80dp"
-                android:text="꿀벌"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+        </LinearLayout>
 
-        </FrameLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/penguin_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/hamster_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/wolf_layout"
-        app:layout_constraintTop_toBottomOf="@+id/lion_layout">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/penguin_text"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="25dp"
-                android:background="@drawable/border_background"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="..."
-                android:textSize="12dp" />
+        <LinearLayout
+            android:id="@+id/penguin_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/hamster_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/wolf_layout"
+            app:layout_constraintTop_toBottomOf="@+id/lion_layout">
 
             <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="65dp"
-                android:background="@drawable/icon_background_man">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/penguin"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/penguin" />
+                <TextView
+                    android:id="@+id/penguin_text"
+                    android:layout_width="140dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="25dp"
+                    android:background="@drawable/border_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="..."
+                    android:textSize="12dp" />
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="65dp"
+                    android:background="@drawable/icon_background_man">
+
+                    <ImageView
+                        android:id="@+id/penguin"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/penguin" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="55dp"
+                    android:layout_marginTop="80dp"
+                    android:text="펭귄"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
             </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="80dp"
-                android:text="펭귄"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
 
-        </FrameLayout>
+        </LinearLayout>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/hamster_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fox_layout"
-        app:layout_constraintStart_toEndOf="@id/penguin_layout"
-        app:layout_constraintTop_toBottomOf="@+id/bee_layout">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/hamster_text"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                android:background="@drawable/border_background"
-                android:gravity="center"
-                android:layout_gravity="right"
-                android:layout_marginEnd="25dp"
-                android:padding="10dp"
-                android:text="..."
-                android:textSize="12dp" />
+        <LinearLayout
+            android:id="@+id/hamster_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fox_layout"
+            app:layout_constraintStart_toEndOf="@id/penguin_layout"
+            app:layout_constraintTop_toBottomOf="@+id/bee_layout">
 
             <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:layout_marginTop="65dp"
-                android:background="@drawable/icon_background_woman">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/hamster"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/hamster" />
+                <TextView
+                    android:id="@+id/hamster_text"
+                    android:layout_width="140dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/border_background"
+                    android:gravity="center"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="25dp"
+                    android:padding="10dp"
+                    android:text="..."
+                    android:textSize="12dp" />
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="65dp"
+                    android:background="@drawable/icon_background_woman">
+
+                    <ImageView
+                        android:id="@+id/hamster"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/hamster" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="55dp"
+                    android:layout_marginTop="80dp"
+                    android:text="햄스터"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
             </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginEnd="55dp"
-                android:layout_marginTop="80dp"
-                android:text="햄스터"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
 
-        </FrameLayout>
+        </LinearLayout>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/wolf_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/layout_chat_chatbox"
-        app:layout_constraintEnd_toStartOf="@id/fox_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/penguin_layout">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/wolf_text"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="25dp"
-                android:background="@drawable/border_background"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="..."
-                android:textSize="12dp" />
+        <LinearLayout
+            android:id="@+id/wolf_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fox_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/penguin_layout">
 
             <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="65dp"
-                android:background="@drawable/icon_background_man">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/wolf"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/wolf" />
+                <TextView
+                    android:id="@+id/wolf_text"
+                    android:layout_width="140dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="25dp"
+                    android:background="@drawable/border_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="..."
+                    android:textSize="12dp" />
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="65dp"
+                    android:background="@drawable/icon_background_man">
+
+                    <ImageView
+                        android:id="@+id/wolf"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/wolf" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="55dp"
+                    android:layout_marginTop="80dp"
+                    android:text="늑대"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
             </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="80dp"
-                android:text="늑대"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
 
-        </FrameLayout>
+        </LinearLayout>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/fox_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/layout_chat_chatbox"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/wolf_layout"
-        app:layout_constraintTop_toBottomOf="@+id/hamster_layout">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/fox_text"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                android:layout_marginEnd="25dp"
-                android:background="@drawable/border_background"
-                android:gravity="center"
-                android:layout_gravity="right"
-                android:padding="10dp"
-                android:text="..."
-                android:textSize="12dp" />
+        <LinearLayout
+            android:id="@+id/fox_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/wolf_layout"
+            app:layout_constraintTop_toBottomOf="@+id/hamster_layout">
 
             <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:layout_marginTop="65dp"
-                android:background="@drawable/icon_background_woman">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/fox"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/fox" />
+                <TextView
+                    android:id="@+id/fox_text"
+                    android:layout_width="140dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="25dp"
+                    android:background="@drawable/border_background"
+                    android:gravity="center"
+                    android:layout_gravity="right"
+                    android:padding="10dp"
+                    android:text="..."
+                    android:textSize="12dp" />
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="65dp"
+                    android:background="@drawable/icon_background_woman">
+
+                    <ImageView
+                        android:id="@+id/fox"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/fox" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="55dp"
+                    android:layout_marginTop="80dp"
+                    android:text="여우"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
             </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginEnd="55dp"
-                android:layout_marginTop="80dp"
-                android:text="여우"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
 
-        </FrameLayout>
+        </LinearLayout>
 
-
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/layout_chat_chatbox"
@@ -436,6 +472,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         tools:ignore="MissingConstraints" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
