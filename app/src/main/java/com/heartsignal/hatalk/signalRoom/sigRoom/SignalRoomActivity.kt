@@ -55,6 +55,7 @@ class SignalRoomActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
     private val answerModel: AnswerModel by viewModels()
+    private val firstAnswerFragmentDialog = FirstAnswerFragmentDialog()
     private val onFirstAnswer = Emitter.Listener { args ->
         firstAnswerEmitListener(args)
     }
@@ -496,13 +497,23 @@ class SignalRoomActivity : AppCompatActivity() {
         }
 
         if (matchingModel.myGender == "1") {
-            FirstAnswerFragmentDialog().show(
+            firstAnswerFragmentDialog.show(
                 supportFragmentManager, "FirstAnswerDialog"
             )
         }
     }
 
     private fun secondCallEmitListener(args: Array<Any>) {
+        if(firstAnswerFragmentDialog.isVisible) {
+            Thread {
+                UiThreadUtil.runOnUiThread(Runnable {
+                    kotlin.run {
+                        firstAnswerFragmentDialog.dismiss()
+                    }
+                })
+            }.start()
+        }
+
         val res = JSONObject(args[0].toString())
         val secondCallResponse = Gson().fromJson(res.toString(), CallMatchingResponse::class.java)
 

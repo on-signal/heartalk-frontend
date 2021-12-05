@@ -116,8 +116,7 @@ class VideoCallActivity : AppCompatActivity() {
     }
 
     private fun addCallListener() {
-        val listenerID = "DirectCallActivity"
-
+        val listenerID = "VideoCallActivity"
 
         CometChat.addCallListener(listenerID, object : CometChat.CallListener() {
             override fun onOutgoingCallAccepted(p0: Call?) {
@@ -234,20 +233,56 @@ class VideoCallActivity : AppCompatActivity() {
         val res = JSONObject(args[0].toString())
         val keepTalkingResult = Gson().fromJson(res.toString(), KeepTalkingResult::class.java)
 
-        if (keepTalkingResult.success) {
-            val intent = Intent(this, ChatingActivity::class.java)
-            intent.putExtra("partner", keepTalkingResult.info?.partner)
-            val chatData = ChatData(null, null, null, null, null, null, mutableListOf(), null)
-            intent.putExtra("chatMessage", chatData)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
-            finish()
-        } else {
-            val intent = Intent(this, HomeActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            startActivity(intent)
-            finish()
-        }
+        CometChat.endCall(
+            CometChat.getActiveCall().sessionId,
+            object : CometChat.CallbackListener<Call?>() {
+                override fun onSuccess(call: Call?) {
+                    // handle end call success
+                    Log.d(TAG, "CALL Ended successfully: " + call.toString())
+
+                    CometChat.removeCallListener("VideoCallActivity")
+
+                    if (keepTalkingResult.success) {
+                        val intent = Intent(this@VideoCallActivity, ChatingActivity::class.java)
+                        intent.putExtra("partner", keepTalkingResult.info?.partner)
+                        val chatData = ChatData(null, null, null, null, null, null, mutableListOf(), null)
+                        intent.putExtra("chatMessage", chatData)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        val intent = Intent(this@VideoCallActivity, HomeActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+
+                override fun onError(e: CometChatException) {
+                    // handled end call error
+                    Log.d(TAG, "CALL Ended Error: $e")
+
+                    CometChat.removeCallListener("VideoCallActivity")
+
+                    if (keepTalkingResult.success) {
+                        val intent = Intent(this@VideoCallActivity, ChatingActivity::class.java)
+                        intent.putExtra("partner", keepTalkingResult.info?.partner)
+                        val chatData = ChatData(null, null, null, null, null, null, mutableListOf(), null)
+                        intent.putExtra("chatMessage", chatData)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        val intent = Intent(this@VideoCallActivity, HomeActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+            })
+
+
     }
 }

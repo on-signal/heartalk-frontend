@@ -29,6 +29,7 @@ class ReadyFirstChoiceSocket(
 ) {
     private lateinit var socket: Socket
     private val dialogBuilder = AlertDialog.Builder(context)
+    private var dialog: AlertDialog? = null
     private val womanIconList = arrayOf("fox", "hamster", "bee")
     private val manIconList = arrayOf("wolf", "penguin", "lion")
     private lateinit var selectedItem: String
@@ -87,10 +88,12 @@ class ReadyFirstChoiceSocket(
                     JSONObject(gson.toJson(FirstChoiceRequest(groupName, myId, myGender, choice)))
                 socket.emit("firstChoiceToServer", firstChoice)
             }.setCancelable(false)
+
         Thread {
             UiThreadUtil.runOnUiThread(Runnable {
                 kotlin.run {
-                    dialogBuilder.show()
+                    dialog = dialogBuilder.create()
+                    dialog?.show()
                 }
             })
         }.start()
@@ -116,16 +119,28 @@ class ReadyFirstChoiceSocket(
                     JSONObject(gson.toJson(FirstChoiceRequest(groupName, myId, myGender, choice)))
                 socket.emit("firstChoiceToServer", firstChoice)
             }.setCancelable(false)
+
         Thread {
             UiThreadUtil.runOnUiThread(Runnable {
                 kotlin.run {
-                    dialogBuilder.show()
+                    dialog = dialogBuilder.create()
+                    dialog?.show()
                 }
             })
         }.start()
     }
 
     private fun emitListenerForFirstChoiceAnswer(args: Array<Any>) {
+        if (dialog?.isShowing == true) {
+            Thread {
+                UiThreadUtil.runOnUiThread(Runnable {
+                    kotlin.run {
+                        dialog?.dismiss()
+                    }
+                })
+            }.start()
+        }
+
         val res = JSONObject(args[0].toString())
         val firstChoiceResponse = Gson().fromJson(res.toString(), CallMatchingResponse::class.java)
 
