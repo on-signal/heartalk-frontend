@@ -19,7 +19,12 @@ import com.cometchat.pro.models.User
 import com.google.gson.Gson
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.ActivityVideoCallBinding
+import com.heartsignal.hatalk.main.HomeActivity
+import com.heartsignal.hatalk.main.chat.ChatingActivity
+import com.heartsignal.hatalk.main.data.ChatData
 import com.heartsignal.hatalk.signalRoom.sigRoom.dataFormat.KeepTalking
+import com.heartsignal.hatalk.signalRoom.sigRoom.dataFormat.KeepTalkingResult
+import com.heartsignal.hatalk.signalRoom.sigRoom.dataFormat.TalkingInfo
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.ContentsSocketApplication
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -37,6 +42,9 @@ class VideoCallActivity : AppCompatActivity() {
     private val onVideoCallAvailable = Emitter.Listener { _ -> callerStart() }
     private val onKeepTalking = Emitter.Listener { args ->
         keepTalkingEmitListener(args)
+    }
+    private val onKeepTalkingResult = Emitter.Listener { args ->
+        keepTalkingResultEmitListener(args)
     }
 
 
@@ -65,6 +73,7 @@ class VideoCallActivity : AppCompatActivity() {
 
         videoCallAvailableSocket.on("${groupName}OneToOneCall", onVideoCallAvailable)
         videoCallAvailableSocket.on("${myId}KeepTalking", onKeepTalking)
+        videoCallAvailableSocket.on("${myId}KeepTalkingResult", onKeepTalkingResult)
 
         addCallListener()
     }
@@ -83,6 +92,9 @@ class VideoCallActivity : AppCompatActivity() {
         super.onDestroy()
 
         videoCallAvailableSocket.disconnect()
+    }
+
+    override fun onBackPressed() {
     }
 
     private fun initiateVideoCall(receiverId: String) {
@@ -208,7 +220,7 @@ class VideoCallActivity : AppCompatActivity() {
                 val finalChoice =
                     JSONObject(gson.toJson(KeepTalking(groupName, myId, "no")))
                 videoCallAvailableSocket.emit("keepTalkingToServer", finalChoice)
-            })
+            }).setCancelable(false)
         Thread {
             runOnUiThread() {
                 kotlin.run {
@@ -216,5 +228,26 @@ class VideoCallActivity : AppCompatActivity() {
                 }
             }
         }.start()
+    }
+
+    private fun keepTalkingResultEmitListener(args: Array<Any>) {
+        val res = JSONObject(args[0].toString())
+        val keepTalkingResult = Gson().fromJson(res.toString(), KeepTalkingResult::class.java)
+
+        if (keepTalkingResult.success) {
+            val intent = Intent(this, ChatingActivity::class.java)
+            intent.putExtra("partner", keepTalkingResult.info?.partner)
+            val chatData = ChatData(null, null, null, null, null, null, mutableListOf(), null)
+            intent.putExtra("chatMessage", chatData)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            finish()
+        } else {
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            startActivity(intent)
+            finish()
+        }
     }
 }

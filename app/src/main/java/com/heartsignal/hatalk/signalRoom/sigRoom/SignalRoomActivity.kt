@@ -680,6 +680,7 @@ class SignalRoomActivity : AppCompatActivity() {
 
             intent.putExtra("directCallData", directCallObj)
             startActivity(intent)
+            finish()
         } else finish()
     }
 
