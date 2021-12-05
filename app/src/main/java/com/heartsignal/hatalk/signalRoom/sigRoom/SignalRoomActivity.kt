@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.*
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -49,13 +50,18 @@ class SignalRoomActivity : AppCompatActivity() {
     private lateinit var contentsReadySocket: ContentsReadySocket
     private lateinit var introductionSocket: IntroductionSocket
     private lateinit var readyFirstChoiceSocket: ReadyFirstChoiceSocket
-    private lateinit var firstQuestionSocket: FirstQuestionSocket
+    private lateinit var firstQuestionSocket: Socket
     private lateinit var firstAnswerSocket: Socket
     private lateinit var finalChoiceSocket: Socket
     private lateinit var binding: ActivitySignalRoomBinding
     private val matchingModel: MatchingModel by viewModels()
     private val answerModel: AnswerModel by viewModels()
     private val firstAnswerFragmentDialog = FirstAnswerFragmentDialog()
+    private var firstQuestionDialogBuilder: AlertDialog.Builder? = null
+    private var firstQuestionDialog: AlertDialog? = null
+    private val onFirstQuestion = Emitter.Listener { _ ->
+        firstQuestionEmitListener()
+    }
     private val onFirstAnswer = Emitter.Listener { args ->
         firstAnswerEmitListener(args)
     }
@@ -125,20 +131,16 @@ class SignalRoomActivity : AppCompatActivity() {
         readyFirstChoiceSocket.set()
         readyFirstChoiceSocket.makeOn()
 
-        firstQuestionSocket =
-            FirstQuestionSocket(
-                this,
-                matchingModel.groupName,
-                matchingModel.myId,
-                matchingModel.myGender,
-                matchingModel.questionList[0]
-            )
-        firstQuestionSocket.set()
-        firstQuestionSocket.makeOn()
+        firstQuestionDialogBuilder = AlertDialog.Builder(this)
 
-//        firstAnswerSocket = FirstAnswerSocket(this, matchingModel.groupName, answerModel, supportFragmentManager)
-//        firstAnswerSocket.set()
-//        firstAnswerSocket.makeOn()
+        try {
+            firstQuestionSocket = ContentsSocketApplication.get()
+            firstQuestionSocket.connect()
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
+        }
+        firstQuestionSocket.on("${matchingModel.groupName}FirstQuestion", onFirstQuestion)
+
 
         try {
             firstAnswerSocket = ContentsSocketApplication.get()
@@ -160,7 +162,6 @@ class SignalRoomActivity : AppCompatActivity() {
         finalChoiceSocket.on("${matchingModel.groupName}FinalChoice", onFinalChoice)
         finalChoiceSocket.on("${matchingModel.groupName}FinalCall", onFinalCall)
     }
-
 
 
     override fun onDestroy() {
@@ -391,7 +392,7 @@ class SignalRoomActivity : AppCompatActivity() {
             matchingModel.appendWomanList(womanUser)
         }
 
-        if(matchingData?.room_info?.user5?.gender.toString() == "0") {
+        if (matchingData?.room_info?.user5?.gender.toString() == "0") {
             val manUser = MatchingUser(
                 matchingData?.room_info?.user5?.Id.toString(),
                 matchingData?.room_info?.user5?.nickname.toString(),
@@ -409,7 +410,7 @@ class SignalRoomActivity : AppCompatActivity() {
             matchingModel.appendWomanList(womanUser)
         }
 
-        if(matchingData?.room_info?.user6?.gender.toString() == "0") {
+        if (matchingData?.room_info?.user6?.gender.toString() == "0") {
             val manUser = MatchingUser(
                 matchingData?.room_info?.user6?.Id.toString(),
                 matchingData?.room_info?.user6?.nickname.toString(),
@@ -490,6 +491,17 @@ class SignalRoomActivity : AppCompatActivity() {
         val res = JSONObject(args[0].toString())
         val firstAnswerResponse = Gson().fromJson(res.toString(), FirstAnswerResponse::class.java)
 
+        if (firstQuestionDialog?.isShowing == true) {
+            Thread {
+                UiThreadUtil.runOnUiThread(Runnable {
+                    kotlin.run {
+                        firstQuestionDialog?.dismiss()
+                    }
+                })
+            }.start()
+        }
+
+
         for (reply in firstAnswerResponse.answers) {
             val answerInfo = AnswerInfo(reply.owner, reply.answer, reply.already, reply.selector)
             answerModel.appendAnswerList(answerInfo)
@@ -504,7 +516,7 @@ class SignalRoomActivity : AppCompatActivity() {
     }
 
     private fun secondCallEmitListener(args: Array<Any>) {
-        if(firstAnswerFragmentDialog.isVisible) {
+        if (firstAnswerFragmentDialog.isVisible) {
             Thread {
                 UiThreadUtil.runOnUiThread(Runnable {
                     kotlin.run {
@@ -693,6 +705,43 @@ class SignalRoomActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else finish()
+    }
+
+    private fun firstQuestionEmitListener() {
+        if (matchingModel.myGender == "0") {
+            renderingForMan()
+        }
+    }
+
+    private fun renderingForMan() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.first_question_dialog, null)
+        firstQuestionDialogBuilder?.setView(dialogView)?.setTitle(matchingModel.questionList[0])
+            ?.setCancelable(false)
+            ?.setPositiveButton("확인") { _, _ ->
+                val answer = dialogView.findViewById<EditText>(R.id.first_question_answer).text
+                Toast.makeText(this, "$answer", Toast.LENGTH_LONG).show()
+                val gson = Gson()
+                val firstAnswer =
+                    JSONObject(
+                        gson.toJson(
+                            FirstAnswerRequest(
+                                matchingModel.groupName,
+                                matchingModel.myId,
+                                answer.toString()
+                            )
+                        )
+                    )
+                firstQuestionSocket.emit("answerToQuestionToServer", firstAnswer)
+            }
+
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    firstQuestionDialog = firstQuestionDialogBuilder?.create()
+                    firstQuestionDialog?.show()
+                }
+            })
+        }.start()
     }
 
     override fun onBackPressed() {
