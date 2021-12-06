@@ -47,6 +47,7 @@ import android.widget.Toast
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
 class SignalRoomActivity : AppCompatActivity() {
     private val TAG = "HEART"
+    private val callManager = CallManager.getInstance()
     private lateinit var chatSocket: ChatSocket
     private lateinit var contentsReadySocket: ContentsReadySocket
     private lateinit var introductionSocket: IntroductionSocket
@@ -257,6 +258,8 @@ class SignalRoomActivity : AppCompatActivity() {
         });
         binding.sigRoomUi.visibility = View.GONE
         Toast.makeText(this, "연결 됐습니다.", Toast.LENGTH_SHORT).show()
+        callManager.muteAudio(true)
+
     }
 
     private fun addCallListener() {

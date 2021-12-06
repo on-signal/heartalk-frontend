@@ -1,6 +1,8 @@
 package com.heartsignal.hatalk.main
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,14 +19,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.heartsignal.hatalk.GlobalApplication
-import com.heartsignal.hatalk.MainActivity
 import com.heartsignal.hatalk.R
-import com.heartsignal.hatalk.databinding.FragmentMainHomeBinding
 import com.heartsignal.hatalk.databinding.FragmentProfileBinding
 import com.heartsignal.hatalk.main.userModel.UserModel
-import com.heartsignal.hatalk.model.UserJoinModel
-import com.heartsignal.hatalk.model.userInfo
 import com.heartsignal.hatalk.network.DeleteUserRequest
 import com.heartsignal.hatalk.network.DeleteUserResponse
 import com.heartsignal.hatalk.network.UserApi
@@ -70,40 +67,59 @@ class ProfileFragment : Fragment() {
 
         val kakaoLogoutButton: Button? = binding?.kakaoLogoutButton
         kakaoLogoutButton?.setOnClickListener {
-            UserApiClient.instance.logout { error ->
-                if (error != null) {
-                    Toast.makeText(context, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "로그아웃 성공", Toast.LENGTH_SHORT).show()
-                    activity?.let {
-                        val intent = Intent(it, com.heartsignal.hatalk.MainActivity::class.java)
-                        it.startActivity(intent)
+            val dialogBuilder = AlertDialog.Builder(activity)
+            dialogBuilder.setTitle("로그아웃").setMessage("로그아웃 하시겠습니까?")
+                .setPositiveButton("수락", DialogInterface.OnClickListener { _, _ ->
+                    UserApiClient.instance.logout { error ->
+                        if (error != null) {
+                            Toast.makeText(context, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "로그아웃 성공", Toast.LENGTH_SHORT).show()
+                            activity?.let {
+                                val intent =
+                                    Intent(it, com.heartsignal.hatalk.MainActivity::class.java)
+                                it.startActivity(intent)
+                            }
+                        }
                     }
-                }
-            }
+                }).setNegativeButton("취소", DialogInterface.OnClickListener { _, _ -> })
+                .setCancelable(false)
+            dialogBuilder.show()
         }
         val kakaoUnlinkButton: Button? = binding?.kakaoUnlinkButton
         kakaoUnlinkButton?.setOnClickListener {
-            UserApiClient.instance.unlink { error ->
-                if (error != null) {
-                    Toast.makeText(context, "회원 탈퇴 실패 $error", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "회원 탈퇴 성공", Toast.LENGTH_SHORT).show()
-                    CoroutineScope(Dispatchers.Main).launch {
-                        val deleteUserRequest = DeleteUserRequest(sharedViewModel.kakaoUserId)
-                        val deleteUserResponse: Response<DeleteUserResponse> = UserApi.retrofitService.deleteUser("Bearer ${sharedViewModel.accessToken}" ,deleteUserRequest)
-                        if (deleteUserResponse.body()?.msg.toString() == "success") {
-                            Log.d(TAG, "Delete Success")
+            val dialogBuilder = AlertDialog.Builder(activity)
+            dialogBuilder.setTitle("회원탈퇴").setMessage("탈퇴하시겠습니까?")
+                .setPositiveButton("탈퇴", DialogInterface.OnClickListener { _, _ ->
+                    UserApiClient.instance.unlink { error ->
+                        if (error != null) {
+                            Toast.makeText(context, "회원 탈퇴 실패 $error", Toast.LENGTH_SHORT).show()
                         } else {
-                            Log.d(TAG, "Delete Fail")
-                        }
-                        activity?.let {
-                            val intent = Intent(it, com.heartsignal.hatalk.MainActivity::class.java)
-                            it.startActivity(intent)
+                            Toast.makeText(context, "회원 탈퇴 성공", Toast.LENGTH_SHORT).show()
+                            CoroutineScope(Dispatchers.Main).launch {
+                                val deleteUserRequest =
+                                    DeleteUserRequest(sharedViewModel.kakaoUserId)
+                                val deleteUserResponse: Response<DeleteUserResponse> =
+                                    UserApi.retrofitService.deleteUser(
+                                        "Bearer ${sharedViewModel.accessToken}",
+                                        deleteUserRequest
+                                    )
+                                if (deleteUserResponse.body()?.msg.toString() == "success") {
+                                    Log.d(TAG, "Delete Success")
+                                } else {
+                                    Log.d(TAG, "Delete Fail")
+                                }
+                                activity?.let {
+                                    val intent =
+                                        Intent(it, com.heartsignal.hatalk.MainActivity::class.java)
+                                    it.startActivity(intent)
+                                }
+                            }
                         }
                     }
-                }
-            }
+                }).setNegativeButton("취소", DialogInterface.OnClickListener { _, _ -> })
+                .setCancelable(false)
+            dialogBuilder.show()
         }
         // Profile balloon 설정
         val profileImage: CircleImageView? = binding?.profileImage
