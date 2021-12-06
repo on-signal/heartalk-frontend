@@ -26,8 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margin_between_elements"
             android:layout_marginTop="@dimen/default_margin"
-            app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:text="@{viewModel.email}"/>
+            android:text="@{viewModel.email}"
+            app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
         <TextView
             android:id="@+id/user_profile_url"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margin_between_elements"
             android:layout_marginTop="@dimen/default_margin"
-            android:text="@{viewModel.photoUrl}"/>
+            android:text="@{viewModel.photoUrl}" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name_input"
@@ -71,22 +71,15 @@
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <Spinner
             android:id="@+id/carrier_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margin_between_elements"
             android:layout_marginTop="@dimen/default_margin"
+            android:entries="@array/carrier"
             android:hint="@string/carrier"
-            app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_input_edit_carrier"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPersonName|textNoSuggestions"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phone_number_input"
@@ -128,9 +121,9 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margin_between_elements"
             android:layout_marginTop="@dimen/default_margin"
+            android:onClick="@{() -> signupFragment.onSignUp()}"
             android:text="회원가입"
-            android:textSize="20sp"
-            android:onClick="@{() -> signupFragment.onSignUp()}"/>
+            android:textSize="20sp" />
         <!--        <ImageView-->
         <!--            android:id="@+id/show_image"-->
         <!--            android:layout_width="50dp"-->
