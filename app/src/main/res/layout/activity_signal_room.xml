@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/full_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/signal"
-    android:id="@+id/full_layout"
     tools:context=".signalRoom.sigRoom.SignalRoomActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -28,7 +28,6 @@
             android:textSize="20sp" />
 
 
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -39,7 +38,7 @@
         android:gravity="center"
         android:paddingHorizontal="20dp"
         android:paddingVertical="20dp"
-        app:layout_constraintBottom_toTopOf="@id/notification_header"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_name">
@@ -59,30 +58,60 @@
 
     </LinearLayout>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.57" />
+
     <TextView
         android:id="@+id/notification_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/border_background"
         android:gravity="center"
-        android:padding="10dp"
         android:text="잠시 후, 늑대님의 목소리가 공개됩니다."
         android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/progress_circular"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <com.view.circulartimerview.CircularTimerView
         android:id="@+id/progress_circular"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1"
         app:backgroundColor="@color/signal"
         app:backgroundWidth="6"
         app:isClockwise="true"
-        app:layout_constraintBottom_toTopOf="@+id/main_message"
+        app:layout_constraintBottom_toTopOf="@+id/guideline13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline12"
         app:maxValue="100"
         app:progressBackgroundColor="@color/black"
         app:progressColor="@color/signal"
@@ -96,28 +125,30 @@
         android:id="@+id/main_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layout_chat_chatbox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/layout_chat_chatbox">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline13">
 
         <LinearLayout
             android:id="@+id/lion_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/bee_layout"
-            app:layout_constraintBottom_toTopOf="@id/penguin_layout"
+            app:layout_constraintBottom_toTopOf="@+id/guideline21"
+            app:layout_constraintDimensionRatio="2.1:1"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/lion_text"
-                    android:layout_width="140dp"
-                    android:layout_height="80dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="25dp"
                     android:background="@drawable/border_background"
                     android:gravity="center"
@@ -126,9 +157,9 @@
                     android:textSize="12dp" />
 
                 <FrameLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="65dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="bottom|left"
                     android:background="@drawable/icon_background_man">
 
                     <ImageView
@@ -142,8 +173,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="55dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_gravity="bottom|left"
                     android:text="사자"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -156,35 +187,34 @@
 
         <LinearLayout
             android:id="@+id/bee_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/lion_layout"
-            app:layout_constraintBottom_toTopOf="@id/hamster_layout"
+            app:layout_constraintBottom_toTopOf="@+id/guideline21"
+            app:layout_constraintDimensionRatio="2.1:1"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/bee_text"
-                    android:layout_width="140dp"
-                    android:layout_height="80dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
                     android:layout_marginEnd="25dp"
                     android:background="@drawable/border_background"
                     android:gravity="center"
-                    android:layout_gravity="right"
-                    android:padding="10dp"
                     android:text="..."
                     android:textSize="12dp" />
 
                 <FrameLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="65dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="end|bottom"
                     android:background="@drawable/icon_background_woman">
 
                     <ImageView
@@ -198,9 +228,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginEnd="55dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginEnd="45dp"
                     android:text="꿀벌"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -211,22 +240,22 @@
 
         <LinearLayout
             android:id="@+id/penguin_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/hamster_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/wolf_layout"
-            app:layout_constraintTop_toBottomOf="@+id/lion_layout">
+            app:layout_constraintBottom_toTopOf="@+id/guideline23"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toTopOf="@+id/guideline22">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/penguin_text"
-                    android:layout_width="140dp"
-                    android:layout_height="80dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="25dp"
                     android:background="@drawable/border_background"
                     android:gravity="center"
@@ -235,9 +264,9 @@
                     android:textSize="12dp" />
 
                 <FrameLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="65dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="bottom|left"
                     android:background="@drawable/icon_background_man">
 
                     <ImageView
@@ -251,8 +280,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="55dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_gravity="bottom|left"
                     android:text="펭귄"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -264,34 +293,35 @@
 
         <LinearLayout
             android:id="@+id/hamster_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fox_layout"
-            app:layout_constraintStart_toEndOf="@id/penguin_layout"
-            app:layout_constraintTop_toBottomOf="@+id/bee_layout">
+            app:layout_constraintBottom_toTopOf="@+id/guideline23"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/guideline22"
+            app:layout_constraintVertical_weight="1">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/hamster_text"
-                    android:layout_width="140dp"
-                    android:layout_height="80dp"
-                    android:background="@drawable/border_background"
-                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="right"
                     android:layout_marginEnd="25dp"
+                    android:background="@drawable/border_background"
+                    android:gravity="center"
                     android:padding="10dp"
                     android:text="..."
                     android:textSize="12dp" />
 
                 <FrameLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="bottom|right"
                     android:layout_marginTop="65dp"
                     android:background="@drawable/icon_background_woman">
 
@@ -306,9 +336,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginEnd="55dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginEnd="45dp"
                     android:text="햄스터"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -320,22 +349,22 @@
 
         <LinearLayout
             android:id="@+id/wolf_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fox_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/penguin_layout">
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toTopOf="@+id/guideline24">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/wolf_text"
-                    android:layout_width="140dp"
-                    android:layout_height="80dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="25dp"
                     android:background="@drawable/border_background"
                     android:gravity="center"
@@ -344,9 +373,9 @@
                     android:textSize="12dp" />
 
                 <FrameLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="65dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="bottom|left"
                     android:background="@drawable/icon_background_man">
 
                     <ImageView
@@ -360,8 +389,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="55dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_gravity="bottom|left"
                     android:text="늑대"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -373,34 +402,35 @@
 
         <LinearLayout
             android:id="@+id/fox_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/wolf_layout"
-            app:layout_constraintTop_toBottomOf="@+id/hamster_layout">
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/guideline24"
+            app:layout_constraintVertical_weight="1">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/fox_text"
-                    android:layout_width="140dp"
-                    android:layout_height="80dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
                     android:layout_marginEnd="25dp"
                     android:background="@drawable/border_background"
                     android:gravity="center"
-                    android:layout_gravity="right"
                     android:padding="10dp"
                     android:text="..."
                     android:textSize="12dp" />
 
                 <FrameLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="bottom|right"
                     android:layout_marginTop="65dp"
                     android:background="@drawable/icon_background_woman">
 
@@ -415,17 +445,78 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginEnd="55dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginEnd="45dp"
+                    android:layout_gravity="bottom|right"
                     android:text="여우"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
             </FrameLayout>
-
-
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.46" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.54" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.04" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.96" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.30" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.70" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -436,7 +527,8 @@
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
+        app:layout_constraintStart_toStartOf="parent">
+
         <EditText
             android:id="@+id/edit_chat_message"
             android:layout_width="wrap_content"
