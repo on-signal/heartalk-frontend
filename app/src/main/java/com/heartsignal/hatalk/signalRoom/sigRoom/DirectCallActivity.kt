@@ -5,12 +5,15 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View.GONE
+import android.widget.*
+import androidx.navigation.fragment.findNavController
+import com.airbnb.lottie.LottieAnimationView
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.Call
 import com.cometchat.pro.core.CallSettings
@@ -18,6 +21,7 @@ import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
+import com.facebook.react.bridge.UiThreadUtil
 import com.google.gson.Gson
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.ActivityDirectCallBinding
@@ -54,13 +58,6 @@ class DirectCallActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-//        loadingDialogBuilder = AlertDialog.Builder(this).setView(R.layout.loading_dialog)
-//        loadingDialog = loadingDialogBuilder!!.create()
-//
-//        loadingDialog.show()
-
-
-
         val intent: Intent = getIntent()
         val directCallData = intent.getParcelableExtra<DirectCall>("directCallData")
         Log.d("HEART", directCallData.toString())
@@ -91,7 +88,18 @@ class DirectCallActivity : AppCompatActivity() {
             "lion" -> "사자"
             else -> "꿀벌"
         }
-        timerSetting()
+
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                val loadingView = findViewById<LottieAnimationView>(R.id.animationView)
+                loadingView.visibility = GONE
+                timerSetting()
+            },
+            5000
+        )
+
+
+
 
         val myDrawble = if (myGender == "0") findViewById<ImageView>(R.id.man_icon) else findViewById(R.id.woman_icon)
         val counterPartDrawble = if (myGender == "0") findViewById<ImageView>(R.id.woman_icon) else findViewById(R.id.man_icon)
