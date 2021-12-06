@@ -94,9 +94,6 @@ class SignalRoomActivity : AppCompatActivity() {
         /** * [Timer설정] */
 
 
-
-
-
         /** [Cometchat_init] ------------------------------------------------ */
 
         initCometChat()
@@ -519,17 +516,6 @@ class SignalRoomActivity : AppCompatActivity() {
                 })
             }.start()
         }
-
-        if (firstQuestionWomanDialog?.isShowing == true) {
-            Thread {
-                UiThreadUtil.runOnUiThread(Runnable {
-                    kotlin.run {
-                        firstQuestionWomanDialog?.dismiss()
-                    }
-                })
-            }.start()
-        }
-
 
         for (reply in firstAnswerResponse.answers) {
             val answerInfo = AnswerInfo(reply.owner, reply.answer, reply.already, reply.selector)
