@@ -58,7 +58,7 @@ class ChatingActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         chatRecyclerview.layoutManager = layoutManager
 
-        
+
         val partnerNameView: TextView = findViewById(R.id.partner_name)
         partnerNameView.text = partner.nickname
 

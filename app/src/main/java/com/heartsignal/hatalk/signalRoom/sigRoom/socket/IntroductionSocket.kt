@@ -137,8 +137,7 @@ class IntroductionSocket(
             }
 
             override fun onTimerFinished() {
-                progressBar.setProgressBackgroundColor("#FF808080")
-                progressBar.setTextColor("#FF808080")
+
             }
         }, 10, TimeFormatEnum.SECONDS, 10)
 
