@@ -41,16 +41,7 @@ import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_signal_room.*
 import org.json.JSONObject
 import java.net.URISyntaxException
-import com.view.circulartimerview.TimeFormatEnum
-
 import android.widget.Toast
-
-import com.heartsignal.hatalk.MainActivity
-
-import com.view.circulartimerview.CircularTimerListener
-
-import com.view.circulartimerview.CircularTimerView
-import kotlin.math.ceil
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
