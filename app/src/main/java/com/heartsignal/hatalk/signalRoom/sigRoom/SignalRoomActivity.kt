@@ -62,6 +62,7 @@ class SignalRoomActivity : AppCompatActivity() {
     private val firstAnswerFragmentDialog = FirstAnswerFragmentDialog()
     private var firstQuestionDialogBuilder: AlertDialog.Builder? = null
     private var firstQuestionDialog: AlertDialog? = null
+    private lateinit var matchingData: MatchingData
     private val onFirstQuestion = Emitter.Listener { _ ->
         firstQuestionEmitListener()
     }
@@ -98,7 +99,8 @@ class SignalRoomActivity : AppCompatActivity() {
         /** [Cometchat_init] ------------------------------------------------ */
 
         initCometChat()
-        setMatchingData()
+        matchingData = MatchingData(intent, matchingModel)
+        matchingData.setMatchingData()
         setMyButton(view)
         addCallListener()
         callerStart()
@@ -183,8 +185,8 @@ class SignalRoomActivity : AppCompatActivity() {
     override fun onRestart() {
         super.onRestart()
 
-        if(directCallCnt == 0) {
-            renderNotificationHeader( resources.getString(R.string.question_for_man))
+        if (directCallCnt == 0) {
+            renderNotificationHeader(resources.getString(R.string.question_for_man))
         } else if (directCallCnt == 1) {
             renderNotificationHeader(resources.getString(R.string.final_choice))
         }
@@ -308,158 +310,6 @@ class SignalRoomActivity : AppCompatActivity() {
         })
     }
 
-    private fun setMatchingData() {
-        val intent: Intent = getIntent()
-        val matchingData = intent.getParcelableExtra<MatchingConfirmResponse>("matchingData")
-
-        val userID: String = CometChat.getLoggedInUser().uid.toString()
-
-        matchingModel.setGroupName(matchingData?.groupName.toString())
-        matchingModel.setCaller(matchingData?.caller.toString())
-
-        matchingModel.setMyGender(matchingData?.gender.toString())
-        matchingModel.setMyId(userID)
-
-        when (userID) {
-            matchingData?.room_info?.user1?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user1?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user1?.icon.toString())
-            }
-            matchingData?.room_info?.user2?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user2?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user2?.icon.toString())
-            }
-            matchingData?.room_info?.user3?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user3?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user3?.icon.toString())
-            }
-            matchingData?.room_info?.user4?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user4?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user4?.icon.toString())
-            }
-            matchingData?.room_info?.user5?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user5?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user5?.icon.toString())
-            }
-            matchingData?.room_info?.user6?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user6?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user6?.icon.toString())
-            }
-        }
-
-        if (matchingData?.room_info?.user1?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user1?.Id.toString(),
-                matchingData?.room_info?.user1?.nickname.toString(),
-                matchingData?.room_info?.user1?.gender.toString(),
-                matchingData?.room_info?.user1?.icon.toString()
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user1?.Id.toString(),
-                matchingData?.room_info?.user1?.nickname.toString(),
-                matchingData?.room_info?.user1?.gender.toString(),
-                matchingData?.room_info?.user1?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        if (matchingData?.room_info?.user2?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user2?.Id.toString(),
-                matchingData?.room_info?.user2?.nickname.toString(),
-                matchingData?.room_info?.user2?.gender.toString(),
-                matchingData?.room_info?.user2?.icon.toString()
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user2?.Id.toString(),
-                matchingData?.room_info?.user2?.nickname.toString(),
-                matchingData?.room_info?.user2?.gender.toString(),
-                matchingData?.room_info?.user2?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        if (matchingData?.room_info?.user3?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user3?.Id.toString(),
-                matchingData?.room_info?.user3?.nickname.toString(),
-                matchingData?.room_info?.user3?.gender.toString(),
-                matchingData?.room_info?.user3?.icon.toString()
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user3?.Id.toString(),
-                matchingData?.room_info?.user3?.nickname.toString(),
-                matchingData?.room_info?.user3?.gender.toString(),
-                matchingData?.room_info?.user3?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        if (matchingData?.room_info?.user4?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user4?.Id.toString(),
-                matchingData?.room_info?.user4?.nickname.toString(),
-                matchingData?.room_info?.user4?.gender.toString(),
-                matchingData?.room_info?.user4?.icon.toString()
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user4?.Id.toString(),
-                matchingData?.room_info?.user4?.nickname.toString(),
-                matchingData?.room_info?.user4?.gender.toString(),
-                matchingData?.room_info?.user4?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        if (matchingData?.room_info?.user5?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user5?.Id.toString(),
-                matchingData?.room_info?.user5?.nickname.toString(),
-                matchingData?.room_info?.user5?.gender.toString(),
-                matchingData?.room_info?.user5?.icon.toString(),
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user5?.Id.toString(),
-                matchingData?.room_info?.user5?.nickname.toString(),
-                matchingData?.room_info?.user5?.gender.toString(),
-                matchingData?.room_info?.user5?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        if (matchingData?.room_info?.user6?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user6?.Id.toString(),
-                matchingData?.room_info?.user6?.nickname.toString(),
-                matchingData?.room_info?.user6?.gender.toString(),
-                matchingData?.room_info?.user6?.icon.toString(),
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user6?.Id.toString(),
-                matchingData?.room_info?.user6?.nickname.toString(),
-                matchingData?.room_info?.user6?.gender.toString(),
-                matchingData?.room_info?.user6?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        for (item: String in matchingData?.question_list!!) {
-            matchingModel.appendQuestionList(item)
-        }
-    }
-
     private fun setMyButton(view: View) {
         var userTextView: TextView? = null
         when (matchingModel.myIcon) {
@@ -528,7 +378,7 @@ class SignalRoomActivity : AppCompatActivity() {
             answerModel.appendOwnerIdList(reply.owner)
         }
 
-        renderNotificationHeader( resources.getString(R.string.question_for_woman))
+        renderNotificationHeader(resources.getString(R.string.question_for_woman))
 
         if (matchingModel.myGender == "1") {
             firstAnswerFragmentDialog.show(
