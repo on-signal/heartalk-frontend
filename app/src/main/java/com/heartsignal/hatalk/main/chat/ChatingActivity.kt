@@ -5,8 +5,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -60,7 +58,7 @@ class ChatingActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         chatRecyclerview.layoutManager = layoutManager
 
-        chatRecyclerview.scrollToPosition(chatList!!.size - 1)
+        
         val partnerNameView: TextView = findViewById(R.id.partner_name)
         partnerNameView.text = partner.nickname
 

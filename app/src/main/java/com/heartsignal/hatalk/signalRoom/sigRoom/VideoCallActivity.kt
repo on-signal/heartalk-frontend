@@ -245,7 +245,9 @@ class VideoCallActivity : AppCompatActivity() {
                     if (keepTalkingResult.success) {
                         val intent = Intent(this@VideoCallActivity, ChatingActivity::class.java)
                         intent.putExtra("partner", keepTalkingResult.info?.partner)
-                        val chatData = ChatData(null, null, null, null, null, null, mutableListOf(), null)
+                        val chatName = if (myGender == "0") myId.plus(keepTalkingResult.info?.partner?.kakaoUserId)
+                                            else keepTalkingResult.info?.partner?.kakaoUserId.plus(myId)
+                        val chatData = ChatData(null, chatName, null, null, null, null, mutableListOf(), null)
                         intent.putExtra("chatMessage", chatData)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
