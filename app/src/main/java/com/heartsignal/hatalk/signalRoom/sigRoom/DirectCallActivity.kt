@@ -22,6 +22,9 @@ import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.ActivityDirectCallBinding
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.CallEndSocket
 import com.heartsignal.hatalk.signalRoom.sigRoom.socket.ContentsSocketApplication
+import com.view.circulartimerview.CircularTimerListener
+import com.view.circulartimerview.CircularTimerView
+import com.view.circulartimerview.TimeFormatEnum
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import org.json.JSONObject
@@ -78,6 +81,7 @@ class DirectCallActivity : AppCompatActivity() {
             "lion" -> "사자"
             else -> "꿀벌"
         }
+        timerSetting()
 
         val myDrawble = if (myGender == "0") findViewById<ImageView>(R.id.man_icon) else findViewById(R.id.woman_icon)
         val counterPartDrawble = if (myGender == "0") findViewById<ImageView>(R.id.woman_icon) else findViewById(R.id.man_icon)
@@ -250,5 +254,23 @@ class DirectCallActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+    }
+
+    private fun timerSetting() {
+        val progressBar: CircularTimerView? = findViewById(R.id.progress_circular)
+        progressBar!!.progress = 0f
+
+        progressBar.setCircularTimerListener(object : CircularTimerListener {
+            override fun updateDataOnTick(remainingTimeInMs: Long): String? {
+                return Math.ceil((remainingTimeInMs / 1000).toDouble()).toInt().toString()
+            }
+
+            override fun onTimerFinished() {
+                progressBar.setProgressBackgroundColor("#FF808080")
+                progressBar.setTextColor("#FF808080")
+            }
+        }, 60, TimeFormatEnum.SECONDS, 10)
+
+        progressBar.startTimer()
     }
 }

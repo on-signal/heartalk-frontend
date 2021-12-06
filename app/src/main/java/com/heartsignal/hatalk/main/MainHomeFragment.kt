@@ -1,6 +1,9 @@
 package com.heartsignal.hatalk.main
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.app.Application
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
@@ -50,7 +53,7 @@ import java.util.*
  */
 class MainHomeFragment : Fragment() {
     private val TAG = "HEART"
-
+    lateinit var activity: Activity
 
     private var binding: FragmentMainHomeBinding? = null
     private val sharedViewModel: UserModel by activityViewModels()
@@ -143,7 +146,11 @@ class MainHomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-        mSocket.disconnect()
+//        mSocket.disconnect()
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is Activity) activity = context
     }
 
 
@@ -250,7 +257,9 @@ class MainHomeFragment : Fragment() {
         val gson = Gson()
         val matchingConfirmSuccessObj = JSONObject(gson.toJson(matchingConfirmSuccessMessage))
         val matchingConfirmFailObj = JSONObject(gson.toJson(matchingConfirmFailMessage))
-        val dialogBuilder = AlertDialog.Builder(context)
+
+
+        val dialogBuilder = AlertDialog.Builder(activity)
         dialogBuilder.setTitle("매칭")
             .setMessage("매칭을 수락하시겠습니까?")
             .setPositiveButton("수락",
