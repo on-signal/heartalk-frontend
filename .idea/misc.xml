@@ -27,7 +27,6 @@
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/activity_signal_room.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/chat_test.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/first_answer_dialog.xml" value="0.19166666666666668" />
-        <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/first_question_dialog.xml" value="0.12432432432432433" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/fragment_alarm.xml" value="0.10945945945945947" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/fragment_chat.xml" value="0.10945945945945947" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/fragment_loading.xml" value="0.10878378378378378" />
@@ -42,8 +41,6 @@
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/item_chating_partner.xml" value="0.14427083333333332" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/item_chating_user.xml" value="0.6" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/itme_chat_other.xml" value="0.22702702702702704" />
-        <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/loading_dialog.xml" value="0.11283783783783784" />
-        <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/loading_popup.xml" value="0.11283783783783784" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/profile_balloon.xml" value="0.12364864864864865" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/retry.xml" value="0.22702702702702704" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/layout/temp.xml" value="0.22" />
@@ -73,6 +70,7 @@
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="app/src/main/res/layout/first_choice_dialog.xml" value="0.8586687440489558" />
         <entry key="app/src/main/res/layout/first_question_dialog.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/first_question_woman_dialog.xml" value="0.246875" />
         <entry key="app/src/main/res/layout/fragment_alarm.xml" value="0.3608430843553312" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_loading.xml" value="0.37604166666666666" />

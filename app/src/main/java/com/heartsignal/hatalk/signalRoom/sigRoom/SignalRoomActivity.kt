@@ -190,6 +190,7 @@ class SignalRoomActivity : AppCompatActivity() {
         readyFirstChoiceSocket.disconnect()
         firstQuestionSocket.disconnect()
         firstAnswerSocket.disconnect()
+        finalChoiceSocket.disconnect()
 
         lifecycleScope.launch {
             val deleteRoomRequest = DeleteRoomRequest(matchingModel.groupName)
@@ -519,12 +520,30 @@ class SignalRoomActivity : AppCompatActivity() {
             }.start()
         }
 
+        if (firstQuestionWomanDialog?.isShowing == true) {
+            Thread {
+                UiThreadUtil.runOnUiThread(Runnable {
+                    kotlin.run {
+                        firstQuestionWomanDialog?.dismiss()
+                    }
+                })
+            }.start()
+        }
+
 
         for (reply in firstAnswerResponse.answers) {
             val answerInfo = AnswerInfo(reply.owner, reply.answer, reply.already, reply.selector)
             answerModel.appendAnswerList(answerInfo)
             answerModel.appendOwnerIdList(reply.owner)
         }
+
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    binding.notificationHeader.text = "여성분들은 마음에 드는 답변을 선택해주세요"
+                }
+            })
+        }.start()
 
         if (matchingModel.myGender == "1") {
             firstAnswerFragmentDialog.show(
@@ -728,6 +747,13 @@ class SignalRoomActivity : AppCompatActivity() {
     }
 
     private fun firstQuestionEmitListener() {
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    binding.notificationHeader.text = "남성분들은 연애관 질문에 답변해주세요"
+                }
+            })
+        }.start()
         if (matchingModel.myGender == "0") {
             renderingForMan()
         }
