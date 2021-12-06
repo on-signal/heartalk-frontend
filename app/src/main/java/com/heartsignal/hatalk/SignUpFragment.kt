@@ -42,6 +42,10 @@ class SignUpFragment : Fragment() {
                     sharedViewModel.setCarrier(parent?.getItemAtPosition(pos).toString())
                 }
 
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+
             }
             signup.setOnClickListener {
                 onSignUp()
