@@ -42,12 +42,13 @@ import kotlinx.android.synthetic.main.activity_signal_room.*
 import org.json.JSONObject
 import java.net.URISyntaxException
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
 class SignalRoomActivity : AppCompatActivity() {
     private val TAG = "HEART"
-    private val callManager = CallManager.getInstance()
+    private var directCallCnt = 0
     private lateinit var chatSocket: ChatSocket
     private lateinit var contentsReadySocket: ContentsReadySocket
     private lateinit var introductionSocket: IntroductionSocket
@@ -61,6 +62,7 @@ class SignalRoomActivity : AppCompatActivity() {
     private val firstAnswerFragmentDialog = FirstAnswerFragmentDialog()
     private var firstQuestionDialogBuilder: AlertDialog.Builder? = null
     private var firstQuestionDialog: AlertDialog? = null
+    private lateinit var matchingData: MatchingData
     private val onFirstQuestion = Emitter.Listener { _ ->
         firstQuestionEmitListener()
     }
@@ -97,7 +99,8 @@ class SignalRoomActivity : AppCompatActivity() {
         /** [Cometchat_init] ------------------------------------------------ */
 
         initCometChat()
-        setMatchingData()
+        matchingData = MatchingData(intent, matchingModel)
+        matchingData.setMatchingData()
         setMyButton(view)
         addCallListener()
         callerStart()
@@ -177,6 +180,16 @@ class SignalRoomActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         supportActionBar?.hide()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+
+        if (directCallCnt == 0) {
+            renderNotificationHeader(resources.getString(R.string.question_for_man))
+        } else if (directCallCnt == 1) {
+            renderNotificationHeader(resources.getString(R.string.final_choice))
+        }
     }
 
     override fun onDestroy() {
@@ -297,158 +310,6 @@ class SignalRoomActivity : AppCompatActivity() {
         })
     }
 
-    private fun setMatchingData() {
-        val intent: Intent = getIntent()
-        val matchingData = intent.getParcelableExtra<MatchingConfirmResponse>("matchingData")
-
-        val userID: String = CometChat.getLoggedInUser().uid.toString()
-
-        matchingModel.setGroupName(matchingData?.groupName.toString())
-        matchingModel.setCaller(matchingData?.caller.toString())
-
-        matchingModel.setMyGender(matchingData?.gender.toString())
-        matchingModel.setMyId(userID)
-
-        when (userID) {
-            matchingData?.room_info?.user1?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user1?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user1?.icon.toString())
-            }
-            matchingData?.room_info?.user2?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user2?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user2?.icon.toString())
-            }
-            matchingData?.room_info?.user3?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user3?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user3?.icon.toString())
-            }
-            matchingData?.room_info?.user4?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user4?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user4?.icon.toString())
-            }
-            matchingData?.room_info?.user5?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user5?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user5?.icon.toString())
-            }
-            matchingData?.room_info?.user6?.Id.toString() -> {
-                matchingModel.setMyNickname(matchingData?.room_info?.user6?.nickname.toString())
-                matchingModel.setMyIcon(matchingData?.room_info?.user6?.icon.toString())
-            }
-        }
-
-        if (matchingData?.room_info?.user1?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user1?.Id.toString(),
-                matchingData?.room_info?.user1?.nickname.toString(),
-                matchingData?.room_info?.user1?.gender.toString(),
-                matchingData?.room_info?.user1?.icon.toString()
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user1?.Id.toString(),
-                matchingData?.room_info?.user1?.nickname.toString(),
-                matchingData?.room_info?.user1?.gender.toString(),
-                matchingData?.room_info?.user1?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        if (matchingData?.room_info?.user2?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user2?.Id.toString(),
-                matchingData?.room_info?.user2?.nickname.toString(),
-                matchingData?.room_info?.user2?.gender.toString(),
-                matchingData?.room_info?.user2?.icon.toString()
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user2?.Id.toString(),
-                matchingData?.room_info?.user2?.nickname.toString(),
-                matchingData?.room_info?.user2?.gender.toString(),
-                matchingData?.room_info?.user2?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        if (matchingData?.room_info?.user3?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user3?.Id.toString(),
-                matchingData?.room_info?.user3?.nickname.toString(),
-                matchingData?.room_info?.user3?.gender.toString(),
-                matchingData?.room_info?.user3?.icon.toString()
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user3?.Id.toString(),
-                matchingData?.room_info?.user3?.nickname.toString(),
-                matchingData?.room_info?.user3?.gender.toString(),
-                matchingData?.room_info?.user3?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        if (matchingData?.room_info?.user4?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user4?.Id.toString(),
-                matchingData?.room_info?.user4?.nickname.toString(),
-                matchingData?.room_info?.user4?.gender.toString(),
-                matchingData?.room_info?.user4?.icon.toString()
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user4?.Id.toString(),
-                matchingData?.room_info?.user4?.nickname.toString(),
-                matchingData?.room_info?.user4?.gender.toString(),
-                matchingData?.room_info?.user4?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        if (matchingData?.room_info?.user5?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user5?.Id.toString(),
-                matchingData?.room_info?.user5?.nickname.toString(),
-                matchingData?.room_info?.user5?.gender.toString(),
-                matchingData?.room_info?.user5?.icon.toString(),
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user5?.Id.toString(),
-                matchingData?.room_info?.user5?.nickname.toString(),
-                matchingData?.room_info?.user5?.gender.toString(),
-                matchingData?.room_info?.user5?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        if (matchingData?.room_info?.user6?.gender.toString() == "0") {
-            val manUser = MatchingUser(
-                matchingData?.room_info?.user6?.Id.toString(),
-                matchingData?.room_info?.user6?.nickname.toString(),
-                matchingData?.room_info?.user6?.gender.toString(),
-                matchingData?.room_info?.user6?.icon.toString(),
-            )
-            matchingModel.appendManList(manUser)
-        } else {
-            val womanUser = MatchingUser(
-                matchingData?.room_info?.user6?.Id.toString(),
-                matchingData?.room_info?.user6?.nickname.toString(),
-                matchingData?.room_info?.user6?.gender.toString(),
-                matchingData?.room_info?.user6?.icon.toString()
-            )
-            matchingModel.appendWomanList(womanUser)
-        }
-
-        for (item: String in matchingData?.question_list!!) {
-            matchingModel.appendQuestionList(item)
-        }
-    }
-
     private fun setMyButton(view: View) {
         var userTextView: TextView? = null
         when (matchingModel.myIcon) {
@@ -508,13 +369,7 @@ class SignalRoomActivity : AppCompatActivity() {
         val firstAnswerResponse = Gson().fromJson(res.toString(), FirstAnswerResponse::class.java)
 
         if (firstQuestionDialog?.isShowing == true) {
-            Thread {
-                UiThreadUtil.runOnUiThread(Runnable {
-                    kotlin.run {
-                        firstQuestionDialog?.dismiss()
-                    }
-                })
-            }.start()
+            dismissAlertDialog(firstQuestionDialog)
         }
 
         for (reply in firstAnswerResponse.answers) {
@@ -523,13 +378,7 @@ class SignalRoomActivity : AppCompatActivity() {
             answerModel.appendOwnerIdList(reply.owner)
         }
 
-        Thread {
-            UiThreadUtil.runOnUiThread(Runnable {
-                kotlin.run {
-                    binding.notificationHeader.text = "여성분들은 마음에 드는 답변을 선택해주세요"
-                }
-            })
-        }.start()
+        renderNotificationHeader(resources.getString(R.string.question_for_woman))
 
         if (matchingModel.myGender == "1") {
             firstAnswerFragmentDialog.show(
@@ -540,13 +389,7 @@ class SignalRoomActivity : AppCompatActivity() {
 
     private fun secondCallEmitListener(args: Array<Any>) {
         if (firstAnswerFragmentDialog.isVisible) {
-            Thread {
-                UiThreadUtil.runOnUiThread(Runnable {
-                    kotlin.run {
-                        firstAnswerFragmentDialog.dismiss()
-                    }
-                })
-            }.start()
+            dismissFragmentDialog(firstAnswerFragmentDialog)
         }
 
         val res = JSONObject(args[0].toString())
@@ -593,6 +436,8 @@ class SignalRoomActivity : AppCompatActivity() {
                 matchingModel.groupName
             )
 
+
+        directCallCnt++
         intent.putExtra("directCallData", directCallObj)
         startActivity(intent)
     }
@@ -733,13 +578,6 @@ class SignalRoomActivity : AppCompatActivity() {
     }
 
     private fun firstQuestionEmitListener() {
-        Thread {
-            UiThreadUtil.runOnUiThread(Runnable {
-                kotlin.run {
-                    binding.notificationHeader.text = "남성분들은 연애관 질문에 답변해주세요"
-                }
-            })
-        }.start()
         if (matchingModel.myGender == "0") {
             renderingForMan()
         }
@@ -771,6 +609,36 @@ class SignalRoomActivity : AppCompatActivity() {
                 kotlin.run {
                     firstQuestionDialog = firstQuestionDialogBuilder?.create()
                     firstQuestionDialog?.show()
+                }
+            })
+        }.start()
+    }
+
+    private fun renderNotificationHeader(text: String) {
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    binding.notificationHeader.text = text
+                }
+            })
+        }.start()
+    }
+
+    private fun dismissAlertDialog(dialog: AlertDialog?) {
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    dialog?.dismiss()
+                }
+            })
+        }.start()
+    }
+
+    private fun dismissFragmentDialog(dialog: DialogFragment) {
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    dialog.dismiss()
                 }
             })
         }.start()

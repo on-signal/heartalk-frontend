@@ -42,4 +42,7 @@
     <string name="matching_start_button">매칭하기</string>
     <string name="Lounge"><b>라운지</b></string>
     <string name="Profile"><b>프로필</b></string>
+    <string name="question_for_man">남성분들은 연애관 질문에 답변해주세요</string>
+    <string name="question_for_woman">여성분들은 마음에 드는 답변을 선택해주세요</string>
+    <string name="final_choice">잠시후 최종 선택이 진행됩니다</string>
 </resources>
