@@ -168,8 +168,21 @@
             app:progressText="60"
             app:progressTextColor="@color/black"
             app:startingPoint="top"
-            app:textSize="12sp" />
+            app:textSize="16sp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="visible"
+        app:lottie_url="https://assets10.lottiefiles.com/packages/lf20_h1cidhml.json" />
 
 
     <RelativeLayout
