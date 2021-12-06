@@ -29,8 +29,6 @@ class MainActivity : AppCompatActivity(com.heartsignal.hatalk.R.layout.activity_
 
     private var matchingStatus by Delegates.notNull<Boolean>()
 
-//    private lateinit var navController: NavController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -197,15 +195,5 @@ class MainActivity : AppCompatActivity(com.heartsignal.hatalk.R.layout.activity_
     /** [CometChat] to remove callListener */
     override fun onDestroy() {
         super.onDestroy()
-
-        val listenerID:String="UNIQUE_LISTENER_ID"
-//        CometChat.removeCallListener(listenerID)
-//        /* Activity가 끝나거나, 혹시 모를 상황을 대비하여 false로 다시 처리 */
-//        matchingStatus = false
     }
-
-//    override fun onSupportNavigateUp(): Boolean {
-//        return navController.navigateUp() || super.onSupportNavigateUp()
-//    }
-
 }

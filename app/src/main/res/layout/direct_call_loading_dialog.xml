@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_url="https://assets2.lottiefiles.com/datafiles/bEYvzB8QfV3EM9a/data.json"
+        app:lottie_url="https://assets8.lottiefiles.com/packages/lf20_3anlqg9g.json"
         tools:ignore="MissingClass" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
