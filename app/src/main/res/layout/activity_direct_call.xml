@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/full_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/signal"
-    android:id="@+id/full_layout"
     tools:context=".signalRoom.sigRoom.SignalRoomActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -38,7 +38,7 @@
         android:paddingVertical="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_name" >
+        app:layout_constraintTop_toBottomOf="@+id/main_name">
 
         <TextView
             android:layout_width="match_parent"
@@ -87,10 +87,10 @@
         android:id="@+id/main_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_board"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_board">
 
         <LinearLayout
             android:id="@+id/man_layout"
@@ -100,7 +100,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/progress_circular"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/man_icon"
@@ -113,10 +113,10 @@
                 android:id="@+id/man_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="사자"
-                android:textSize="16sp"
                 android:layout_gravity="center"
+                android:text="사자"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -126,27 +126,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/progress_circular"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/woman_icon"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/bee" />
+            <ImageView
+                android:id="@+id/woman_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:src="@drawable/bee" />
 
-                <TextView
-                    android:id="@+id/woman_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="꿀벌"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/woman_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="꿀벌"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -156,13 +156,13 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:backgroundColor="@color/signal"
+            app:backgroundWidth="6"
             app:isClockwise="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/woman_layout"
             app:layout_constraintStart_toEndOf="@id/man_layout"
             app:layout_constraintTop_toTopOf="parent"
             app:maxValue="100"
-            app:backgroundWidth="6"
             app:progressBackgroundColor="@color/black"
             app:progressColor="@color/signal"
             app:progressText="60"
@@ -171,27 +171,12 @@
             app:textSize="16sp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animationView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        android:visibility="visible"
-        app:lottie_url="https://assets10.lottiefiles.com/packages/lf20_h1cidhml.json" />
-
 
     <RelativeLayout
         android:id="@+id/direct_ui"
         android:layout_width="0dp"
         android:layout_height="0dp"
         tools:ignore="MissingConstraints" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
