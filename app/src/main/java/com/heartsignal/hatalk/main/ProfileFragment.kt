@@ -78,7 +78,9 @@ class ProfileFragment : Fragment() {
                             activity?.let {
                                 val intent =
                                     Intent(it, com.heartsignal.hatalk.MainActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 it.startActivity(intent)
+                                it.finish()
                             }
                         }
                     }
@@ -112,7 +114,9 @@ class ProfileFragment : Fragment() {
                                 activity?.let {
                                     val intent =
                                         Intent(it, com.heartsignal.hatalk.MainActivity::class.java)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                     it.startActivity(intent)
+                                    it.finish()
                                 }
                             }
                         }
