@@ -1,6 +1,7 @@
 package com.heartsignal.hatalk.signalRoom.sigRoom
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,6 +42,8 @@ class DirectCallActivity : AppCompatActivity() {
     private lateinit var groupName: String
     private lateinit var callEndSocket: CallEndSocket
     private lateinit var directCallAvailableSocket: Socket
+    private var loadingDialogBuilder: AlertDialog.Builder? = null
+    private var loadingDialog: AlertDialog? = null
     private val onDirectCallAvailable = Emitter.Listener { _ ->
         callerStart()
     }
@@ -50,6 +53,13 @@ class DirectCallActivity : AppCompatActivity() {
         binding = ActivityDirectCallBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+//        loadingDialogBuilder = AlertDialog.Builder(this).setView(R.layout.loading_dialog)
+//        loadingDialog = loadingDialogBuilder!!.create()
+//
+//        loadingDialog.show()
+
+
 
         val intent: Intent = getIntent()
         val directCallData = intent.getParcelableExtra<DirectCall>("directCallData")
@@ -273,4 +283,6 @@ class DirectCallActivity : AppCompatActivity() {
 
         progressBar.startTimer()
     }
+
+
 }
