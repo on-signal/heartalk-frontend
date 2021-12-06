@@ -42,12 +42,13 @@ import kotlinx.android.synthetic.main.activity_signal_room.*
 import org.json.JSONObject
 import java.net.URISyntaxException
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
 class SignalRoomActivity : AppCompatActivity() {
     private val TAG = "HEART"
-    private val callManager = CallManager.getInstance()
+    private var directCallCnt = 0
     private lateinit var chatSocket: ChatSocket
     private lateinit var contentsReadySocket: ContentsReadySocket
     private lateinit var introductionSocket: IntroductionSocket
@@ -177,6 +178,16 @@ class SignalRoomActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         supportActionBar?.hide()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+
+        if(directCallCnt == 0) {
+            renderNotificationHeader( resources.getString(R.string.question_for_man))
+        } else if (directCallCnt == 1) {
+            renderNotificationHeader(resources.getString(R.string.final_choice))
+        }
     }
 
     override fun onDestroy() {
@@ -508,13 +519,7 @@ class SignalRoomActivity : AppCompatActivity() {
         val firstAnswerResponse = Gson().fromJson(res.toString(), FirstAnswerResponse::class.java)
 
         if (firstQuestionDialog?.isShowing == true) {
-            Thread {
-                UiThreadUtil.runOnUiThread(Runnable {
-                    kotlin.run {
-                        firstQuestionDialog?.dismiss()
-                    }
-                })
-            }.start()
+            dismissAlertDialog(firstQuestionDialog)
         }
 
         for (reply in firstAnswerResponse.answers) {
@@ -523,13 +528,7 @@ class SignalRoomActivity : AppCompatActivity() {
             answerModel.appendOwnerIdList(reply.owner)
         }
 
-        Thread {
-            UiThreadUtil.runOnUiThread(Runnable {
-                kotlin.run {
-                    binding.notificationHeader.text = "여성분들은 마음에 드는 답변을 선택해주세요"
-                }
-            })
-        }.start()
+        renderNotificationHeader( resources.getString(R.string.question_for_woman))
 
         if (matchingModel.myGender == "1") {
             firstAnswerFragmentDialog.show(
@@ -540,13 +539,7 @@ class SignalRoomActivity : AppCompatActivity() {
 
     private fun secondCallEmitListener(args: Array<Any>) {
         if (firstAnswerFragmentDialog.isVisible) {
-            Thread {
-                UiThreadUtil.runOnUiThread(Runnable {
-                    kotlin.run {
-                        firstAnswerFragmentDialog.dismiss()
-                    }
-                })
-            }.start()
+            dismissFragmentDialog(firstAnswerFragmentDialog)
         }
 
         val res = JSONObject(args[0].toString())
@@ -593,6 +586,8 @@ class SignalRoomActivity : AppCompatActivity() {
                 matchingModel.groupName
             )
 
+
+        directCallCnt++
         intent.putExtra("directCallData", directCallObj)
         startActivity(intent)
     }
@@ -733,13 +728,6 @@ class SignalRoomActivity : AppCompatActivity() {
     }
 
     private fun firstQuestionEmitListener() {
-        Thread {
-            UiThreadUtil.runOnUiThread(Runnable {
-                kotlin.run {
-                    binding.notificationHeader.text = "남성분들은 연애관 질문에 답변해주세요"
-                }
-            })
-        }.start()
         if (matchingModel.myGender == "0") {
             renderingForMan()
         }
@@ -771,6 +759,36 @@ class SignalRoomActivity : AppCompatActivity() {
                 kotlin.run {
                     firstQuestionDialog = firstQuestionDialogBuilder?.create()
                     firstQuestionDialog?.show()
+                }
+            })
+        }.start()
+    }
+
+    private fun renderNotificationHeader(text: String) {
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    binding.notificationHeader.text = text
+                }
+            })
+        }.start()
+    }
+
+    private fun dismissAlertDialog(dialog: AlertDialog?) {
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    dialog?.dismiss()
+                }
+            })
+        }.start()
+    }
+
+    private fun dismissFragmentDialog(dialog: DialogFragment) {
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    dialog.dismiss()
                 }
             })
         }.start()
