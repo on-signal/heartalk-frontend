@@ -4,8 +4,12 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -16,6 +20,7 @@ import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
+import com.facebook.react.bridge.UiThreadUtil
 import com.google.gson.Gson
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.ActivityVideoCallBinding
@@ -39,6 +44,8 @@ class VideoCallActivity : AppCompatActivity() {
     private lateinit var myGender: String
     private lateinit var groupName: String
     private lateinit var videoCallAvailableSocket: Socket
+    private lateinit var loadingDialogBuilder: AlertDialog.Builder
+    private var loadingDialog: AlertDialog? = null
     private val onVideoCallAvailable = Emitter.Listener { _ -> callerStart() }
     private val onKeepTalking = Emitter.Listener { args ->
         keepTalkingEmitListener(args)
@@ -76,6 +83,8 @@ class VideoCallActivity : AppCompatActivity() {
         videoCallAvailableSocket.on("${myId}KeepTalkingResult", onKeepTalkingResult)
 
         addCallListener()
+
+        showLoadingDialog()
     }
 
     override fun onResume() {
@@ -286,5 +295,28 @@ class VideoCallActivity : AppCompatActivity() {
             })
 
 
+    }
+
+    private fun showLoadingDialog() {
+        loadingDialogBuilder = AlertDialog.Builder(this)
+        loadingDialogBuilder.setView(R.layout.loading_dialog).setCancelable(false)
+
+
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    loadingDialog = loadingDialogBuilder.create()
+                    loadingDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    loadingDialog?.show()
+                }
+            })
+        }.start()
+
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                loadingDialog?.dismiss()
+            },
+            5000
+        )
     }
 }

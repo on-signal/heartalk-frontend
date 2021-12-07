@@ -87,29 +87,6 @@ class DirectCallActivity : AppCompatActivity() {
             else -> "꿀벌"
         }
 
-        loadingDialogBuilder = AlertDialog.Builder(this)
-        loadingDialogBuilder.setView(R.layout.loading_dialog).setCancelable(false)
-
-
-        Thread {
-            UiThreadUtil.runOnUiThread(Runnable {
-                kotlin.run {
-                    loadingDialog = loadingDialogBuilder.create()
-                    loadingDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    loadingDialog?.show()
-                }
-            })
-        }.start()
-
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                loadingDialog?.dismiss()
-                timerSetting()
-            },
-            5000
-        )
-
-
         val myDrawble =
             if (myGender == "0") findViewById<ImageView>(R.id.man_icon) else findViewById(R.id.woman_icon)
         val counterPartDrawble =
@@ -158,6 +135,8 @@ class DirectCallActivity : AppCompatActivity() {
         callEndSocket = CallEndSocket(this, groupName, TAG)
         callEndSocket.set()
         callEndSocket.makeOn()
+
+        showLoadingDialog()
     }
 
     override fun onResume() {
@@ -309,5 +288,27 @@ class DirectCallActivity : AppCompatActivity() {
         progressBar.startTimer()
     }
 
+    private fun showLoadingDialog() {
+        loadingDialogBuilder = AlertDialog.Builder(this)
+        loadingDialogBuilder.setView(R.layout.loading_dialog).setCancelable(false)
 
+
+        Thread {
+            UiThreadUtil.runOnUiThread(Runnable {
+                kotlin.run {
+                    loadingDialog = loadingDialogBuilder.create()
+                    loadingDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    loadingDialog?.show()
+                }
+            })
+        }.start()
+
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                loadingDialog?.dismiss()
+                timerSetting()
+            },
+            5000
+        )
+    }
 }
