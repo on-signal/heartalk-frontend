@@ -12,9 +12,7 @@
     <color name="heart">#F66257</color>
     <color name="keyboard">#EEEEEE</color>
 
-
-
-    <color name="primaryColor">#ffcdc0</color>
+    <color name="primaryColor">#34A7FC</color>
     <color name="primaryLightColor">#fffff3</color>
     <color name="primaryDarkColor">#cb9c90</color>
     <color name="secondaryColor">#fff7d9</color>
@@ -23,7 +21,7 @@
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
 
-
     <color name="icon_man">#b3e5fc</color>
     <color name="icon_woman">#f8bbd0</color>
+
 </resources>

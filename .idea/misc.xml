@@ -58,9 +58,10 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.3921875" />
         <entry key="app/src/main/res/layout/activity_chating.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/layout/activity_direct_call.xml" value="0.3953125" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.45755517826825126" />
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/activity_main_home.xml" value="0.27239583333333334" />
         <entry key="app/src/main/res/layout/activity_one_to_one_call.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_second.xml" value="0.30364583333333334" />
@@ -68,6 +69,7 @@
         <entry key="app/src/main/res/layout/activity_sign_up_loading.xml" value="0.291213768115942" />
         <entry key="app/src/main/res/layout/activity_signal_room.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_video_call.xml" value="0.3953125" />
         <entry key="app/src/main/res/layout/direct_call_loading_dialog.xml" value="0.28278165889593115" />
         <entry key="app/src/main/res/layout/first_choice_dialog.xml" value="0.8586687440489558" />
         <entry key="app/src/main/res/layout/first_question_dialog.xml" value="0.20833333333333334" />
@@ -88,6 +90,7 @@
         <entry key="app/src/main/res/layout/item_chating_user.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/profile_balloon.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.10519714355468751" />
+        <entry key="app/src/main/res/menu/tabs.xml" value="0.3953125" />
       </map>
     </option>
   </component>

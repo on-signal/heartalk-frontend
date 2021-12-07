@@ -1,20 +1,21 @@
 package com.heartsignal.hatalk
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.CometChat
-
 import com.cometchat.pro.exceptions.CometChatException
 import com.heartsignal.hatalk.signalRoom.PRIVATE.IDs
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.common.model.KakaoSdkError
+import com.kakao.sdk.user.UserApiClient
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -31,7 +32,20 @@ class MainActivity : AppCompatActivity(com.heartsignal.hatalk.R.layout.activity_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.statusBarColor = getColor(R.color.primaryColor)
+            window.navigationBarColor = getColor(R.color.primaryColor)
+            window.setDecorFitsSystemWindows(false)
+        } else {
+            window.statusBarColor = getColor(R.color.primaryColor)
+            window.navigationBarColor = getColor(R.color.primaryColor)
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
+        }
 
         val appID: String = IDs.APP_ID // Replace with your App ID
         val region: String = IDs.REGION // Replace with your App Region ("eu" or "us")
@@ -169,10 +183,11 @@ class MainActivity : AppCompatActivity(com.heartsignal.hatalk.R.layout.activity_
             }
         }
 
-        val kakaoLoginButton = findViewById<ImageView>(com.heartsignal.hatalk.R.id.kako_login)
+        val kakaoLoginButton = findViewById<ImageView>(com.heartsignal.hatalk.R.id.kakao_login)
 
         kakaoLoginButton.setOnClickListener {
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
+
                 UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = accountCallBack)
