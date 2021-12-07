@@ -10,12 +10,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.widget.*
-import androidx.navigation.fragment.findNavController
-import com.airbnb.lottie.LottieAnimationView
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.Call
 import com.cometchat.pro.core.CallSettings
@@ -92,7 +88,7 @@ class DirectCallActivity : AppCompatActivity() {
         }
 
         loadingDialogBuilder = AlertDialog.Builder(this)
-        loadingDialogBuilder.setView(R.layout.direct_call_loading_dialog).setCancelable(false)
+        loadingDialogBuilder.setView(R.layout.loading_dialog).setCancelable(false)
 
 
         Thread {

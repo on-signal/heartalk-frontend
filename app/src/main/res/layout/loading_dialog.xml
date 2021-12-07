@@ -7,7 +7,7 @@
     android:background="#00000000">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/first_question_woman_loading"
+        android:id="@+id/loading_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_url="https://assets8.lottiefiles.com/packages/lf20_3anlqg9g.json"
+        app:lottie_url="https://assets2.lottiefiles.com/packages/lf20_spfiyf3z.json"
         tools:ignore="MissingClass" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
