@@ -1,9 +1,11 @@
 package com.heartsignal.hatalk.main
 
+import android.R
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.DialogInterface.OnShowListener
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -37,6 +39,8 @@ import kotlinx.android.synthetic.main.fragment_main_home.*
 import org.json.JSONObject
 import java.net.URISyntaxException
 import java.util.*
+import android.os.CountDownTimer
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -253,27 +257,53 @@ class MainHomeFragment : Fragment() {
         val matchingConfirmFailObj = JSONObject(gson.toJson(matchingConfirmFailMessage))
 
 
-        val dialogBuilder = AlertDialog.Builder(activity)
-        dialogBuilder.setTitle("매칭")
-            .setMessage("매칭을 수락하시겠습니까?")
-            .setPositiveButton("수락",
-                DialogInterface.OnClickListener{ dialog, id ->
-                    mSocket.emit("imready", matchingConfirmSuccessObj)
-                })
-            .setNegativeButton("취소",
-                DialogInterface.OnClickListener{ dialog, id ->
-                    mSocket.emit("imready", matchingConfirmFailObj)
-                    matchingStatus = false
-                    val matchingButton = binding?.matchingButton
-                    runOnUiThread {
-                        matchingButton?.text = "매칭하기"
-                    }
-                }
-            )
         Thread {
             runOnUiThread(Runnable {
                 kotlin.run {
-                    dialogBuilder.show()
+                    val dialog = AlertDialog.Builder(activity)
+                        .setTitle("매칭")
+                        .setMessage("매칭하시겠습니까?")
+                        .setPositiveButton("예", DialogInterface.OnClickListener{ dialog, id ->
+                            mSocket.emit("imready", matchingConfirmSuccessObj)
+                        })
+                        .setNegativeButton("아니오", DialogInterface.OnClickListener{ dialog, id ->
+                            mSocket.emit("imready", matchingConfirmFailObj)
+                            matchingStatus = false
+                            val matchingButton = binding?.matchingButton
+                            runOnUiThread {
+                                matchingButton?.text = "매칭하기"
+                            }
+                        })
+                        .create()
+                    dialog.setOnShowListener(object : OnShowListener {
+                        private val AUTO_DISMISS_MILLIS = 10000
+                        override fun onShow(dialog: DialogInterface) {
+                            val defaultButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_NEGATIVE)
+                            val negativeButtonText = defaultButton.text
+                            object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 100) {
+                                override fun onTick(millisUntilFinished: Long) {
+                                    defaultButton.text = java.lang.String.format(
+                                        Locale.getDefault(), "%s (%d)",
+                                        negativeButtonText,
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1 //add one so it never displays zero
+                                    )
+                                }
+
+                                override fun onFinish() {
+                                    if (dialog.isShowing) {
+                                        mSocket.emit("imready", matchingConfirmFailObj)
+                                        matchingStatus = false
+                                        val matchingButton = binding?.matchingButton
+                                        runOnUiThread {
+                                            matchingButton?.text = "매칭하기"
+                                        }
+                                        dialog.dismiss()
+                                    }
+                                }
+                            }.start()
+                        }
+                    })
+                    dialog.show()
                 }
             })
         }.start()

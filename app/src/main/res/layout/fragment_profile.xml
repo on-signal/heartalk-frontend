@@ -7,10 +7,11 @@
     tools:context=".main.ProfileFragment">
 
     <LinearLayout
-        android:id="@+id/profile_layout"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline103"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,10 +19,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="cursive"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
             android:text="프로필"
             android:textColor="@color/black"
             android:textSize="24sp"
@@ -37,7 +36,7 @@
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_layout" />
+        app:layout_constraintTop_toTopOf="@+id/guideline103" />
 
 
     <Button
@@ -60,6 +59,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline103"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

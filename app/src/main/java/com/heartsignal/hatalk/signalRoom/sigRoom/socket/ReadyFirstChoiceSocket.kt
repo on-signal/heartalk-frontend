@@ -78,32 +78,50 @@ class ReadyFirstChoiceSocket(
     }
 
     private fun choiceForMan() {
-        dialogBuilder.setTitle("첫 인상 선택")
-            .setSingleChoiceItems(womanIconList, -1) { _, pos ->
-                selectedItem = womanIconList[pos]
-            }.setPositiveButton("OK") { _, _ ->
-                Toast.makeText(
-                    context,
-                    "$selectedItem is Selected", Toast.LENGTH_LONG
-                ).show()
-                var choice = ""
-                for (woman in womanList) {
-                    if (woman.icon == nameToIcon(selectedItem)) {
-                        choice = woman.id
-                    }
-                }
-                val gson = Gson()
-                val firstChoice =
-                    JSONObject(gson.toJson(FirstChoiceRequest(groupName, myId, myGender, choice)))
-                socket.emit("firstChoiceToServer", firstChoice)
-            }.setCancelable(false)
-
 
         Thread {
             UiThreadUtil.runOnUiThread(Runnable {
                 kotlin.run {
-                    dialog = dialogBuilder.create()
-                    dialog?.show()
+                    val firstDialog = AlertDialog.Builder(context)
+                        .setTitle("첫 인상 선택")
+                        .setSingleChoiceItems(womanIconList, -1) { _, pos ->
+                            selectedItem = womanIconList[pos]
+                        }.setPositiveButton("OK") { _, _ ->
+                            var choice = ""
+                            for (woman in womanList) {
+                                if (woman.icon == nameToIcon(selectedItem)) {
+                                    choice = woman.id
+                                }
+                            }
+                            val gson = Gson()
+                            val firstChoice =
+                                JSONObject(gson.toJson(FirstChoiceRequest(groupName, myId, myGender, choice)))
+                            socket.emit("firstChoiceToServer", firstChoice)
+                        }.setCancelable(false)
+                        .create()
+                    firstDialog.setOnShowListener(object : DialogInterface.OnShowListener {
+                        private val AUTO_DISMISS_MILLIS = 10000
+                        override fun onShow(dialog: DialogInterface) {
+                            val defaultButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                            val negativeButtonText = defaultButton.text
+                            object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 100) {
+                                override fun onTick(millisUntilFinished: Long) {
+                                    defaultButton.text = java.lang.String.format(
+                                        Locale.getDefault(), "%s (%d)",
+                                        negativeButtonText,
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1 //add one so it never displays zero
+                                    )
+                                }
+
+                                override fun onFinish() {
+                                    if (dialog.isShowing) {
+                                    }
+                                    dialog.dismiss()
+                                }
+                            }.start()
+                        }
+                    })
+                    firstDialog.show()
                 }
             })
         }.start()
@@ -112,31 +130,50 @@ class ReadyFirstChoiceSocket(
 
 
 private fun choiceForWoman() {
-        dialogBuilder.setTitle("첫 인상 선택")
-            .setSingleChoiceItems(manIconList, -1) { _, pos ->
-                selectedItem = manIconList[pos]
-            }.setPositiveButton("OK") { _, _ ->
-                Toast.makeText(
-                    context,
-                    "$selectedItem is Selected", Toast.LENGTH_LONG
-                ).show()
-                var choice = ""
-                for (man in manList) {
-                    if (man.icon == nameToIcon(selectedItem)) {
-                        choice = man.id
-                    }
-                }
-                val gson = Gson()
-                val firstChoice =
-                    JSONObject(gson.toJson(FirstChoiceRequest(groupName, myId, myGender, choice)))
-                socket.emit("firstChoiceToServer", firstChoice)
-            }.setCancelable(false)
 
         Thread {
             UiThreadUtil.runOnUiThread(Runnable {
                 kotlin.run {
-                    dialog = dialogBuilder.create()
-                    dialog?.show()
+                    val firstDialog = AlertDialog.Builder(context)
+                        .setTitle("첫 인상 선택")
+                        .setSingleChoiceItems(manIconList, -1) { _, pos ->
+                            selectedItem = manIconList[pos]
+                        }.setPositiveButton("OK") { _, _ ->
+                            var choice = ""
+                            for (man in manList) {
+                                if (man.icon == nameToIcon(selectedItem)) {
+                                    choice = man.id
+                                }
+                            }
+                            val gson = Gson()
+                            val firstChoice =
+                                JSONObject(gson.toJson(FirstChoiceRequest(groupName, myId, myGender, choice)))
+                            socket.emit("firstChoiceToServer", firstChoice)
+                        }.setCancelable(false)
+                        .create()
+                    firstDialog.setOnShowListener(object : DialogInterface.OnShowListener {
+                        private val AUTO_DISMISS_MILLIS = 10000
+                        override fun onShow(dialog: DialogInterface) {
+                            val defaultButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                            val negativeButtonText = defaultButton.text
+                            object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 100) {
+                                override fun onTick(millisUntilFinished: Long) {
+                                    defaultButton.text = java.lang.String.format(
+                                        Locale.getDefault(), "%s (%d)",
+                                        negativeButtonText,
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1 //add one so it never displays zero
+                                    )
+                                }
+
+                                override fun onFinish() {
+                                    if (dialog.isShowing) {
+                                    }
+                                    dialog.dismiss()
+                                }
+                            }.start()
+                        }
+                    })
+                    firstDialog.show()
                 }
             })
         }.start()

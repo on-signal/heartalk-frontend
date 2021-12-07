@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/guideline103"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -30,85 +31,51 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="15dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="cursive"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
                 android:text="라운지"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/home_profile_total"
+        <ImageView
+            android:id="@+id/home_profile_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toStartOf="@+id/guideline12"
             app:layout_constraintStart_toStartOf="@+id/guideline11"
-            app:layout_constraintTop_toTopOf="@+id/guideline6">
-
-            <LinearLayout
-                android:id="@+id/profile_name_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@id/home_profile_image"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <TextView
-                    android:id="@+id/home_profile_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/main_home_myself(viewModel.name, viewModel.age)}"
-                    android:textColor="@color/white"
-                    android:textFontWeight="800"
-                    android:textSize="20sp" />
-            </LinearLayout>
-            
-            <ImageView
-                android:id="@+id/home_profile_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:elevation="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
 
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/home_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="15dp"
+            android:text="@{@string/main_home_myself(viewModel.name, viewModel.age)}"
+            android:textColor="@color/white"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/home_profile_image"
+            app:layout_constraintStart_toStartOf="@id/home_profile_image"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/matching_button"
             style="@style/Matching.Button"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:fontFamily="@font/rubik"
+            android:fontFamily="@font/godo_medium"
             android:text="매칭하기"
-            android:textFontWeight="800"
+            android:textColor="@color/white"
+            android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline102"
             app:layout_constraintEnd_toStartOf="@+id/guideline202"
             app:layout_constraintStart_toStartOf="@+id/guideline201"
             app:layout_constraintTop_toTopOf="@+id/guideline101" />
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{@string/main_home_myself(viewModel.name, viewModel.age)}"
-            android:textColor="@color/white"
-            android:textFontWeight="800"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline202"
-            app:layout_constraintStart_toStartOf="@+id/guideline201"
-            app:layout_constraintTop_toBottomOf="@+id/matching_button" />
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline6"
             android:layout_width="wrap_content"
@@ -121,23 +88,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.65" />
+            app:layout_constraintGuide_percent="0.7" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.05" />
+            app:layout_constraintGuide_percent="0.1" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.95" />
-
-
+            app:layout_constraintGuide_percent="0.9" />
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -145,15 +110,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.75" />
+            app:layout_constraintGuide_percent="0.8" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline102"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.85" />
+            app:layout_constraintGuide_percent="0.9" />
 
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline103"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline201"

@@ -564,6 +564,7 @@ class SignalRoomActivity : AppCompatActivity() {
                 }
             }
         }
+        // 팝업
 
         if (canVideoCall) {
             val intent = Intent(this, VideoCallActivity::class.java)

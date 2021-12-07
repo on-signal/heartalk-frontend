@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/border_background"
-            android:elevation="6dp"
+            android:elevation="4dp"
             android:gravity="center"
             android:paddingHorizontal="30dp"
             android:paddingVertical="50dp"
