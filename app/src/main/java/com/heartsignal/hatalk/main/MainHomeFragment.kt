@@ -20,6 +20,7 @@ import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
@@ -104,6 +105,7 @@ class MainHomeFragment : Fragment() {
 
         Glide.with(this)
             .load(GlobalApplication.userInfo.photoUrl)
+            .apply(RequestOptions().circleCrop())
             .into(binding!!.homeProfileImage)
 
 

@@ -79,6 +79,7 @@
             android:fontFamily="@font/rubik"
             android:paddingHorizontal="50dp"
             android:text="Matching"
+            style="@style/Matching.Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/home_profile_image"

@@ -43,6 +43,9 @@ import org.json.JSONObject
 import java.net.URISyntaxException
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.view.circulartimerview.CircularTimerListener
+import com.view.circulartimerview.CircularTimerView
+import com.view.circulartimerview.TimeFormatEnum
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
@@ -187,8 +190,10 @@ class SignalRoomActivity : AppCompatActivity() {
 
         if (directCallCnt == 0) {
             renderNotificationHeader(resources.getString(R.string.question_for_man))
+            timerSetting(25)
         } else if (directCallCnt == 1) {
             renderNotificationHeader(resources.getString(R.string.final_choice))
+            timerSetting(10)
         }
     }
 
@@ -642,6 +647,23 @@ class SignalRoomActivity : AppCompatActivity() {
                 }
             })
         }.start()
+    }
+
+    private fun timerSetting(time : Long) {
+        val progressBar: CircularTimerView? = findViewById(R.id.progress_circular)
+        progressBar!!.progress = 0f
+
+        progressBar.setCircularTimerListener(object : CircularTimerListener {
+            override fun updateDataOnTick(remainingTimeInMs: Long): String? {
+                return Math.ceil((remainingTimeInMs / 1000).toDouble()).toInt().toString()
+            }
+
+            override fun onTimerFinished() {
+
+            }
+        }, time, TimeFormatEnum.SECONDS, 10)
+
+        progressBar.startTimer()
     }
 
     override fun onBackPressed() {
