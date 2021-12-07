@@ -78,6 +78,7 @@ class ReadyFirstChoiceSocket(
     }
 
     private fun choiceForMan() {
+        selectedItem = womanIconList[0]
         dialogBuilder.setTitle("첫 인상 선택")
             .setSingleChoiceItems(womanIconList, 0) { _, pos ->
                 selectedItem = womanIconList[pos]
@@ -112,6 +113,7 @@ class ReadyFirstChoiceSocket(
 
 
 private fun choiceForWoman() {
+    selectedItem = manIconList[0]
         dialogBuilder.setTitle("첫 인상 선택")
             .setSingleChoiceItems(manIconList, 0) { _, pos ->
                 selectedItem = manIconList[pos]

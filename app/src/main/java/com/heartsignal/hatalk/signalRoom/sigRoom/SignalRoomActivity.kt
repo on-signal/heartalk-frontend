@@ -64,8 +64,6 @@ class SignalRoomActivity : AppCompatActivity() {
     private val firstAnswerFragmentDialog = FirstAnswerFragmentDialog()
     private var firstQuestionDialogBuilder: AlertDialog.Builder? = null
     private var firstQuestionDialog: AlertDialog? = null
-    private lateinit var loadingDialogBuilder: AlertDialog.Builder
-    private var loadingDialog: AlertDialog? = null
     private lateinit var matchingData: MatchingData
     private val onFirstQuestion = Emitter.Listener { _ ->
         firstQuestionEmitListener()
@@ -452,7 +450,7 @@ class SignalRoomActivity : AppCompatActivity() {
         val dialogBuilder = AlertDialog.Builder(this)
         val womanIconList = arrayOf("여우", "햄스터", "꿀벌")
         val manIconList = arrayOf("늑대", "펭귄", "사자")
-        lateinit var selectedItem: String
+        var selectedItem = womanIconList[0]
         if (matchingModel.myGender == "0") {
             dialogBuilder.setTitle("최종선택")
                 .setSingleChoiceItems(womanIconList, 0) { _, pos ->
@@ -490,6 +488,7 @@ class SignalRoomActivity : AppCompatActivity() {
                 })
             }.start()
         } else if (matchingModel.myGender == "1") {
+            selectedItem = manIconList[0]
             dialogBuilder.setTitle("최종선택")
                 .setSingleChoiceItems(manIconList, 0) { _, pos ->
                     selectedItem = manIconList[pos]
