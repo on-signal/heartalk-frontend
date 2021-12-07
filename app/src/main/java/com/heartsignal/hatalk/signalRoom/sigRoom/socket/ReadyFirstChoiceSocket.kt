@@ -79,7 +79,7 @@ class ReadyFirstChoiceSocket(
 
     private fun choiceForMan() {
         dialogBuilder.setTitle("첫 인상 선택")
-            .setSingleChoiceItems(womanIconList, -1) { _, pos ->
+            .setSingleChoiceItems(womanIconList, 0) { _, pos ->
                 selectedItem = womanIconList[pos]
             }.setPositiveButton("OK") { _, _ ->
                 Toast.makeText(
@@ -113,7 +113,7 @@ class ReadyFirstChoiceSocket(
 
 private fun choiceForWoman() {
         dialogBuilder.setTitle("첫 인상 선택")
-            .setSingleChoiceItems(manIconList, -1) { _, pos ->
+            .setSingleChoiceItems(manIconList, 0) { _, pos ->
                 selectedItem = manIconList[pos]
             }.setPositiveButton("OK") { _, _ ->
                 Toast.makeText(

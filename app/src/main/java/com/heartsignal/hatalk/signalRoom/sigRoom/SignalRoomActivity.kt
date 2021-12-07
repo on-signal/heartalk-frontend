@@ -455,7 +455,7 @@ class SignalRoomActivity : AppCompatActivity() {
         lateinit var selectedItem: String
         if (matchingModel.myGender == "0") {
             dialogBuilder.setTitle("최종선택")
-                .setSingleChoiceItems(womanIconList, -1) { _, pos ->
+                .setSingleChoiceItems(womanIconList, 0) { _, pos ->
                     selectedItem = womanIconList[pos]
                 }.setPositiveButton("OK") { _, _ ->
                     Toast.makeText(
@@ -491,7 +491,7 @@ class SignalRoomActivity : AppCompatActivity() {
             }.start()
         } else if (matchingModel.myGender == "1") {
             dialogBuilder.setTitle("최종선택")
-                .setSingleChoiceItems(manIconList, -1) { _, pos ->
+                .setSingleChoiceItems(manIconList, 0) { _, pos ->
                     selectedItem = manIconList[pos]
                 }.setPositiveButton("OK") { _, _ ->
                     Toast.makeText(
