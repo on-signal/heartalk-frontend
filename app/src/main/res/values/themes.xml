@@ -48,4 +48,17 @@
         <item name="colorOnPrimary">@color/black</item>
     </style>
 
+    <style name="TransparentStatusTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/primaryColor</item>
+        <item name="android:navigationBarColor">@color/primaryColor</item>
+    </style>
+
+    <style name="FontTheme">
+        <item name="android:textViewStyle">@style/godoTextViewFontStyle</item>
+        <item name="android:buttonStyle">@style/godoButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/godoEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/godoRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/godoCheckboxFontStyle</item>
+    </style>
+
 </resources>
