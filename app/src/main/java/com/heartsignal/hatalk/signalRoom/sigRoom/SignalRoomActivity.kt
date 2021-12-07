@@ -563,23 +563,74 @@ class SignalRoomActivity : AppCompatActivity() {
                 }
             }
         }
-
+        val videoCallAvailDialogBuilder = AlertDialog.Builder(this)
         if (canVideoCall) {
-            val intent = Intent(this, VideoCallActivity::class.java)
-            val directCallObj =
-                DirectCall(
-                    matchingModel.myId,
-                    matchingModel.myGender,
-                    matchingModel.myIcon,
-                    counterPartId,
-                    counterIcon,
-                    matchingModel.groupName
-                )
+            videoCallAvailDialogBuilder.setTitle("매칭이 성사!!").setMessage("잠시후 1대1 전화로 넘어갑니다.")
 
-            intent.putExtra("directCallData", directCallObj)
-            startActivity(intent)
-            finish()
-        } else finish()
+            var videoCallAvailDialog: AlertDialog? = null
+            Thread {
+                UiThreadUtil.runOnUiThread(Runnable {
+                    kotlin.run {
+                        videoCallAvailDialog = videoCallAvailDialogBuilder.create()
+                        videoCallAvailDialog?.show()
+                    }
+                })
+            }.start()
+
+            Handler(Looper.getMainLooper()).postDelayed(
+                {
+                    Thread {
+                        UiThreadUtil.runOnUiThread(Runnable {
+                            kotlin.run {
+                                videoCallAvailDialog?.dismiss()
+                            }
+                        })
+                    }.start()
+                    val intent = Intent(this, VideoCallActivity::class.java)
+                    val directCallObj =
+                        DirectCall(
+                            matchingModel.myId,
+                            matchingModel.myGender,
+                            matchingModel.myIcon,
+                            counterPartId,
+                            counterIcon,
+                            matchingModel.groupName
+                        )
+
+                    intent.putExtra("directCallData", directCallObj)
+                    startActivity(intent)
+                    finish()
+                },
+                2000
+            )
+
+        } else {
+            videoCallAvailDialogBuilder.setTitle("매칭에 실패ㅠㅠ").setMessage("잠시후 홈화면으로 넘어갑니다.")
+
+            var videoCallAvailDialog: AlertDialog? = null
+            Thread {
+                UiThreadUtil.runOnUiThread(Runnable {
+                    kotlin.run {
+                        videoCallAvailDialog = videoCallAvailDialogBuilder.create()
+                        videoCallAvailDialog?.show()
+                    }
+                })
+            }.start()
+
+            Handler(Looper.getMainLooper()).postDelayed(
+                {
+                    Thread {
+                        UiThreadUtil.runOnUiThread(Runnable {
+                            kotlin.run {
+                                videoCallAvailDialog?.dismiss()
+                            }
+                        })
+                    }.start()
+                    finish()
+                },
+                2000
+            )
+        }
     }
 
     private fun firstQuestionEmitListener() {
@@ -649,7 +700,7 @@ class SignalRoomActivity : AppCompatActivity() {
         }.start()
     }
 
-    private fun timerSetting(time : Long) {
+    private fun timerSetting(time: Long) {
         val progressBar: CircularTimerView? = findViewById(R.id.progress_circular)
         progressBar!!.progress = 0f
 
@@ -669,8 +720,8 @@ class SignalRoomActivity : AppCompatActivity() {
     override fun onBackPressed() {
     }
 
-    private fun nameToIcon(name: String) : String {
-        val myIcon = when(name) {
+    private fun nameToIcon(name: String): String {
+        val myIcon = when (name) {
             "늑대" -> "wolf"
             "여우" -> "fox"
             "펭귄" -> "penguin"
