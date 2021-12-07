@@ -2,6 +2,7 @@
 <resources>
     <string name="main_home_email">이메일: %s</string>
     <string name="main_home_name">%s</string>
+    <string name="main_home_name_real">이름: %s</string>
     <string name="main_home_nickname">닉네임: %s</string>
     <string name="main_home_gender">성: %s</string>
     <string name="main_home_age">나이: %s</string>
