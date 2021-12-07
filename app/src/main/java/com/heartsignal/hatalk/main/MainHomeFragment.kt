@@ -2,15 +2,10 @@ package com.heartsignal.hatalk.main
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Application
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,17 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.Group
 import com.cometchat.pro.models.User
-import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.FragmentMainHomeBinding
 import com.heartsignal.hatalk.main.userModel.UserModel
 import com.heartsignal.hatalk.signalRoom.PRIVATE.IDs
@@ -38,8 +30,6 @@ import com.google.gson.Gson
 import com.heartsignal.hatalk.GlobalApplication
 import com.heartsignal.hatalk.main.data.*
 import com.heartsignal.hatalk.model.userInfo
-import com.heartsignal.hatalk.signalRoom.PRIVATE.URLs
-import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_signal_room.view.*
