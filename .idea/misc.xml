@@ -64,6 +64,7 @@
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1347972972972973" />
         <entry key="..\:/Users/ggam-nyang/Desktop/JUNGLE/Android_study/HearTok_Signal/heartalk-frontend/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1347972972972973" />
         <entry key="app/src/main/res/drawable-v24/border_background.xml" value="0.3861538461538462" />
+        <entry key="app/src/main/res/drawable-v24/button_background.xml" value="0.35" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3921875" />
         <entry key="app/src/main/res/drawable/bg.xml" value="0.18796296296296297" />
         <entry key="app/src/main/res/drawable/border_background_chat.xml" value="0.3921875" />
@@ -85,6 +86,9 @@
         <entry key="app/src/main/res/layout/activity_sign_up_loading.xml" value="0.291213768115942" />
         <entry key="app/src/main/res/layout/activity_signal_room.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/direct_call_loading_dialog.xml" value="0.28278165889593115" />
+        <entry key="app/src/main/res/layout/first_answer_dialog.xml" value="0.31691919191919193" />
+        <entry key="app/src/main/res/layout/first_choice_dialog.xml" value="0.8586687440489558" />
         <entry key="app/src/main/res/layout/first_question_dialog.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_alarm.xml" value="0.3608430843553312" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.37604166666666666" />

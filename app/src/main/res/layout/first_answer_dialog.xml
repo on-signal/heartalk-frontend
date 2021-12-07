@@ -29,37 +29,45 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="72dp"
-            android:text="@{matchingViewModel.questionList[0]}" />
+            android:layout_marginTop="30dp"
+            android:text="@{matchingViewModel.questionList[0]}"
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/first_reply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_background"
             android:enabled="@{answerViewModel.answerList[0].already == 0}"
             android:onClick="@{() -> firstAnswerDialogFragment.selectFirstOne()}"
-            android:text="@{answerViewModel.answerList[0].answer}" />
+            android:text="@{answerViewModel.answerList[0].answer}"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/second_reply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_background"
             android:enabled="@{answerViewModel.answerList[1].already == 0}"
             android:onClick="@{() -> firstAnswerDialogFragment.selectSecondOne()}"
-            android:text="@{answerViewModel.answerList[1].answer}" />
+            android:text="@{answerViewModel.answerList[1].answer}"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/third_reply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_background"
             android:enabled="@{answerViewModel.answerList[2].already == 0}"
             android:onClick="@{() -> firstAnswerDialogFragment.selectThirdOne()}"
-            android:text="@{answerViewModel.answerList[2].answer}" />
+            android:text="@{answerViewModel.answerList[2].answer}"
+            android:textSize="15sp" />
     </LinearLayout>
 </layout>

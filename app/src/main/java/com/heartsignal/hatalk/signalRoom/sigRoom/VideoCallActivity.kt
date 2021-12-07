@@ -251,22 +251,76 @@ class VideoCallActivity : AppCompatActivity() {
 
                     CometChat.removeCallListener("VideoCallActivity")
 
+                    val chatAvailDialogBuilder = AlertDialog.Builder(this@VideoCallActivity)
                     if (keepTalkingResult.success) {
-                        val intent = Intent(this@VideoCallActivity, ChatingActivity::class.java)
-                        intent.putExtra("partner", keepTalkingResult.info?.partner)
-                        val chatName = if (myGender == "0") myId.plus(keepTalkingResult.info?.partner?.kakaoUserId)
-                                            else keepTalkingResult.info?.partner?.kakaoUserId.plus(myId)
-                        val chatData = ChatData(null, chatName, null, null, null, null, mutableListOf(), null)
-                        intent.putExtra("chatMessage", chatData)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        startActivity(intent)
-                        finish()
+                        chatAvailDialogBuilder.setTitle("매칭이 성사!!").setMessage("잠시후 1대1 채팅으로 넘어갑니다.")
+
+                        var chatAvailDialog: AlertDialog? = null
+                        Thread {
+                            UiThreadUtil.runOnUiThread(Runnable {
+                                kotlin.run {
+                                    chatAvailDialog = chatAvailDialogBuilder.create()
+                                    chatAvailDialog?.show()
+                                }
+                            })
+                        }.start()
+
+
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            Thread {
+                                UiThreadUtil.runOnUiThread(Runnable {
+                                    kotlin.run {
+                                        chatAvailDialog?.dismiss()
+                                    }
+                                })
+                            }.start()
+                            val intent = Intent(this@VideoCallActivity, ChatingActivity::class.java)
+                            intent.putExtra("partner", keepTalkingResult.info?.partner)
+                            val chatName =
+                                if (myGender == "0") myId.plus(keepTalkingResult.info?.partner?.kakaoUserId)
+                                else keepTalkingResult.info?.partner?.kakaoUserId.plus(myId)
+                            val chatData = ChatData(
+                                null,
+                                chatName,
+                                null,
+                                null,
+                                null,
+                                null,
+                                mutableListOf(),
+                                null
+                            )
+                            intent.putExtra("chatMessage", chatData)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
+                            finish()
+                        }, 2000)
                     } else {
-                        val intent = Intent(this@VideoCallActivity, HomeActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                        startActivity(intent)
-                        finish()
+                        chatAvailDialogBuilder.setTitle("매칭에 실패ㅠㅠ").setMessage("잠시후 홈화면으로 넘어갑니다.")
+
+                        var chatAvailDialog: AlertDialog? = null
+                        Thread {
+                            UiThreadUtil.runOnUiThread(Runnable {
+                                kotlin.run {
+                                    chatAvailDialog = chatAvailDialogBuilder.create()
+                                    chatAvailDialog?.show()
+                                }
+                            })
+                        }.start()
+
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            Thread {
+                                UiThreadUtil.runOnUiThread(Runnable {
+                                    kotlin.run {
+                                        chatAvailDialog?.dismiss()
+                                    }
+                                })
+                            }.start()
+                            val intent = Intent(this@VideoCallActivity, HomeActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                            startActivity(intent)
+                            finish()
+                        }, 2000)
                     }
                 }
 
@@ -276,22 +330,76 @@ class VideoCallActivity : AppCompatActivity() {
 
                     CometChat.removeCallListener("VideoCallActivity")
 
+                    val chatAvailDialogBuilder = AlertDialog.Builder(this@VideoCallActivity)
                     if (keepTalkingResult.success) {
-                        val intent = Intent(this@VideoCallActivity, ChatingActivity::class.java)
-                        intent.putExtra("partner", keepTalkingResult.info?.partner)
-                        val chatName = if (myGender == "0") myId.plus(keepTalkingResult.info?.partner?.kakaoUserId)
-                                    else keepTalkingResult.info?.partner?.kakaoUserId.plus(myId)
-                        val chatData = ChatData(null, chatName, null, null, null, null, mutableListOf(), null)
-                        intent.putExtra("chatMessage", chatData)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        startActivity(intent)
-                        finish()
+                        chatAvailDialogBuilder.setTitle("매칭이 성사!!").setMessage("잠시후 1대1 채팅으로 넘어갑니다.")
+
+                        var chatAvailDialog: AlertDialog? = null
+                        Thread {
+                            UiThreadUtil.runOnUiThread(Runnable {
+                                kotlin.run {
+                                    chatAvailDialog = chatAvailDialogBuilder.create()
+                                    chatAvailDialog?.show()
+                                }
+                            })
+                        }.start()
+
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            Thread {
+                                UiThreadUtil.runOnUiThread(Runnable {
+                                    kotlin.run {
+                                        chatAvailDialog?.dismiss()
+                                    }
+                                })
+                            }.start()
+                            val intent = Intent(this@VideoCallActivity, ChatingActivity::class.java)
+                            intent.putExtra("partner", keepTalkingResult.info?.partner)
+                            val chatName =
+                                if (myGender == "0") myId.plus(keepTalkingResult.info?.partner?.kakaoUserId)
+                                else keepTalkingResult.info?.partner?.kakaoUserId.plus(myId)
+                            val chatData =
+                                ChatData(
+                                    null,
+                                    chatName,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    mutableListOf(),
+                                    null
+                                )
+                            intent.putExtra("chatMessage", chatData)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
+                            finish()
+                        }, 2000)
                     } else {
-                        val intent = Intent(this@VideoCallActivity, HomeActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                        startActivity(intent)
-                        finish()
+                        chatAvailDialogBuilder.setTitle("매칭에 실패ㅠㅠ").setMessage("잠시후 홈화면으로 넘어갑니다.")
+
+                        var chatAvailDialog: AlertDialog? = null
+                        Thread {
+                            UiThreadUtil.runOnUiThread(Runnable {
+                                kotlin.run {
+                                    chatAvailDialog = chatAvailDialogBuilder.create()
+                                    chatAvailDialog?.show()
+                                }
+                            })
+                        }.start()
+
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            Thread {
+                                UiThreadUtil.runOnUiThread(Runnable {
+                                    kotlin.run {
+                                        chatAvailDialog?.dismiss()
+                                    }
+                                })
+                            }.start()
+                            val intent = Intent(this@VideoCallActivity, HomeActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                            startActivity(intent)
+                            finish()
+                        }, 2000)
                     }
                 }
             })
