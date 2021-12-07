@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.*
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,7 +22,6 @@ import com.cometchat.pro.models.AudioMode
 import com.cometchat.pro.models.User
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.ActivitySignalRoomBinding
-import com.heartsignal.hatalk.main.data.MatchingConfirmResponse
 import com.heartsignal.hatalk.model.sigRoom.MatchingModel
 import com.heartsignal.hatalk.network.DeleteRoomRequest
 import com.heartsignal.hatalk.network.MatchingApi
@@ -30,7 +30,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_signal_room.view.*
 import kotlinx.coroutines.launch
 import java.util.*
-import com.heartsignal.hatalk.model.sigRoom.MatchingUser
 import com.cometchat.pro.core.CometChat
 import com.facebook.react.bridge.UiThreadUtil
 import com.google.gson.Gson
@@ -65,6 +64,8 @@ class SignalRoomActivity : AppCompatActivity() {
     private val firstAnswerFragmentDialog = FirstAnswerFragmentDialog()
     private var firstQuestionDialogBuilder: AlertDialog.Builder? = null
     private var firstQuestionDialog: AlertDialog? = null
+    private lateinit var loadingDialogBuilder: AlertDialog.Builder
+    private var loadingDialog: AlertDialog? = null
     private lateinit var matchingData: MatchingData
     private val onFirstQuestion = Emitter.Listener { _ ->
         firstQuestionEmitListener()
@@ -449,8 +450,8 @@ class SignalRoomActivity : AppCompatActivity() {
 
     private fun finalChoiceEmitListener() {
         val dialogBuilder = AlertDialog.Builder(this)
-        val womanIconList = arrayOf("fox", "hamster", "bee")
-        val manIconList = arrayOf("wolf", "penguin", "lion")
+        val womanIconList = arrayOf("여우", "햄스터", "꿀벌")
+        val manIconList = arrayOf("늑대", "펭귄", "사자")
         lateinit var selectedItem: String
         if (matchingModel.myGender == "0") {
             dialogBuilder.setTitle("최종선택")
@@ -463,7 +464,7 @@ class SignalRoomActivity : AppCompatActivity() {
                     ).show()
                     var choice = ""
                     for (woman in matchingModel.womanList) {
-                        if (woman.icon == selectedItem) {
+                        if (woman.icon == nameToIcon(selectedItem)) {
                             choice = woman.id
                         }
                     }
@@ -499,7 +500,7 @@ class SignalRoomActivity : AppCompatActivity() {
                     ).show()
                     var choice = ""
                     for (man in matchingModel.manList) {
-                        if (man.icon == selectedItem) {
+                        if (man.icon == nameToIcon(selectedItem)) {
                             choice = man.id
                         }
                     }
@@ -667,5 +668,17 @@ class SignalRoomActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+    }
+
+    private fun nameToIcon(name: String) : String {
+        val myIcon = when(name) {
+            "늑대" -> "wolf"
+            "여우" -> "fox"
+            "펭귄" -> "penguin"
+            "햄스터" -> "hamster"
+            "사자" -> "lion"
+            else -> "bee"
+        }
+        return myIcon
     }
 }
