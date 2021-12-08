@@ -82,9 +82,10 @@ class ReadyFirstChoiceSocket(
         Thread {
             UiThreadUtil.runOnUiThread(Runnable {
                 kotlin.run {
+                    selectedItem = womanIconList[0]
                     val firstDialog = AlertDialog.Builder(context)
                         .setTitle("첫 인상 선택")
-                        .setSingleChoiceItems(womanIconList, -1) { _, pos ->
+                        .setSingleChoiceItems(womanIconList, 0) { _, pos ->
                             selectedItem = womanIconList[pos]
                         }.setPositiveButton("OK") { _, _ ->
                             var choice = ""
@@ -134,9 +135,10 @@ private fun choiceForWoman() {
         Thread {
             UiThreadUtil.runOnUiThread(Runnable {
                 kotlin.run {
+                    selectedItem = manIconList[0]
                     val firstDialog = AlertDialog.Builder(context)
                         .setTitle("첫 인상 선택")
-                        .setSingleChoiceItems(manIconList, -1) { _, pos ->
+                        .setSingleChoiceItems(manIconList, 0) { _, pos ->
                             selectedItem = manIconList[pos]
                         }.setPositiveButton("OK") { _, _ ->
                             var choice = ""
