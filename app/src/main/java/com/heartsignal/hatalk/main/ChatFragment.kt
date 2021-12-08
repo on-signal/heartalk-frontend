@@ -15,17 +15,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.Gson
 import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.databinding.FragmentChatBinding
+import com.heartsignal.hatalk.main.chat.ChatSocketApplication
 import com.heartsignal.hatalk.main.chat.ChatingActivity
 import com.heartsignal.hatalk.main.data.ChatData
 import com.heartsignal.hatalk.main.data.Friends
 import com.heartsignal.hatalk.main.userModel.UserModel
 import com.heartsignal.hatalk.network.UserApi
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_chating.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 
 
 /**
@@ -37,6 +42,8 @@ class ChatFragment : Fragment() {
     private val TAG = "HEART"
     private val sharedViewModel: UserModel by activityViewModels()
     private var binding: FragmentChatBinding? = null
+    lateinit var mSocket: Socket
+
 
     companion object{
         fun newInstance() : ChatFragment {
@@ -44,7 +51,14 @@ class ChatFragment : Fragment() {
         }
     }
 
-    private var friends : ArrayList<Friends> = arrayListOf()
+    var friends : ArrayList<Friends> = arrayListOf()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        mSocket = ChatSocketApplication.set()
+
+    }
 
     @SuppressLint("UserRequireInsteadOfGet")
     override fun onCreateView(
@@ -76,6 +90,11 @@ class ChatFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             return CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.item_chat_list, parent, false))
+        }
+
+        fun update(newList:Array<Friends>) {
+            friends.addAll(newList)
+            RecyclerViewAdapter()!!.notifyDataSetChanged()
         }
 
         inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

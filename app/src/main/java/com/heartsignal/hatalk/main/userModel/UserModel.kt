@@ -55,21 +55,25 @@ class UserModel: ViewModel() {
     private var _friends: Array<Friends>? = null
     val friends: Array<Friends>? get() = _friends
 
-    private fun getFriends() {
-        viewModelScope.launch {
-            try {
-                val friendsResponse = UserApi.retrofitService.getUserFriend(_kakaoUserId)
-                _friends = friendsResponse.body()
-                }
-            catch (e: Exception) {
-                Log.d("HEART", e.toString())
-            }
-        }
+//    private fun getFriends() {
+//        viewModelScope.launch {
+//            try {
+//                val friendsResponse = UserApi.retrofitService.getUserFriend(_kakaoUserId)
+//                _friends = friendsResponse.body()
+//                }
+//            catch (e: Exception) {
+//                Log.d("HEART", e.toString())
+//            }
+//        }
+//    }
+
+    fun setFriends(friends: Array<Friends>) {
+        _friends = friends
     }
 
     fun setKakaoUserId(kakaoUserId: String) {
         _kakaoUserId = kakaoUserId
-        getFriends()
+//        getFriends()
     }
 
 

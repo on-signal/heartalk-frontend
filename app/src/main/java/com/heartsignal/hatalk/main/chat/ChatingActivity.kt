@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -42,7 +43,7 @@ class ChatingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chating)
 
 
-        var intent = intent;
+        val intent = intent
         partner = intent.getParcelableExtra<Partner>("partner")!!
         GlobalApplication.tempPartner = partner
         chatData = intent.getParcelableExtra<ChatData>("chatMessage")!!
@@ -58,6 +59,22 @@ class ChatingActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         chatRecyclerview.layoutManager = layoutManager
 
+
+        chatRecyclerview.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+            override fun onLayoutChange(
+                v: View?,
+                left: Int,
+                top: Int,
+                right: Int,
+                bottom: Int,
+                oldLeft: Int,
+                oldTop: Int,
+                oldRight: Int,
+                oldBottom: Int
+            ) {
+                chatRecyclerview.scrollToPosition(chatList!!.size - 1)
+            }
+        })
 
         val partnerNameView: TextView = findViewById(R.id.partner_name)
         partnerNameView.text = partner.nickname
@@ -77,7 +94,6 @@ class ChatingActivity : AppCompatActivity() {
         send.setOnClickListener {
             val chat = edit_text.text.toString()
             val tempTime = setTime()
-            Log.d(TAG, "tempTime ${tempTime}")
             val tempMessage = ChatMessage(
                 "",
                 chat,
@@ -92,8 +108,6 @@ class ChatingActivity : AppCompatActivity() {
             addItemToRecyclerView(tempMessage)
             edit_text.text.clear()
         }
-
-        (chatRecyclerview.getLayoutManager() as LinearLayoutManager).stackFromEnd = true
 
         val fullLayout = findViewById<ConstraintLayout>(R.id.full_layout)
         chatRecyclerview.setOnTouchListener { v, event ->
@@ -186,18 +200,6 @@ class ChatingActivity : AppCompatActivity() {
             chat_recycler.scrollToPosition(chatList!!.size - 1) //move focus on last message
         }
     }
-
-
-    private fun closeKeyBoard() {
-        val view = this.currentFocus
-        if (view != null) {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-    }
-
-
-
 
 }
 

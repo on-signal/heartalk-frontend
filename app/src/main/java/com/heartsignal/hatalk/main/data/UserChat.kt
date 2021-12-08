@@ -27,6 +27,7 @@ data class Partner (
 data class recentMessage (
     var _id: String,
     var text: String,
+    var sendTime: String,
     var senderKakaoUserId: String,
     var chatName: String,
     var createdAt: String?,

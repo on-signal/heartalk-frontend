@@ -191,7 +191,7 @@ class SignalRoomActivity : AppCompatActivity() {
 
         if (directCallCnt == 0) {
             renderNotificationHeader(resources.getString(R.string.question_for_man))
-            timerSetting(25)
+            timerSetting(30)
         } else if (directCallCnt == 1) {
             renderNotificationHeader(resources.getString(R.string.final_choice))
             timerSetting(10)
