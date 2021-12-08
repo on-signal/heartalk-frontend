@@ -227,7 +227,9 @@ class MainHomeFragment : Fragment() {
     private val onCallStartConnect = Emitter.Listener { args ->
         val callReadyJSON = JSONObject(args[0].toString())
         val callReadyMsg = Gson().fromJson(callReadyJSON.toString(), CallReadyResponse::class.java)
-        if (callReadyMsg.msg == true) {
+        binding?.matchingButton?.text = "매칭하기"
+        matchingStatus = false
+        if (callReadyMsg.msg) {
             activity?.let {
                 val intent = Intent(it, SignalRoomActivity::class.java)
                 intent.putExtra("matchingData", matchingConfirmResponse)
