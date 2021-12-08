@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.RelativeLayout
 import android.widget.Toast
 import com.cometchat.pro.constants.CometChatConstants
@@ -232,6 +233,7 @@ class VideoCallActivity : AppCompatActivity() {
         Thread {
             runOnUiThread() {
                 kotlin.run {
+                    binding.videoUi.visibility = View.GONE
                     dialogBuilder.show()
                 }
             }

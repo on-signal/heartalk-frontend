@@ -66,6 +66,8 @@ class SignalRoomActivity : AppCompatActivity() {
     private val firstAnswerFragmentDialog = FirstAnswerFragmentDialog()
     private var firstQuestionDialogBuilder: AlertDialog.Builder? = null
     private var firstQuestionDialog: AlertDialog? = null
+    private var signalRoomDialogBuilder: AlertDialog.Builder? = null
+    private var signalRoomDialog: AlertDialog? = null
     private lateinit var matchingData: MatchingData
     private val onFirstQuestion = Emitter.Listener { _ ->
         firstQuestionEmitListener()
@@ -145,6 +147,46 @@ class SignalRoomActivity : AppCompatActivity() {
         readyFirstChoiceSocket.makeOn()
 
         firstQuestionDialogBuilder = AlertDialog.Builder(this)
+//        signalRoomDialogBuilder = AlertDialog.Builder(this)
+//
+//        val signalRoomDialogView =
+//            LayoutInflater.from(this).inflate(R.layout.first_question_dialog, null)
+//        val imageView = signalRoomDialogView.findViewById<ImageView>(R.id.my_icon_image)
+//
+//        Log.d("My Icon: ", matchingModel.myIcon)
+//        when (matchingModel.myIcon) {
+//            "wolf" -> imageView.setImageResource(R.drawable.lion)
+//            "fox" -> imageView.setImageResource(R.drawable.fox)
+//            "penguin" -> imageView.setImageResource(R.drawable.penguin)
+//            "hamster" -> imageView.setImageResource(R.drawable.hamster)
+//            "lion" -> imageView.setImageResource(R.drawable.lion)
+//        }
+//
+//        signalRoomDialogBuilder?.setView(signalRoomDialogView)
+//
+//        Thread {
+//            UiThreadUtil.runOnUiThread(Runnable {
+//                kotlin.run {
+//                    signalRoomDialog = signalRoomDialogBuilder?.create()
+//                    signalRoomDialog?.show()
+//                }
+//            })
+//        }.start()
+//
+//        Handler(Looper.getMainLooper()).postDelayed(
+//            {
+//                Thread {
+//                    UiThreadUtil.runOnUiThread(Runnable {
+//                        kotlin.run {
+//                            signalRoomDialog?.dismiss()
+//                        }
+//                    })
+//                }.start()
+//            },
+//            2000
+//        )
+
+
 
         try {
             firstQuestionSocket = ContentsSocketApplication.get()
