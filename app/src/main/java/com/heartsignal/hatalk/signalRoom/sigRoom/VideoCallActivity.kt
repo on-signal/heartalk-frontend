@@ -206,7 +206,7 @@ class VideoCallActivity : AppCompatActivity() {
                 Log.d(TAG, "DirectCall onAudioModesUpdated: " + call.toString());
             }
         });
-        Toast.makeText(this, "1대1 영상 통화 연결 됐습니다.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.video_call_succeed, Toast.LENGTH_SHORT).show()
     }
 
     private fun callerStart() {
@@ -217,7 +217,7 @@ class VideoCallActivity : AppCompatActivity() {
 
     private fun keepTalkingEmitListener(args: Array<Any>) {
         val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setTitle("인연").setMessage("이분과 계속 인연을 이어가시겠습니까?")
+        dialogBuilder.setTitle(R.string.match).setMessage(R.string.is_matching)
             .setPositiveButton("수락", DialogInterface.OnClickListener { _, _ ->
                 val gson = Gson()
                 val finalChoice =
@@ -253,7 +253,8 @@ class VideoCallActivity : AppCompatActivity() {
 
                     val chatAvailDialogBuilder = AlertDialog.Builder(this@VideoCallActivity)
                     if (keepTalkingResult.success) {
-                        chatAvailDialogBuilder.setTitle("매칭이 성사!!").setMessage("잠시후 1대1 채팅으로 넘어갑니다.")
+                        chatAvailDialogBuilder.setTitle(R.string.match_accomplished)
+                            .setMessage(R.string.move_to_chat)
 
                         var chatAvailDialog: AlertDialog? = null
                         Thread {
@@ -295,7 +296,8 @@ class VideoCallActivity : AppCompatActivity() {
                             finish()
                         }, 2000)
                     } else {
-                        chatAvailDialogBuilder.setTitle("매칭에 실패ㅠㅠ").setMessage("잠시후 홈화면으로 넘어갑니다.")
+                        chatAvailDialogBuilder.setTitle(R.string.match_failed)
+                            .setMessage(R.string.move_to_home)
 
                         var chatAvailDialog: AlertDialog? = null
                         Thread {
@@ -332,7 +334,8 @@ class VideoCallActivity : AppCompatActivity() {
 
                     val chatAvailDialogBuilder = AlertDialog.Builder(this@VideoCallActivity)
                     if (keepTalkingResult.success) {
-                        chatAvailDialogBuilder.setTitle("매칭이 성사!!").setMessage("잠시후 1대1 채팅으로 넘어갑니다.")
+                        chatAvailDialogBuilder.setTitle(R.string.match_accomplished)
+                            .setMessage(R.string.move_to_chat)
 
                         var chatAvailDialog: AlertDialog? = null
                         Thread {
@@ -374,7 +377,8 @@ class VideoCallActivity : AppCompatActivity() {
                             finish()
                         }, 2000)
                     } else {
-                        chatAvailDialogBuilder.setTitle("매칭에 실패ㅠㅠ").setMessage("잠시후 홈화면으로 넘어갑니다.")
+                        chatAvailDialogBuilder.setTitle(R.string.match_failed)
+                            .setMessage(R.string.move_to_home)
 
                         var chatAvailDialog: AlertDialog? = null
                         Thread {

@@ -58,7 +58,6 @@ class DirectCallActivity : AppCompatActivity() {
 
         val intent: Intent = getIntent()
         val directCallData = intent.getParcelableExtra<DirectCall>("directCallData")
-        Log.d("HEART", directCallData.toString())
 
         if (directCallData != null) {
             myId = directCallData.myId
@@ -87,16 +86,16 @@ class DirectCallActivity : AppCompatActivity() {
             else -> "꿀벌"
         }
 
-        val myDrawble =
+        val myDrawable =
             if (myGender == "0") findViewById<ImageView>(R.id.man_icon) else findViewById(R.id.woman_icon)
-        val counterPartDrawble =
+        val counterPartDrawable =
             if (myGender == "0") findViewById<ImageView>(R.id.woman_icon) else findViewById(R.id.man_icon)
 
         val myAnimal =
             if (myGender == "0") findViewById<TextView>(R.id.man_name) else findViewById(R.id.woman_name)
         val counterPartAnimal =
             if (myGender == "0") findViewById<TextView>(R.id.woman_name) else findViewById(R.id.man_name)
-        myDrawble.setImageResource(
+        myDrawable.setImageResource(
             when (myIcon) {
                 "wolf" -> R.drawable.wolf
                 "fox" -> R.drawable.fox
@@ -107,7 +106,7 @@ class DirectCallActivity : AppCompatActivity() {
             }
         )
 
-        counterPartDrawble.setImageResource(
+        counterPartDrawable.setImageResource(
             when (counterPartIcon) {
                 "wolf" -> R.drawable.wolf
                 "fox" -> R.drawable.fox
@@ -258,7 +257,7 @@ class DirectCallActivity : AppCompatActivity() {
             }
         });
         binding.directUi.visibility = View.GONE
-        Toast.makeText(this, "1대1 콜 연결 됐습니다.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.direct_call_succeed, Toast.LENGTH_SHORT).show()
     }
 
     private fun callerStart() {

@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.heartsignal.hatalk.signalRoom.sigRoom.FirstContent
 import com.facebook.react.bridge.UiThreadUtil
 import com.google.gson.Gson
+import com.heartsignal.hatalk.R
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import org.json.JSONObject
@@ -46,7 +47,7 @@ class ContentsReadySocket(private val context: Context, private val groupName: S
             UiThreadUtil.runOnUiThread(Runnable {
                 Toast.makeText(
                     context,
-                    "자기 소개 시간입니다.",
+                    R.string.self_intro,
                     Toast.LENGTH_SHORT
                 ).show()
             })
