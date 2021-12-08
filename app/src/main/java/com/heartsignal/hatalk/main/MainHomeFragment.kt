@@ -98,7 +98,6 @@ class MainHomeFragment : Fragment() {
             e.printStackTrace();
         }
 
-
         Glide.with(this)
             .load(GlobalApplication.userInfo.photoUrl)
             .transform(CenterCrop(), RoundedCorners(100))
@@ -120,7 +119,6 @@ class MainHomeFragment : Fragment() {
         mSocket.on("cancel-${sharedViewModel.kakaoUserId}", onMatchingCancelConnect)
 
 
-        Log.d("HEART", "${matchingConfirmResponse?.groupName}groupCall")
         mSocket.on("groupCall", onCallStartConnect)
 
     }
@@ -146,10 +144,10 @@ class MainHomeFragment : Fragment() {
         binding = null
 //        mSocket.disconnect()
     }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is Activity) activity = context
-    }
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        if (context is Activity) activity = context
+//    }
 
 
     private fun matchingCancel() {
@@ -212,7 +210,6 @@ class MainHomeFragment : Fragment() {
                 "",
                 object : CometChat.CallbackListener<Group>() {
                     override fun onSuccess(p0: Group?) {
-                        Log.d(TAG, p0.toString())
                         callReadyEmit(groupName)
                     }
 
@@ -262,7 +259,7 @@ class MainHomeFragment : Fragment() {
         Thread {
             runOnUiThread(Runnable {
                 kotlin.run {
-                    val dialog = AlertDialog.Builder(activity)
+                    val dialog = AlertDialog.Builder(context)
                         .setTitle("매칭")
                         .setMessage("매칭하시겠습니까?")
                         .setPositiveButton("예", DialogInterface.OnClickListener{ dialog, id ->
@@ -315,7 +312,6 @@ class MainHomeFragment : Fragment() {
         val callReadyMsg = CallReadyRequest(groupId, "groupCall")
         val gson = Gson()
         val callReadyObj = JSONObject(gson.toJson(callReadyMsg))
-        Log.d(TAG, "emit")
 
         mSocket.emit("callInit", callReadyObj)
     }

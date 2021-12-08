@@ -24,8 +24,6 @@ class ChatingAdapter(val context: Context, val chatList: MutableList<ChatMessage
 
     val CHAT_MINE = 0
     val CHAT_PARTNER = 1
-    val USER_JOIN = 2
-    val USER_LEAVE = 3
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
