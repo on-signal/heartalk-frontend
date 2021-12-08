@@ -454,75 +454,114 @@ class SignalRoomActivity : AppCompatActivity() {
         val manIconList = arrayOf("늑대", "펭귄", "사자")
         var selectedItem = womanIconList[0]
         if (matchingModel.myGender == "0") {
-            dialogBuilder.setTitle("최종선택")
-                .setSingleChoiceItems(womanIconList, 0) { _, pos ->
-                    selectedItem = womanIconList[pos]
-                }.setPositiveButton("OK") { _, _ ->
-                    Toast.makeText(
-                        this,
-                        "$selectedItem is Selected", Toast.LENGTH_LONG
-                    ).show()
-                    var choice = ""
-                    for (woman in matchingModel.womanList) {
-                        if (woman.icon == nameToIcon(selectedItem)) {
-                            choice = woman.id
-                        }
-                    }
-                    val gson = Gson()
-                    val finalChoice =
-                        JSONObject(
-                            gson.toJson(
-                                FirstChoiceRequest(
-                                    matchingModel.groupName,
-                                    matchingModel.myId,
-                                    matchingModel.myGender,
-                                    choice
-                                )
-                            )
-                        )
-                    finalChoiceSocket.emit("finalChoiceToServer", finalChoice)
-                }.setCancelable(false)
             Thread {
                 UiThreadUtil.runOnUiThread(Runnable {
                     kotlin.run {
-                        dialogBuilder.show()
+                        val manFinalDialog = AlertDialog.Builder(this)
+                            .setTitle("최종선택")
+                            .setSingleChoiceItems(womanIconList, 0) { _, pos ->
+                                selectedItem = womanIconList[pos]
+                            }.setPositiveButton("OK") { _, _ ->
+                                var choice = ""
+                                for (woman in matchingModel.womanList) {
+                                    if (woman.icon == nameToIcon(selectedItem)) {
+                                        choice = woman.id
+                                    }
+                                }
+                                val gson = Gson()
+                                val finalChoice =
+                                    JSONObject(
+                                        gson.toJson(
+                                            FirstChoiceRequest(
+                                                matchingModel.groupName,
+                                                matchingModel.myId,
+                                                matchingModel.myGender,
+                                                choice
+                                            )
+                                        )
+                                    )
+                                finalChoiceSocket.emit("finalChoiceToServer", finalChoice)
+                            }.setCancelable(false)
+                            .create()
+                        manFinalDialog.setOnShowListener(object : DialogInterface.OnShowListener {
+                            private val AUTO_DISMISS_MILLIS = 10000
+                            override fun onShow(dialog: DialogInterface) {
+                                val defaultButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                                val positiveButtonText = defaultButton.text
+                                object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 100) {
+                                    override fun onTick(millisUntilFinished: Long) {
+                                        defaultButton.text = java.lang.String.format(
+                                            Locale.getDefault(), "%s (%d)",
+                                            positiveButtonText,
+                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1 //add one so it never displays zero
+                                        )
+                                    }
+                                    override fun onFinish() {
+                                        if (dialog.isShowing) {
+                                            dialog.dismiss()
+                                        }
+                                    }
+                                }.start()
+                            }
+                        })
+                        manFinalDialog.show()
                     }
                 })
             }.start()
         } else if (matchingModel.myGender == "1") {
             selectedItem = manIconList[0]
-            dialogBuilder.setTitle("최종선택")
-                .setSingleChoiceItems(manIconList, 0) { _, pos ->
-                    selectedItem = manIconList[pos]
-                }.setPositiveButton("OK") { _, _ ->
-                    Toast.makeText(
-                        this,
-                        "$selectedItem is Selected", Toast.LENGTH_LONG
-                    ).show()
-                    var choice = ""
-                    for (man in matchingModel.manList) {
-                        if (man.icon == nameToIcon(selectedItem)) {
-                            choice = man.id
-                        }
-                    }
-                    val gson = Gson()
-                    val finalChoice =
-                        JSONObject(
-                            gson.toJson(
-                                FirstChoiceRequest(
-                                    matchingModel.groupName,
-                                    matchingModel.myId,
-                                    matchingModel.myGender,
-                                    choice
-                                )
-                            )
-                        )
-                    finalChoiceSocket.emit("finalChoiceToServer", finalChoice)
-                }.setCancelable(false)
+
             Thread {
                 UiThreadUtil.runOnUiThread(Runnable {
                     kotlin.run {
-                        dialogBuilder.show()
+                        val womanFinalDialog = AlertDialog.Builder(this)
+                            .setTitle("최종선택")
+                            .setSingleChoiceItems(manIconList, 0) { _, pos ->
+                                selectedItem = manIconList[pos]
+                            }.setPositiveButton("OK") { _, _ ->
+                                var choice = ""
+                                for (man in matchingModel.manList) {
+                                    if (man.icon == nameToIcon(selectedItem)) {
+                                        choice = man.id
+                                    }
+                                }
+                                val gson = Gson()
+                                val finalChoice =
+                                    JSONObject(
+                                        gson.toJson(
+                                            FirstChoiceRequest(
+                                                matchingModel.groupName,
+                                                matchingModel.myId,
+                                                matchingModel.myGender,
+                                                choice
+                                            )
+                                        )
+                                    )
+                                finalChoiceSocket.emit("finalChoiceToServer", finalChoice)
+                            }.setCancelable(false)
+                            .create()
+                        womanFinalDialog.setOnShowListener(object : DialogInterface.OnShowListener {
+                            private val AUTO_DISMISS_MILLIS = 10000
+                            override fun onShow(dialog: DialogInterface) {
+                                val defaultButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                                val positiveButtonText = defaultButton.text
+                                object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 100) {
+                                    override fun onTick(millisUntilFinished: Long) {
+                                        defaultButton.text = java.lang.String.format(
+                                            Locale.getDefault(), "%s (%d)",
+                                            positiveButtonText,
+                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1 //add one so it never displays zero
+                                        )
+                                    }
+                                    override fun onFinish() {
+                                        if (dialog.isShowing) {
+                                            dialog.dismiss()
+                                        }
+                                    }
+                                }.start()
+                            }
+                        })
+                        womanFinalDialog.show()
                     }
                 })
             }.start()
