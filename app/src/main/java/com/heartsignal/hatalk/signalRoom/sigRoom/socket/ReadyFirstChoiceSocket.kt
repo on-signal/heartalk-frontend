@@ -13,6 +13,7 @@ import com.cometchat.pro.core.CometChat.CallbackListener
 import com.cometchat.pro.exceptions.CometChatException
 import com.facebook.react.bridge.UiThreadUtil
 import com.google.gson.Gson
+import com.heartsignal.hatalk.R
 import com.heartsignal.hatalk.model.sigRoom.MatchingUser
 import com.heartsignal.hatalk.signalRoom.sigRoom.CallMatchingResponse
 import com.heartsignal.hatalk.signalRoom.sigRoom.DirectCall
@@ -84,7 +85,7 @@ class ReadyFirstChoiceSocket(
                 kotlin.run {
                     selectedItem = womanIconList[0]
                     val firstDialog = AlertDialog.Builder(context)
-                        .setTitle("첫 인상 선택")
+                        .setTitle(R.string.first_choice)
                         .setSingleChoiceItems(womanIconList, 0) { _, pos ->
                             selectedItem = womanIconList[pos]
                         }.setPositiveButton("OK") { _, _ ->
@@ -137,7 +138,7 @@ private fun choiceForWoman() {
                 kotlin.run {
                     selectedItem = manIconList[0]
                     val firstDialog = AlertDialog.Builder(context)
-                        .setTitle("첫 인상 선택")
+                        .setTitle(R.string.first_choice)
                         .setSingleChoiceItems(manIconList, 0) { _, pos ->
                             selectedItem = manIconList[pos]
                         }.setPositiveButton("OK") { _, _ ->

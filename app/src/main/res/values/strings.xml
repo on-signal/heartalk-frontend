@@ -44,5 +44,18 @@
     <string name="Profile"><b>프로필</b></string>
     <string name="question_for_man">남성분들은 연애관 질문에 답변해주세요</string>
     <string name="question_for_woman">여성분들은 마음에 드는 답변을 선택해주세요</string>
-    <string name="final_choice">잠시후 최종 선택이 진행됩니다</string>
+    <string name="final_choice">잠시 후 최종 선택이 진행됩니다</string>
+    <string name="match">인연</string>
+    <string name="is_matching">이 분과 계속 인연을 이어가시겠습니까?</string>
+    <string name="match_accomplished">매칭 성사!!</string>
+    <string name="move_to_chat">잠시 후 1대1 채팅으로 넘어갑니다</string>
+    <string name="match_failed">매칭 실패ㅠㅠ</string>
+    <string name="move_to_home">잠시 후 홈 화면으로 넘어갑니다</string>
+    <string name="move_to_call">잠시 후 1대1 전화로 넘어갑니다</string>
+    <string name="self_intro">자기 소개 시간입니다</string>
+    <string name="first_choice">첫 인상 선택</string>
+    <string name="group_call_succeed">연결 됐습니다</string>
+    <string name="direct_call_succeed">1대1 콜 연결 됐습니다</string>
+    <string name="video_call_succeed">1대1 영상 통화 연결 됐습니다</string>
+    <string name="final_choice_dialog_title">최종선택</string>
 </resources>

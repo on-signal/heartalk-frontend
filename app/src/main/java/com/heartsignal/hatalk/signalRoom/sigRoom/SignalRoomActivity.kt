@@ -274,7 +274,7 @@ class SignalRoomActivity : AppCompatActivity() {
             }
         });
         binding.sigRoomUi.visibility = View.GONE
-        Toast.makeText(this, "연결 됐습니다.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.group_call_succeed, Toast.LENGTH_SHORT).show()
     }
 
     private fun addCallListener() {
@@ -458,7 +458,7 @@ class SignalRoomActivity : AppCompatActivity() {
                 UiThreadUtil.runOnUiThread(Runnable {
                     kotlin.run {
                         val manFinalDialog = AlertDialog.Builder(this)
-                            .setTitle("최종선택")
+                            .setTitle(R.string.final_choice_dialog_title)
                             .setSingleChoiceItems(womanIconList, 0) { _, pos ->
                                 selectedItem = womanIconList[pos]
                             }.setPositiveButton("OK") { _, _ ->
@@ -486,7 +486,8 @@ class SignalRoomActivity : AppCompatActivity() {
                         manFinalDialog.setOnShowListener(object : DialogInterface.OnShowListener {
                             private val AUTO_DISMISS_MILLIS = 10000
                             override fun onShow(dialog: DialogInterface) {
-                                val defaultButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                                val defaultButton =
+                                    (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
                                 val positiveButtonText = defaultButton.text
                                 object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 100) {
                                     override fun onTick(millisUntilFinished: Long) {
@@ -496,6 +497,7 @@ class SignalRoomActivity : AppCompatActivity() {
                                             TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1 //add one so it never displays zero
                                         )
                                     }
+
                                     override fun onFinish() {
                                         if (dialog.isShowing) {
                                             dialog.dismiss()
@@ -515,7 +517,7 @@ class SignalRoomActivity : AppCompatActivity() {
                 UiThreadUtil.runOnUiThread(Runnable {
                     kotlin.run {
                         val womanFinalDialog = AlertDialog.Builder(this)
-                            .setTitle("최종선택")
+                            .setTitle(R.string.final_choice_dialog_title)
                             .setSingleChoiceItems(manIconList, 0) { _, pos ->
                                 selectedItem = manIconList[pos]
                             }.setPositiveButton("OK") { _, _ ->
@@ -543,7 +545,8 @@ class SignalRoomActivity : AppCompatActivity() {
                         womanFinalDialog.setOnShowListener(object : DialogInterface.OnShowListener {
                             private val AUTO_DISMISS_MILLIS = 10000
                             override fun onShow(dialog: DialogInterface) {
-                                val defaultButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                                val defaultButton =
+                                    (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
                                 val positiveButtonText = defaultButton.text
                                 object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 100) {
                                     override fun onTick(millisUntilFinished: Long) {
@@ -553,6 +556,7 @@ class SignalRoomActivity : AppCompatActivity() {
                                             TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1 //add one so it never displays zero
                                         )
                                     }
+
                                     override fun onFinish() {
                                         if (dialog.isShowing) {
                                             dialog.dismiss()
@@ -606,7 +610,8 @@ class SignalRoomActivity : AppCompatActivity() {
         }
         val videoCallAvailDialogBuilder = AlertDialog.Builder(this)
         if (canVideoCall) {
-            videoCallAvailDialogBuilder.setTitle("매칭이 성사!!").setMessage("잠시후 1대1 전화로 넘어갑니다.")
+            videoCallAvailDialogBuilder.setTitle(R.string.match_accomplished)
+                .setMessage(R.string.move_to_call)
 
             var videoCallAvailDialog: AlertDialog? = null
             Thread {
@@ -646,7 +651,8 @@ class SignalRoomActivity : AppCompatActivity() {
             )
 
         } else {
-            videoCallAvailDialogBuilder.setTitle("매칭에 실패ㅠㅠ").setMessage("잠시후 홈화면으로 넘어갑니다.")
+            videoCallAvailDialogBuilder.setTitle(R.string.match_failed)
+                .setMessage(R.string.move_to_home)
 
             var videoCallAvailDialog: AlertDialog? = null
             Thread {
@@ -690,7 +696,8 @@ class SignalRoomActivity : AppCompatActivity() {
                         .setView(dialogView)?.setTitle(matchingModel.questionList[0])
                         ?.setCancelable(false)
                         ?.setPositiveButton("확인") { _, _ ->
-                            val answer = dialogView.findViewById<EditText>(R.id.first_question_answer).text
+                            val answer =
+                                dialogView.findViewById<EditText>(R.id.first_question_answer).text
                             val gson = Gson()
                             val firstAnswer =
                                 JSONObject(
@@ -707,7 +714,8 @@ class SignalRoomActivity : AppCompatActivity() {
                     firstQuestionDialog?.setOnShowListener(object : DialogInterface.OnShowListener {
                         private val AUTO_DISMISS_MILLIS = 10000
                         override fun onShow(dialog: DialogInterface) {
-                            val defaultButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                            val defaultButton =
+                                (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
                             val positiveButtonText = defaultButton.text
                             object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 100) {
                                 override fun onTick(millisUntilFinished: Long) {
