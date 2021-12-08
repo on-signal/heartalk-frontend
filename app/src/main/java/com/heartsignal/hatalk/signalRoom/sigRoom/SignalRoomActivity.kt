@@ -2,6 +2,7 @@ package com.heartsignal.hatalk.signalRoom.sigRoom
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -45,6 +46,7 @@ import androidx.fragment.app.DialogFragment
 import com.view.circulartimerview.CircularTimerListener
 import com.view.circulartimerview.CircularTimerView
 import com.view.circulartimerview.TimeFormatEnum
+import java.util.concurrent.TimeUnit
 
 
 /** [Permission] 처리해줘야 함!!!--------------------------------------------- */
@@ -641,29 +643,50 @@ class SignalRoomActivity : AppCompatActivity() {
 
     private fun renderingForMan() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.first_question_dialog, null)
-        firstQuestionDialogBuilder?.setView(dialogView)?.setTitle(matchingModel.questionList[0])
-            ?.setCancelable(false)
-            ?.setPositiveButton("확인") { _, _ ->
-                val answer = dialogView.findViewById<EditText>(R.id.first_question_answer).text
-                Toast.makeText(this, "$answer", Toast.LENGTH_LONG).show()
-                val gson = Gson()
-                val firstAnswer =
-                    JSONObject(
-                        gson.toJson(
-                            FirstAnswerRequest(
-                                matchingModel.groupName,
-                                matchingModel.myId,
-                                answer.toString()
-                            )
-                        )
-                    )
-                firstQuestionSocket.emit("answerToQuestionToServer", firstAnswer)
-            }
 
         Thread {
             UiThreadUtil.runOnUiThread(Runnable {
                 kotlin.run {
-                    firstQuestionDialog = firstQuestionDialogBuilder?.create()
+                    val firstQuestionDialog = AlertDialog.Builder(this)
+                        .setView(dialogView)?.setTitle(matchingModel.questionList[0])
+                        ?.setCancelable(false)
+                        ?.setPositiveButton("확인") { _, _ ->
+                            val answer = dialogView.findViewById<EditText>(R.id.first_question_answer).text
+                            val gson = Gson()
+                            val firstAnswer =
+                                JSONObject(
+                                    gson.toJson(
+                                        FirstAnswerRequest(
+                                            matchingModel.groupName,
+                                            matchingModel.myId,
+                                            answer.toString()
+                                        )
+                                    )
+                                )
+                            firstQuestionSocket.emit("answerToQuestionToServer", firstAnswer)
+                        }?.create()
+                    firstQuestionDialog?.setOnShowListener(object : DialogInterface.OnShowListener {
+                        private val AUTO_DISMISS_MILLIS = 10000
+                        override fun onShow(dialog: DialogInterface) {
+                            val defaultButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                            val positiveButtonText = defaultButton.text
+                            object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 100) {
+                                override fun onTick(millisUntilFinished: Long) {
+                                    defaultButton.text = java.lang.String.format(
+                                        Locale.getDefault(), "%s (%d)",
+                                        positiveButtonText,
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1 //add one so it never displays zero
+                                    )
+                                }
+
+                                override fun onFinish() {
+                                    if (dialog.isShowing) {
+                                        dialog.dismiss()
+                                    }
+                                }
+                            }.start()
+                        }
+                    })
                     firstQuestionDialog?.show()
                 }
             })
