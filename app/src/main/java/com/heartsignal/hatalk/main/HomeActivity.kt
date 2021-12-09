@@ -69,22 +69,21 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
         setupActionBarWithNavController(navController)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     val onFriendsConnection = Emitter.Listener { args ->
         // Array type은 JSONArray로 받아야 한다.
 
         val friendsJson = JSONArray(args[0].toString())
         val FriendsList = Gson().fromJson(friendsJson.toString(), Array<Friends>::class.java)
         sharedViewModel.setFriends(FriendsList)
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.home_fragment)?.childFragmentManager?.fragments?.last()
-        if (currentFragment is ChatFragment) {
-            Log.d(TAG, "HIHIHI")
-            Log.d(TAG, currentFragment.friends.toString())
-            currentFragment.friends.clear()
-            Log.d(TAG, currentFragment.friends.toString())
-            currentFragment.RecyclerViewAdapter().update(FriendsList)
-            Log.d(TAG, currentFragment.friends.toString())
-        }
+//        val currentFragment = supportFragmentManager.findFragmentById(R.id.home_fragment)?.childFragmentManager?.fragments?.last()
+//        if (currentFragment is ChatFragment) {
+//            Log.d(TAG, "HIHIHI")
+//            Log.d(TAG, currentFragment.friends.toString())
+//            currentFragment.friends.clear()
+//            Log.d(TAG, currentFragment.friends.toString())
+//            currentFragment.update(FriendsList)
+//            Log.d(TAG, currentFragment.friends.toString())
+//        }
     }
 
 

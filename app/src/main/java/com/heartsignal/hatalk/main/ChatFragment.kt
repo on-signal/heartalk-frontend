@@ -56,7 +56,19 @@ class ChatFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        val onFriendsConnection = Emitter.Listener { args ->
+//            // Array type은 JSONArray로 받아야 한다.
+//
+//            Log.d("HEART", "CHATFRAGMENT")
+//            val friendsJson = JSONArray(args[0].toString())
+//            val FriendsList = Gson().fromJson(friendsJson.toString(), Array<Friends>::class.java)
+//            friends.clear()
+//            friends.addAll(FriendsList)
+//            RecyclerViewAdapter().notifyItemChanged(0)
+//        }
+
         mSocket = ChatSocketApplication.set()
+//        mSocket.on("chats", onFriendsConnection)
 
     }
 
@@ -86,16 +98,14 @@ class ChatFragment : Fragment() {
 
     }
 
+
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.CustomViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             return CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.item_chat_list, parent, false))
         }
 
-        fun update(newList:Array<Friends>) {
-            friends.addAll(newList)
-            RecyclerViewAdapter()!!.notifyDataSetChanged()
-        }
+
 
         inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val imageView: ImageView = itemView.findViewById(R.id.chat_item_image)

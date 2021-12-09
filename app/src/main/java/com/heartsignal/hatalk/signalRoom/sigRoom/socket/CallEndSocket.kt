@@ -13,7 +13,7 @@ import java.net.URISyntaxException
 class CallEndSocket(
     private val context: Context,
     private val groupName: String,
-    private val TAG: String
+    private val TAG: String = "HEART"
 ) {
     private lateinit var socket: Socket
     private val onCallEnd = Emitter.Listener {

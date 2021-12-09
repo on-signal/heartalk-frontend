@@ -50,7 +50,7 @@ import java.util.concurrent.TimeUnit
  */
 class MainHomeFragment : Fragment() {
     private val TAG = "HEART"
-    lateinit var activity: Activity
+//    lateinit var activity: Activity
 
     private var binding: FragmentMainHomeBinding? = null
     private val sharedViewModel: UserModel by activityViewModels()
