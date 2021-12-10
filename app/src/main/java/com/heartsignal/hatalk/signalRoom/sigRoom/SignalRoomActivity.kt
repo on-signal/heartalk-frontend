@@ -526,7 +526,7 @@ class SignalRoomActivity : AppCompatActivity() {
                             }.setCancelable(false)
                             .create()
                         manFinalDialog.setOnShowListener(object : DialogInterface.OnShowListener {
-                            private val AUTO_DISMISS_MILLIS = 10000
+                            private val AUTO_DISMISS_MILLIS = 15000
                             override fun onShow(dialog: DialogInterface) {
                                 val defaultButton =
                                     (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)

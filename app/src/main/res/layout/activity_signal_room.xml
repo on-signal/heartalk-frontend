@@ -45,6 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/main_name">
 
         <TextView
+            android:id="@+id/main_string"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
