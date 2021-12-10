@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainHomeFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_mainHomeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -22,6 +25,9 @@
         <action
             android:id="@+id/action_chatFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_mainHomeFragment"
+            app:destination="@id/mainHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -31,6 +37,12 @@
         <action
             android:id="@+id/action_profileFragment_to_profileEditFragment"
             app:destination="@id/profileEditFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_mainHomeFragment"
+            app:destination="@id/mainHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/loadingFragment"

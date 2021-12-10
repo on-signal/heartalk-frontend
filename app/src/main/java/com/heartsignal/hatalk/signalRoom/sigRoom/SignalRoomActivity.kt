@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.*
 import android.util.Log
 import android.view.LayoutInflater
@@ -141,7 +140,8 @@ class SignalRoomActivity : AppCompatActivity() {
             matchingModel.myIcon,
             matchingModel.manList,
             matchingModel.womanList,
-            TAG
+            TAG,
+            view
         )
         readyFirstChoiceSocket.set()
         readyFirstChoiceSocket.makeOn()
@@ -234,9 +234,11 @@ class SignalRoomActivity : AppCompatActivity() {
         if (directCallCnt == 0) {
             renderNotificationHeader(resources.getString(R.string.question_for_man))
             timerSetting(30)
+            binding.mainString.text = getString(R.string.guideAfterFirstCall)
         } else if (directCallCnt == 1) {
             renderNotificationHeader(resources.getString(R.string.final_choice))
             timerSetting(10)
+            binding.mainString.text = getString(R.string.guideAfterSecondCall)
         }
     }
 
@@ -754,7 +756,7 @@ class SignalRoomActivity : AppCompatActivity() {
                             firstQuestionSocket.emit("answerToQuestionToServer", firstAnswer)
                         }?.create()
                     firstQuestionDialog?.setOnShowListener(object : DialogInterface.OnShowListener {
-                        private val AUTO_DISMISS_MILLIS = 10000
+                        private val AUTO_DISMISS_MILLIS = 15000
                         override fun onShow(dialog: DialogInterface) {
                             val defaultButton =
                                 (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)

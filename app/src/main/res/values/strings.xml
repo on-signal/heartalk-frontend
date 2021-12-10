@@ -19,7 +19,12 @@
     <string name="login_button">로그인으로</string>
     <string name="signal_room">시그널 룸</string>
     <string name="guideIntroduce">시그널 룸 입주를 환영합니다!\n\n 잠시 후 자기소개가 시작됩니다.\n 간단한 인사를 나누세요 :)</string>
-    <string name="saying_first">“사랑은 결정이 아니다.\n 사랑은 감정이다.\n 누구를 사랑할 수 있다면 훨씬 더 간단하겠지만\n 마법처럼 느껴지지는 않을 것이다.”\n - 트레이 파커</string>
+    <string name="guideBeforeFirstCall">잠시 후, 1:1 채팅을 위해 \n <b>시크릿 룸</b>으로 이동합니다.</string>
+    <string name="guideAfterFirstCall">서로에 대해 알아보는 \n 연애관 게임입니다.</string>
+    <string name="guideAfterSecondCall">더 알아보고 싶은 분을 선택해주세요.\n 매칭 된 커플은 영상통화를 진행합니다.</string>
+
+
+    <string name="saying_first">“사랑은 결정이 아니다.\n 사랑은 감정이다.\n 누구를 사랑할 수 있다면\n 훨씬 더 간단하겠지만\n 마법처럼 느껴지지는 않을 것이다.”\n - 트레이 파커</string>
     <string name="guideOneToOneCall">1:1 음성 통화 시간입니다.</string>
     <string name="name_input">이름을 입력하세요</string>
     <string name="social_number_input">주민번호 7자리를 입력하세요</string>

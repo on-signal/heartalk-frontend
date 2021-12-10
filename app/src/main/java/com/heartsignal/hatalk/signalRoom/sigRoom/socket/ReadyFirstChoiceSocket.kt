@@ -4,8 +4,11 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.Resources
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import com.cometchat.pro.core.Call
 import com.cometchat.pro.core.CometChat
@@ -21,6 +24,7 @@ import com.heartsignal.hatalk.signalRoom.sigRoom.DirectCallActivity
 import com.heartsignal.hatalk.signalRoom.sigRoom.FirstChoiceRequest
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
+import kotlinx.android.synthetic.main.activity_signal_room.view.*
 import org.json.JSONObject
 import java.net.URISyntaxException
 import java.util.*
@@ -35,7 +39,8 @@ class ReadyFirstChoiceSocket(
     private val myIcon: String,
     private val manList: MutableList<MatchingUser>,
     private val womanList: MutableList<MatchingUser>,
-    private val TAG: String
+    private val TAG: String,
+    private val view: View
 ) {
     private lateinit var socket: Socket
     private val dialogBuilder = AlertDialog.Builder(context)
@@ -76,6 +81,15 @@ class ReadyFirstChoiceSocket(
         } else if (myGender == "1") {
             choiceForWoman()
         }
+
+//        Thread {
+//            UiThreadUtil.runOnUiThread(Runnable {
+//                kotlin.run {
+//                    val mainString: TextView = view.main_string
+//                    mainString.text = getString(R.string.guideBeforeFirstCall)
+//                }
+//            })
+//        }.start()
     }
 
     private fun choiceForMan() {
@@ -188,10 +202,14 @@ private fun choiceForWoman() {
                 UiThreadUtil.runOnUiThread(Runnable {
                     kotlin.run {
                         dialog?.dismiss()
+                        view.main_string.text = R.string.guideBeforeFirstCall.toString()
                     }
                 })
             }.start()
         }
+
+
+
 
         val res = JSONObject(args[0].toString())
         val firstChoiceResponse = Gson().fromJson(res.toString(), CallMatchingResponse::class.java)
