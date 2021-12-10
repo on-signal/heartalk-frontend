@@ -24,7 +24,8 @@
     <string name="guideAfterSecondCall">더 알아보고 싶은 분을 선택해주세요.\n 매칭 된 커플은 영상통화를 진행합니다.</string>
 
 
-    <string name="saying_first">“사랑은 결정이 아니다.\n 사랑은 감정이다.\n 누구를 사랑할 수 있다면\n 훨씬 더 간단하겠지만\n 마법처럼 느껴지지는 않을 것이다.”\n - 트레이 파커</string>
+    <string name="saying_first">“사랑은 결정이 아니다.\n 사랑은 감정이다.\n 누구를 사랑할 수 있다면\n 훨씬 더 간단하겠지만\n 마법처럼 느껴지지는 않을 것이다.”\n\n - 트레이 파커</string>
+    <string name="saying_second">“사랑은 자신 이외에\n 다른 것도 존재한다는 사실을\n 어렵사리 깨닫는 것이다.“\n\n - 아이리스 머독</string>
     <string name="guideOneToOneCall">1:1 음성 통화 시간입니다.</string>
     <string name="name_input">이름을 입력하세요</string>
     <string name="social_number_input">주민번호 7자리를 입력하세요</string>
@@ -39,6 +40,7 @@
     <string name="currentUser">TestUser1</string>
     <string name="opponentUser">TestUser2</string>
     <string name="loading">로딩중...</string>
+    <string name="last_loading">상대의 마음을 확인 중입니다...</string>
     <!--    Bottom navBar -->
     <string name="home">Home</string>
     <string name="chat">Chat</string>
