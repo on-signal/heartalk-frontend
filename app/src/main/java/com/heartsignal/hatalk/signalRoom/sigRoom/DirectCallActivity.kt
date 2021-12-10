@@ -282,7 +282,7 @@ class DirectCallActivity : AppCompatActivity() {
                 progressBar.setProgressBackgroundColor("#FF808080")
                 progressBar.setTextColor("#FF808080")
             }
-        }, 35, TimeFormatEnum.SECONDS, 10)
+        }, 30, TimeFormatEnum.SECONDS, 10)
 
         progressBar.startTimer()
     }
