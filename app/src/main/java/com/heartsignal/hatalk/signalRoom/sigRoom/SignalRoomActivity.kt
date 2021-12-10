@@ -233,11 +233,11 @@ class SignalRoomActivity : AppCompatActivity() {
 
         if (directCallCnt == 0) {
             renderNotificationHeader(resources.getString(R.string.question_for_man))
-            timerSetting(30)
+            timerSetting(25)
             binding.mainString.text = getString(R.string.guideAfterFirstCall)
         } else if (directCallCnt == 1) {
             renderNotificationHeader(resources.getString(R.string.final_choice))
-            timerSetting(10)
+            timerSetting(10 )
             binding.mainString.text = getString(R.string.guideAfterSecondCall)
         }
     }
