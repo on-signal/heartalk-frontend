@@ -6,13 +6,13 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class userInfo(
     val kakaoUserId: String,
-    val email: String?,
+    var email: String?,
     val photoUrl: String,
     val name: String,
     val socialNumber: String,
     val carrier: String,
-    val phoneNumber: String,
-    val nickname: String,
+    var phoneNumber: String,
+    var nickname: String,
     val accessToken: String,
     val refreshToken: String,
     val gender: String,

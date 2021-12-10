@@ -131,43 +131,10 @@ class ProfileFragment : Fragment() {
             .load(sharedViewModel.photoUrl)
             .into(profileImage!!)
 
-        val balloon = Balloon.Builder(tempContext)
-            .setLayout(R.layout.profile_balloon)
-            .setArrowSize(10)
-            .setArrowOrientation(ArrowOrientation.TOP)
-            .setArrowPosition(0.5f)
-            .setHeight(250)
-            .setCornerRadius(4f)
-            .setBackgroundColor(ContextCompat.getColor(tempContext, R.color.primaryDarkColor))
-            .setBalloonAnimation(BalloonAnimation.CIRCULAR)
-            .setLifecycleOwner(viewLifecycleOwner)
-            .build()
-
-        val button: Button =
-            balloon.getContentView().findViewById(R.id.button_edit)
-        button.setOnClickListener {
-            profileEdit()
-            balloon.dismiss()
-        }
-        val circleImage: ImageView =
-            balloon.getContentView().findViewById(R.id.circleImageView)
-        Glide.with(this)
-            .load(sharedViewModel.photoUrl)
-            .into(circleImage)
-        val balloonName: TextView =
-            balloon.getContentView().findViewById(R.id.balloon_name)
-        balloonName.text = sharedViewModel.nickname
 
 
-        profileImage.setOnTouchListener(View.OnTouchListener { v, event ->
-            when (event?.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    profileImage.showAlignBottom(balloon)
-                }
-            }
-            true
-        })
-
+        val button: Button? = binding?.buttonEdit
+        button?.setOnClickListener { profileEdit() }
 
     }
 

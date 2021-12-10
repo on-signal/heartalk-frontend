@@ -40,7 +40,7 @@
     <string name="currentUser">TestUser1</string>
     <string name="opponentUser">TestUser2</string>
     <string name="loading">로딩중...</string>
-    <string name="last_loading">상대의 마음을 확인 중입니다...</string>
+    <string name="last_loading">상대의 마음을\n 확인 중입니다...</string>
     <!--    Bottom navBar -->
     <string name="home">Home</string>
     <string name="chat">Chat</string>

@@ -1,6 +1,5 @@
 package com.heartsignal.hatalk.main
 
-import android.R
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
@@ -40,7 +39,11 @@ import org.json.JSONObject
 import java.net.URISyntaxException
 import java.util.*
 import android.os.CountDownTimer
+import androidx.fragment.app.FragmentManager
 import java.util.concurrent.TimeUnit
+
+
+
 
 
 /**
@@ -50,7 +53,8 @@ import java.util.concurrent.TimeUnit
  */
 class MainHomeFragment : Fragment() {
     private val TAG = "HEART"
-//    lateinit var activity: Activity
+//    lateinit var activity: HomeActivity
+    private var activityContext: Context? = null
 
     private var binding: FragmentMainHomeBinding? = null
     private val sharedViewModel: UserModel by activityViewModels()
@@ -69,6 +73,7 @@ class MainHomeFragment : Fragment() {
         binding = fragmentBinding
 
         val userInfo: userInfo = GlobalApplication.userInfo
+
 
         sharedViewModel.setEmail(userInfo.email)
         sharedViewModel.setName(userInfo.name)
@@ -103,6 +108,7 @@ class MainHomeFragment : Fragment() {
             .transform(CenterCrop(), RoundedCorners(100))
             .into(binding!!.homeProfileImage)
 
+        activityContext = context
 
         /** [CometChat로그인] */
         cometchatLogin()
@@ -146,7 +152,12 @@ class MainHomeFragment : Fragment() {
     }
 //    override fun onAttach(context: Context) {
 //        super.onAttach(context)
-//        if (context is Activity) activity = context
+//        if (context is HomeActivity) activity = context
+//    }
+
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//        if (context is HomeActivity) activity = context as HomeActivity
 //    }
 
 
@@ -259,10 +270,11 @@ class MainHomeFragment : Fragment() {
         Thread {
             runOnUiThread(Runnable {
                 kotlin.run {
-                    val dialog = AlertDialog.Builder(context)
+                    val dialog = AlertDialog.Builder(activityContext)
                         .setTitle("매칭")
                         .setMessage("매칭하시겠습니까?")
                         .setPositiveButton("예", DialogInterface.OnClickListener{ dialog, id ->
+                            Log.d(TAG, "hello world")
                             mSocket.emit("imready", matchingConfirmSuccessObj)
                         })
                         .setNegativeButton("아니오", DialogInterface.OnClickListener{ dialog, id ->
@@ -273,6 +285,7 @@ class MainHomeFragment : Fragment() {
                                 matchingButton?.text = "매칭하기"
                             }
                         })
+                        .setCancelable(false)
                         .create()
                     dialog.setOnShowListener(object : OnShowListener {
                         private val AUTO_DISMISS_MILLIS = 10000

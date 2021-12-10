@@ -35,18 +35,18 @@ class SignUpLoadingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val signUpRequest =
-            SignUpRequest(
-                sharedViewModel.kakaoUserId,
-                sharedViewModel.email,
-                sharedViewModel.name,
-                sharedViewModel.socialNumber,
-                sharedViewModel.carrier,
-                sharedViewModel.phoneNumber,
-                sharedViewModel.nickname,
-                sharedViewModel.photoUrl
-            )
         lifecycleScope.launch {
+            val signUpRequest =
+                SignUpRequest(
+                    sharedViewModel.kakaoUserId,
+                    sharedViewModel.email,
+                    sharedViewModel.name,
+                    sharedViewModel.socialNumber,
+                    sharedViewModel.carrier,
+                    sharedViewModel.phoneNumber,
+                    sharedViewModel.nickname,
+                    sharedViewModel.photoUrl
+                )
             val signUpResponse = UserApi.retrofitService.signUp(signUpRequest)
             sharedViewModel.setAccessToken(signUpResponse.body()?.accessToken.toString())
 
@@ -83,6 +83,7 @@ class SignUpLoadingFragment : Fragment() {
                 it.startActivity(intent)
 //                        startActivity(intent)
             }
+
 
 //            sharedViewModel.setGender(gender)
 //            getProfileResponse.body()?.age?.let { sharedViewModel.setAge(it) }

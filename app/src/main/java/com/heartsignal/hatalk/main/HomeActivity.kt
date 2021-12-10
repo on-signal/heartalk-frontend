@@ -63,6 +63,8 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
 
         mSocket.on("chats", onFriendsConnection)
 
+        Log.d(TAG, "HOMEACTIVITY")
+
 
         navController = findNavController(R.id.home_fragment)
 
