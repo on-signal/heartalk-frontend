@@ -1,6 +1,6 @@
 # 하톡시그널
 러브라인 예능 프로그램 '하트시그널' 기반의 3:3 소개팅 어플
-(https://user-images.githubusercontent.com/87048860/145799474-6a48e175-731b-4847-8fd7-0954948706d6.png)
+![하톡시그널 포스터](https://user-images.githubusercontent.com/87048860/145799474-6a48e175-731b-4847-8fd7-0954948706d6.png)
 
 
 <br>
@@ -15,9 +15,9 @@
 <br><br>
 
 ## 2. SW 기능 및 UI
-- 협업툴 : Git, GitHub, Notion
-- Client : Android Studio, JAVA
-- Server : KINX IX Cloud(Ubuntu 14.04), MySQL, PHP
+- 협업툴 : Git, GitHub, Trello
+- Client : Kotlin, Android Studio
+- Server : TypeScript, Nest.js, MongoDB
 
 ### 1) 멘티와 멘토 회원가입을 나눠 구현 및 서버연동
 <image src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/6de45ba5-e6e5-4b4d-80c5-be25b57a49c4/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201218T190321Z&X-Amz-Expires=86400&X-Amz-Signature=3b82c86b2adb58d1dfc1cdff6af52e8e2afce982489c16b77cfacb045f34a450&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" width="600">
