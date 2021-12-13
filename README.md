@@ -1,8 +1,7 @@
 # 하톡시그널
 러브라인 예능 프로그램 '하트시그널' 기반의 3:3 소개팅 어플
+(https://user-images.githubusercontent.com/87048860/145799474-6a48e175-731b-4847-8fd7-0954948706d6.png)
 
-> GitHub Repo : https://github.com/KHU-Pearl/SMP-Android  
-> 필요시 GitHub권한 드리겠습니다.
 
 <br>
 
