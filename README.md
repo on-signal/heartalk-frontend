@@ -6,8 +6,7 @@
 <br>
 
 ## 1. 프로젝트의 목표 및 내용
-
-<image src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3db97e0d-16a1-489a-9ad3-d6186b9586d1/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201218T185849Z&X-Amz-Expires=86400&X-Amz-Signature=ff721940c2327e2e635a436ad622178a0bf734eafde3f7aae6d57e7a47140390&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" width="500">  
+  
 - 남자 3, 여자 3이 매칭되어 시그널 룸으로 이동한다.
 - 시그널 룸에서 음성통화, 말풍선 채팅을 하며 커플 선택을 통해 총 2차례의 1:1 음성 통화 기회를 갖는다.
 - 남녀의 최종 선택이 일치할 경우, 1:1 영상통화를 진행하고 친구 등록을 할 수 있다.
@@ -19,9 +18,10 @@
 - Client : Kotlin, Android Studio
 - Server : TypeScript, Nest.js, MongoDB
 
-### 1) 멘티와 멘토 회원가입을 나눠 구현 및 서버연동
-<image src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/6de45ba5-e6e5-4b4d-80c5-be25b57a49c4/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201218T190321Z&X-Amz-Expires=86400&X-Amz-Signature=3b82c86b2adb58d1dfc1cdff6af52e8e2afce982489c16b77cfacb045f34a450&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" width="600">
-중복확인 : 이메일이 이미 회원가입된 아이디라면 사용할 수 없다.
+### 1) 카카오톡 로그인을 이용해 로그인
+<image src=![Kakao_login](https://user-images.githubusercontent.com/57060164/145925512-49e2b47f-4c8c-4271-b446-4cd81f805918.jpg) 
+ width="600">
+주민등록번호를 이용해 나이, 성별을 가져옴.
 
 ### 2) 멘티 로그인 및 메인화면
 <image src="https://user-images.githubusercontent.com/37680108/102651159-64228c00-41af-11eb-8299-9c50987ff550.png" width="600">
