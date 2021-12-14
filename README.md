@@ -19,24 +19,15 @@
 - Server : TypeScript, Nest.js, MongoDB
 
 ### 1) 카카오톡 로그인을 이용해 로그인
-<image src=![Kakao_login](https://user-images.githubusercontent.com/57060164/145925512-49e2b47f-4c8c-4271-b446-4cd81f805918.jpg) 
- width="600">
+<img src="https://user-images.githubusercontent.com/57060164/145927435-69f30b25-cf52-46c7-b227-6dc89da18f9f.jpg" height="600"> <image src="https://user-images.githubusercontent.com/57060164/145927439-36913e87-55bd-459d-9e6d-37d20014b464.jpg" height="600">
 주민등록번호를 이용해 나이, 성별을 가져옴.
 
-### 2) 멘티 로그인 및 메인화면
-<image src="https://user-images.githubusercontent.com/37680108/102651159-64228c00-41af-11eb-8299-9c50987ff550.png" width="600">
+### 2) 홈 화면, 1:1 채팅, 프로필 화면
+<image src="https://user-images.githubusercontent.com/57060164/145933941-fa399853-f816-4c01-bb3e-e726f3ffb328.jpg" height="600"> <image src="https://user-images.githubusercontent.com/57060164/145934585-dd17e30d-4806-4d2c-924c-7d83421db95b.jpg" height="600"> <image src="https://user-images.githubusercontent.com/57060164/145933932-b7a90909-6da0-4c1f-93c8-6c5c470e168e.jpg" height="600">
 
-### 3) 멘토 로그인 및 메인화면
-<image src="https://user-images.githubusercontent.com/37680108/102651215-81575a80-41af-11eb-932b-1de99961088a.png" width="600">
+### 3) 시그널 룸 화면
+<image src="https://user-images.githubusercontent.com/57060164/145933538-305b2aef-0a5c-41b8-ac83-206852f6af16.jpg" height="600"> <image src="https://user-images.githubusercontent.com/57060164/145933528-7d84f2be-e7d2-4317-be13-e4c1f9b33539.jpg" height="600"> <image src="https://user-images.githubusercontent.com/57060164/145933535-0017ddc9-a165-4ed3-8ed8-f4ccca10ae55.jpg" height="600">
 
-### 4) 멘토 팀만들기 기능
-<image src="https://user-images.githubusercontent.com/37680108/102651274-9f24bf80-41af-11eb-8e40-91d245a0f1d4.png" width="500">
 
-### 5)WBS
-#### 팀별 목록 및 세부사항 확인 : 칸반보드 형태로 구현 (예정, 진행, 완료)
-<image src="https://user-images.githubusercontent.com/37680108/102651476-f75bc180-41af-11eb-9b74-acd7b5826275.png" width="600">
-
-#### 할 일 (프로젝트 작업) 추가 :
-<image src="https://user-images.githubusercontent.com/37680108/102651491-fd51a280-41af-11eb-9109-5c251e1e6ff7.png" width="600">
 
 <br><br>
