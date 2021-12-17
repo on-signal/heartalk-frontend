@@ -12,8 +12,8 @@ android {
         applicationId "com.heartsignal.hatalk"
         minSdk 24
         targetSdk 31
-        versionCode 9
-        versionName "1.4.4"
+        versionCode 10
+        versionName "1.5.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -93,7 +93,4 @@ dependencies {
 
     //로딩 화면
     implementation 'com.airbnb.android:lottie:3.4.0'
-
-    // anko for socket (1:1 chat)
-//    implementation "org.jetbrains.anko:anko:0.10.8"
 }

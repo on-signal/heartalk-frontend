@@ -113,7 +113,7 @@
                         android:layout_marginBottom="16dp"
                         android:background="@drawable/edittext_background"
                         android:ems="10"
-                        android:hint="여기에 입력해 주세요 "
+                        android:hint="-없이 7자리 입력해주세요."
                         android:inputType="text"
                         android:paddingLeft="15dp"
                         android:textColorHint="#0079c8"
@@ -173,7 +173,8 @@
                         android:background="@drawable/edittext_background"
                         android:ems="10"
                         android:hint="여기에 입력해 주세요 "
-                        android:inputType="text"
+                        android:inputType="phone"
+                        android:maxLength="13"
                         android:paddingLeft="15dp"
                         android:textColorHint="#0079c8"
                         android:textSize="16sp" />
