@@ -1,5 +1,9 @@
 # 하톡시그널
 러브라인 예능 프로그램 '하트시그널' 기반의 3:3 소개팅 어플
+
+## Play Store
+https://play.google.com/store/apps/details?id=com.heartsignal.hatalk
+
 ![하톡시그널 포스터](https://user-images.githubusercontent.com/87048860/145799474-6a48e175-731b-4847-8fd7-0954948706d6.png)
 
 
